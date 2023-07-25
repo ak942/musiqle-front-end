@@ -6,7 +6,7 @@ const Navbar = () => {
     return (
         <>
             <nav>
-                <div>
+                <div className="nav-container">
                     <NavLink className= "nav-link" to="/album" activeStyle>
                         Album
                     </NavLink>

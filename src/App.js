@@ -9,7 +9,7 @@ import Song from './pages/Song';
 
 function App() {
     return (
-        <Router>
+        <Router className="router">
             <Navbar className= "nav" />
             <Routes>
                 <Route exact path='/' exact element={<Home />} />
