@@ -1,11 +1,5 @@
-import React from 'react';
+import logo from './logo.svg';
 import './App.css';
-import Navbar from './components/NavBar/NavBar';
-import { BrowserRouter as Router, Routes, Route }from 'react-router-dom';
-import Home from './pages/Home';
-import Album from './pages/Album';
-import Song from './pages/Song';
-
 
 function App() {
     return (
