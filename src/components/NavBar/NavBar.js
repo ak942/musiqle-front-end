@@ -1,11 +1,14 @@
 import React from "react";
-import { Nav, NavLink, NavMenu }from "./NavBarElements";
+import { Nav, NavLink, NavMenu } from "./NavBarElements";
 
 const Navbar = () => {
     return (
         <>
             <Nav>
                 <NavMenu>
+                    <NavLink to="/" activeStyle>
+                        Home
+                    </NavLink>
                     <NavLink to="/album" activeStyle>
                         Album
                     </NavLink>
