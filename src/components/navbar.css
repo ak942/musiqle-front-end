@@ -1,0 +1,11 @@
+#nav-link {
+    border: 2px black solid;
+    display: flex;
+    color: pink;
+}
+
+#nav-container {
+    border: 3px black solid;
+    height: 15vh;
+    text-align: center;
+}

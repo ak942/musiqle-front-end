@@ -1,0 +1,30 @@
+/* Header Styling */
+.welcome-header {
+    text-align: center;
+}
+
+/* Link Styling */
+.link-container {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    border: black, solid, 3px;
+    justify-content: center;
+}
+
+a:link {
+    text-decoration: none;
+    color: black;
+}
+
+a:visited {
+    color: pink;
+}
+
+.link-list {
+    padding: 10vh;
+    font-size: 40px;
+    color: black;
+    background-color: grey;
+    margin: 4vh;
+}
