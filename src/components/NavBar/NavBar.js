@@ -1,19 +1,20 @@
 import React from "react";
-import { Nav, NavLink, NavMenu }from "./NavBarElements";
+import {NavLink }from "react-router-dom";
+import './navbar.css'
 
 const Navbar = () => {
     return (
         <>
-            <Nav>
-                <NavMenu>
-                    <NavLink to="/album" activeStyle>
+            <nav>
+                <div>
+                    <NavLink className= "nav-link" to="/album" activeStyle>
                         Album
                     </NavLink>
-                    <NavLink to="/song" activeStyle>
+                    <NavLink className= "nav-link" to="/song" activeStyle>
                         Song
                     </NavLink>
-                </NavMenu>
-            </Nav>
+                </div>
+            </nav>
         </>
     );
 };

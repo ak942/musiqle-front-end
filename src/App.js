@@ -10,7 +10,7 @@ import Song from './pages/Song';
 function App() {
     return (
         <Router>
-            <Navbar />
+            <Navbar className= "nav" />
             <Routes>
                 <Route exact path='/' exact element={<Home />} />
                 <Route path='/album' element={<Album />} />
