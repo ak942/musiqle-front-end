@@ -1,18 +1,16 @@
 import React from "react";
 import { Nav, NavLink, NavMenu }from "./NavBarElements";
+import './navbar.css'
 
-const Navbar = () => {
+const NavBar = () => {
     return (
         <>
-<<<<<<< HEAD
-            <nav>
-                <div className="nav-container">
-                    <NavLink className= "nav-link" to="/album" activeStyle>
-=======
             <Nav>
-                <NavMenu>
+                <NavMenu className="nav-container">
+                    <NavLink to="/home" activeStyle>
+                        Home
+                    </NavLink>
                     <NavLink to="/album" activeStyle>
->>>>>>> parent of 87c9421 (changes to home app)
                         Album
                     </NavLink>
                     <NavLink to="/song" activeStyle>
@@ -24,5 +22,5 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default NavBar;
 

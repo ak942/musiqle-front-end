@@ -1,15 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
+import NavBar from './components/NavBar'
+import { BrowserRouter as Router, Routes, Route }from 'react-router-dom';
+import Home from './pages/Home'
+import Album from './pages/Album'
+import Song from './pages/Song'
 
 function App() {
     return (
-<<<<<<< HEAD
         <Router className="router">
-            <Navbar className= "nav" />
-=======
-        <Router>
-            <Navbar />
->>>>>>> parent of 87c9421 (changes to home app)
+            <NavBar className= "nav" />
             <Routes>
                 <Route exact path='/' exact element={<Home />} />
                 <Route path='/album' element={<Album />} />
