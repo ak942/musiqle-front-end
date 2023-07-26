@@ -1,16 +1,15 @@
 import React from 'react';
-import songinfo from "../dummy_data.json"
 import "./Album.css"
 
-const Album = ({ attempts = 0 }) => {
+const Album = ({ name, url, attempts = 4 }) => {
 
     return (
         <div className="center game">
             <h1>Guess the Album</h1>
             <p>Attempts Left: {attempts}</p>
-            <img className="blur size image" src={songinfo[0].album.images[0].url} alt="album cover" />
+            <img className="blur size image" src={url} alt="album cover" />
             <form>
-                <input></input>
+                <input placeholder="Type here"></input>
                 <button className="circular">Enter</button>
             </form>
         </div>
