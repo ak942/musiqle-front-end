@@ -8,5 +8,11 @@
                 }
             ]
         }
+    },
+    {
+        "song": {
+            "name": "Club Tropicana",
+            "preview_url": ""
+        }
     }
 ]
