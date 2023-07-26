@@ -1,0 +1,36 @@
+.blur {
+    filter: blur(8px)
+}
+
+.size {
+    height: 300px;
+    width: 300px
+}
+
+.image {
+    margin: 30px;
+}
+
+input {
+    border: 2px solid #1db954;
+    background-color: #1ed760;
+    width: 500px;
+    color: white;
+    border-radius: 2px;
+    height: 50px;
+    font-size: larger;
+}
+
+.circular {
+    border-radius: 5px;
+    height: 50px;
+    width: 75px;
+    border: 2px solid #1db954;
+    background-color: white;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
