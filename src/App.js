@@ -4,7 +4,7 @@ import Home from "./components/Home";
 import Album from "./components/Album";
 import Song from "./components/Song";
 import albuminfo from "./dummy_data_album.json"
-// import { useState } from "react";
+import { useState } from "react";
 
 function App() {
 
@@ -12,8 +12,9 @@ function App() {
   const albumImage = albuminfo[randomNum].album.images[0].url
   const albumName = albuminfo[randomNum].album.name
 
-  // const [answerInput, setAnswerInput] = useState("")
+  const [inputAnswer, setInputAnswer] = useState("")
 
+  
 
 
 
@@ -21,11 +22,11 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route 
-            exact path="/" 
+          <Route
+            exact path="/"
             element={
               <Home />
-            } 
+            }
           />
           <Route
             path="/album"
@@ -33,13 +34,15 @@ function App() {
               <Album
                 url={albumImage}
                 name={albumName}
+                inputAnswer={inputAnswer}
+                setInputAnswer={setInputAnswer}
               />}
           />
           <Route
             path="/song"
             element={
-              <Song 
-              />} 
+              <Song
+              />}
           />
         </Routes>
       </Router>

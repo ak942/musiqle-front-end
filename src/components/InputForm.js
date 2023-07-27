@@ -1,38 +1,33 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 
-const InputForm = ({ inputAnswer }) => {
-    const [formFields, setFormFields] = useState({
-        answer: ''
-    });
-
-    const onFormSubmit = (event) => {
+const InputForm = ({ albumName, inputAnswer, setInputAnswer }) => {
+    const handleSubmit = (event) => {
         event.preventDefault()
 
-        inputAnswer(formFields)
-        setFormFields({
-            'answer': ''
-        })
+        if (inputAnswer.trim().toLowerCase() === albumName.toLowerCase()) {
+            setInputAnswer('')
+            console.log("Correct!")
+        } else {
+            console.log("Incorrect!")
+        }
     }
 
-    const onAnswerChange = (event) => {
-        setFormFields({
-            ...formFields,
-            answer: event.target.value
-        })
+    const handleChange = (event) => {
+        setInputAnswer(event.target.value);
     };
 
 
     return (
         <div className="amswer-box">
-            <form id="answer" onSubmit={onFormSubmit}>
+            <form id="answer" onSubmit={handleSubmit}>
 
                 <div className="answer-input">
                     <input
+                        type="text"
                         name="answer"
-                        value={formFields.answer}
-                        onChange={onAnswerChange}
+                        value={inputAnswer}
+                        onChange={handleChange}
                         className="input-form"
                         placeholder='Type Here'
                         required
@@ -40,7 +35,11 @@ const InputForm = ({ inputAnswer }) => {
                 </div>
 
                 <div>
-                    <button className="circular">
+                    <button 
+                        type="submit"
+                        className="circular"
+                        onClick={handleSubmit}
+                    >
                         Enter
                     </button>
                 </div>
