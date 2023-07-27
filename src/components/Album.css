@@ -1,0 +1,47 @@
+.blur {
+    filter: blur(8px)
+}
+
+.size {
+    height: 250px;
+    width: 250px
+}
+
+.image {
+    margin: 20px;
+    border: 2px solid white;
+}
+
+input {
+    border: 2px solid #1db954;
+    background-color: #1ed760;
+    width: 500px;
+    color: white;
+    border-radius: 2px;
+    height: 50px;
+    font-size: larger;
+}
+
+input::placeholder {
+    color: white;
+    padding: 10px;
+}
+
+.circular {
+    border-radius: 5px;
+    height: 50px;
+    width: 75px;
+    border: 2px solid #1db954;
+    background-color: white;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+form button {
+    font-size: larger;
+}

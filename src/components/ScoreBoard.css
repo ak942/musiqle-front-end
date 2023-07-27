@@ -1,0 +1,12 @@
+.scores {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.score-bubble {
+    border: 2px solid white;
+    padding: 15px;
+    background-color: #1ed760;
+    border-radius: 5px;
+}
