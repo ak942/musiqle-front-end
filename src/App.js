@@ -14,10 +14,6 @@ function App() {
 
   const [inputAnswer, setInputAnswer] = useState("")
 
-  
-
-
-
   return (
     <>
       <Router>

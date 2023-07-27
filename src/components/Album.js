@@ -12,8 +12,6 @@ const Album = ({ name, url, attempts = 4, currentScore, totalScore, streak, inpu
     //     }
     // }
 
-
-
     return (
         <div className="center game">
             <h1>Guess the Album</h1>
