@@ -6,7 +6,8 @@ const Home = () => {
     return (
         <div className="home">
             <h1 className="welcome-header">Play! Pick Your Path</h1>
-            <button>Sign In to Spotify(optional)</button>
+            <button>Sign in to Spotify</button>
+            <button>Sign in as Guest</button>
             <br />
             <ul className="link-container">
                 <li className="link-home">

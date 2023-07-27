@@ -1,14 +1,21 @@
 import PropTypes from 'prop-types';
+import albuminfo from "../dummy_data_album.json"
 
 
-const InputForm = ({ albumName, inputAnswer, setInputAnswer }) => {
+const InputForm = ({ name, attempts, setAttempts, num, setNum, inputAnswer, setInputAnswer, getRandomAlbum, setRandomAlbum }) => {
     const handleSubmit = (event) => {
         event.preventDefault()
 
-        if (inputAnswer.trim().toLowerCase() === albumName.toLowerCase()) {
+        if (inputAnswer.trim().toLowerCase() === name.toLowerCase()) {
             setInputAnswer('')
-            console.log("Correct!")
+            console.log("Correct")
         } else {
+            setAttempts(
+                attempts--
+            )
+            setNum(
+                num = num - 2
+            )
             console.log("Incorrect!")
         }
     }
@@ -35,7 +42,7 @@ const InputForm = ({ albumName, inputAnswer, setInputAnswer }) => {
                 </div>
 
                 <div>
-                    <button 
+                    <button
                         type="submit"
                         className="circular"
                         onClick={handleSubmit}
