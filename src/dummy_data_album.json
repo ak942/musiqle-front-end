@@ -1,0 +1,32 @@
+[
+    {
+        "album": {
+            "name": "Fantastic",
+            "images": [
+                {
+                    "url": "https://upload.wikimedia.org/wikipedia/en/2/26/Whamfantastic.jpg"
+                }
+            ]
+        }
+    },
+    {
+        "album": {
+            "name": "Lover",
+            "images": [
+                {
+                    "url": "https://eaglenationonline.com/wp-content/uploads/2019/09/lover-album-cover-e1568299021731.jpg"
+                }
+            ]
+        }
+    },
+    {
+        "album": {
+            "name": "Renaissance",
+            "images": [
+                {
+                    "url": "https://upload.wikimedia.org/wikipedia/en/a/ad/Beyonc%C3%A9_-_Renaissance.png"
+                }
+            ]
+        }
+    }
+]

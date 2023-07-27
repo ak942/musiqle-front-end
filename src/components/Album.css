@@ -3,12 +3,12 @@
 }
 
 .size {
-    height: 300px;
-    width: 300px
+    height: 250px;
+    width: 250px
 }
 
 .image {
-    margin: 30px;
+    margin: 20px;
     border: 2px solid white;
 }
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 
-const InputForm = () => {
+const InputForm = ({ inputAnswer }) => {
     const [formFields, setFormFields] = useState({
         answer: ''
     });
@@ -10,10 +10,9 @@ const InputForm = () => {
     const onFormSubmit = (event) => {
         event.preventDefault()
 
-        createBoard(formFields)
+        inputAnswer(formFields)
         setFormFields({
-            'title': '',
-            'owner': ''
+            'answer': ''
         })
     }
 
@@ -32,7 +31,7 @@ const InputForm = () => {
                 <div className="answer-input">
                     <input
                         name="answer"
-                        value={formFields.title}
+                        value={formFields.answer}
                         onChange={onAnswerChange}
                         className="input-form"
                         placeholder='Type Here'
@@ -52,7 +51,7 @@ const InputForm = () => {
 }
 
 InputForm.propTypes = {
-    createBoard: PropTypes.func.isRequired
+    inputAnswer: PropTypes.func.isRequired
 };
 
 export default InputForm;
