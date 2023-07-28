@@ -1,27 +1,25 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 
-const InputForm = ({ albumName, inputAnswer, setInputAnswer }) => {
+const InputForm = ({ compareInput, giveAnswer }) => {
+
+    const [inputAnswer, setInputAnswer] = useState("")
     const handleSubmit = (event) => {
         event.preventDefault()
 
-        if (inputAnswer.trim().toLowerCase() === albumName.toLowerCase()) {
-            setInputAnswer('')
-            console.log("Correct!")
-        } else {
-            console.log("Incorrect!")
-        }
+        compareInput(inputAnswer)
+        setInputAnswer('')
     }
 
     const handleChange = (event) => {
-        setInputAnswer(event.target.value);
+        giveAnswer ? setInputAnswer(giveAnswer) : setInputAnswer(event.target.value);
     };
 
 
     return (
-        <div className="amswer-box">
+        <div className="answer-box">
             <form id="answer" onSubmit={handleSubmit}>
-
                 <div className="answer-input">
                     <input
                         type="text"
@@ -33,9 +31,8 @@ const InputForm = ({ albumName, inputAnswer, setInputAnswer }) => {
                         required
                     />
                 </div>
-
                 <div>
-                    <button 
+                    <button
                         type="submit"
                         className="circular"
                         onClick={handleSubmit}
@@ -43,7 +40,6 @@ const InputForm = ({ albumName, inputAnswer, setInputAnswer }) => {
                         Enter
                     </button>
                 </div>
-
             </form>
         </div>
     )

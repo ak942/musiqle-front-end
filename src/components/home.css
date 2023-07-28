@@ -16,6 +16,7 @@
     list-style-type: none;
     border: black, solid, 3px;
     justify-content: center;
+    align-items: center;
 }
 
 a:link {

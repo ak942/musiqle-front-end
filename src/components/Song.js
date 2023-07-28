@@ -3,46 +3,107 @@ import ScoreBoard from './ScoreBoard'
 import InputForm from './InputForm'
 import axios from 'axios'
 
-const Song = ({name, currentScore, totalScore, streak, attempts = 4}) => {
-    const [songData, setSongData] = React.useState(null)
-    const accessToken = "BQAMUyDSZPDYTTl_Zt-FE4dpDeSpjcSR7oKzgMWV8H9O1uEacdH4ni0yvd_0-RJWUTW4jIAhArPlWsoB1wAzcGaKCx6HQTz3nes-8uZJdqvfmUG4nrY"; //Replace with your Access Token obtained from Spotify API
+// const Song = ({name, currentScore, totalScore, streak, attempts = 4}) => {
+//     const [songData, setSongData] = React.useState(null)
+//     const accessToken = "BQAMUyDSZPDYTTl_Zt-FE4dpDeSpjcSR7oKzgMWV8H9O1uEacdH4ni0yvd_0-RJWUTW4jIAhArPlWsoB1wAzcGaKCx6HQTz3nes-8uZJdqvfmUG4nrY"; //Replace with your Access Token obtained from Spotify API
 
 
-    React.useEffect(() => {
-    const loadPage = async () => {
-        try {
-            const response = await axios.get('https://api.spotify.com/v1/search?q=sweet%20child%20o%20mine%20artist:guns%20n%20roses&type=track&limit=1',
-            {
-                headers: {
-                Authorization: `Bearer ${accessToken}`,
-                },
-            }
+//     React.useEffect(() => {
+//     const loadPage = async () => {
+//         try {
+//             const response = await axios.get('https://api.spotify.com/v1/search?q=sweet%20child%20o%20mine%20artist:guns%20n%20roses&type=track&limit=1',
+//             {
+//                 headers: {
+//                 Authorization: `Bearer ${accessToken}`,
+//                 },
+//             }
+//             )
+//             setSongData(response.data.tracks.items[0]);
+//         } catch (err) {
+//             console.log(err.message)
+//         }
+//     }
+//     loadPage()
+//     }, [])
+
+//     const music = () => { return songData ? (
+//             <div>
+//             <h1>{songData.name}</h1>
+//             <p>{songData.artists[0].name}</p>
+//             <img src={songData.album.images[0].url} alt="Album Cover" />
+//             </div>
+//         ) : (
+//             <p>Loading...</p>
+//         )}
+import NavBar from './NavBar'
+import songinfo from "../dummy_data_song.json"
+import { useState } from 'react'
+
+const Song = ({ currentScore, totalScore, streak }) => {
+
+    const [attempts, setAttempts] = useState(4)
+
+    const getRandomSong = () => {
+        const randomNum = Math.floor(Math.random() * songinfo.length)
+        return songinfo[randomNum]
+    }
+
+    const [randomSong, setRandomSong] = useState(getRandomSong())
+
+    const name = randomSong.song.name
+
+    const giveAnswer = () => {
+        return `The song is ${name}`
+    }
+
+    const compareInput = (inputAnswer) => {
+        if (inputAnswer === name) {
+
+            console.log(name)
+            setRandomSong(
+                getRandomSong()
             )
-            setSongData(response.data.tracks.items[0]);
-        } catch (err) {
-            console.log(err.message)
+
+        } else {
+            console.log(attempts)
+            if (attempts === 0) {
+
+                console.log("Game Over")
+                setRandomSong(
+                    getRandomSong()
+                )
+                setAttempts(4)
+
+            } else {
+
+                setAttempts(
+                    attempts - 1
+                )
+
+            }
         }
     }
-    loadPage()
-    }, [])
 
-    const music = () => { return songData ? (
-            <div>
-            <h1>{songData.name}</h1>
-            <p>{songData.artists[0].name}</p>
-            <img src={songData.album.images[0].url} alt="Album Cover" />
-            </div>
-        ) : (
-            <p>Loading...</p>
-        )}
     return (
         <div className="center game">
+            <NavBar />
             <h1>Guess the Song</h1>
-            <ScoreBoard currentScore={currentScore} totalScore={totalScore} streak={streak} />
+            <ScoreBoard
+                currentScore={currentScore}
+                totalScore={totalScore}
+                streak={streak}
+            />
             <p>Attempts Left: {attempts}</p>
             <div className="size"></div>
-            {music()}
             <InputForm />
+            <div className="size">
+                {name}
+            </div>
+            <InputForm
+                compareInput={compareInput}
+                giveAnswer={attempts === 0 ? giveAnswer : null}
+            />
+
         </div>
     )
 
