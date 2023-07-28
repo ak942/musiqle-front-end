@@ -9,13 +9,6 @@ import NavBar from './NavBar';
 
 const Album = ({ currentScore, totalScore, streak, inputAnswer, setInputAnswer }) => {
 
-    // Get info from input form
-    // while (attempts > 0) {
-    //     if (answer !== name) {
-    //         attempts--
-    //     }
-    // }
-
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
 
@@ -40,7 +33,11 @@ const Album = ({ currentScore, totalScore, streak, inputAnswer, setInputAnswer }
                 streak={streak}
             />
             <p>Attempts Left: {attempts}</p>
-            <img className={`blur${num} size image`} src={url} alt="album cover" />
+            <img
+                className={`blur${num} size image`}
+                src={url}
+                alt="album cover"
+            />
             <InputForm
                 name={name}
                 attempts={attempts}

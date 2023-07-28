@@ -23,8 +23,6 @@ function App() {
           path="/album"
           element={
             <Album
-              // url={albumImage}
-              // name={albumName}
               inputAnswer={inputAnswer}
               setInputAnswer={setInputAnswer}
             />}
