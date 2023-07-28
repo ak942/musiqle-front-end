@@ -1,7 +1,17 @@
 [
     {
         "song": {
-        "name": "Lover"
+            "name": "You Need To Calm Down"
+        }
+    },
+    {
+        "song": {
+            "name": "Club Tropicana"
+        }
+    },
+    {
+        "song": {
+            "name": "ALIEN SUPERSTAR"
+        }
     }
-}
 ]
