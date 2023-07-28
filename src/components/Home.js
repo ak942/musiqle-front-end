@@ -16,9 +16,6 @@ const Home = () => {
             </div>
             <br />
             <ul className="link-container">
-                {/* <li className="link-home">
-                    <Link to="/"></Link>
-                </li> */}
                 <li className="link-list">
                     <div className="link">
                         <Link to="/album">Album</Link>

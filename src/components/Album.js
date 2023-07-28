@@ -7,7 +7,7 @@ import { useState } from 'react';
 import NavBar from './NavBar';
 
 
-const Album = ({ currentScore, totalScore, streak, inputAnswer, setInputAnswer }) => {
+const Album = ({ currentScore, totalScore, streak }) => {
 
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
@@ -21,6 +21,46 @@ const Album = ({ currentScore, totalScore, streak, inputAnswer, setInputAnswer }
 
     const name = randomAlbum.album.name
     const url = randomAlbum.album.images[0].url
+
+    const giveAnswer = () => {
+        return `The album is ${name}`
+    }
+
+    const compareInput = (inputAnswer) => {
+        if (inputAnswer === name) {
+
+            console.log(name)
+            setRandomAlbum(
+                getRandomAlbum()
+            )
+
+        } else {
+            console.log(attempts)
+            if (attempts === 0) {
+
+                console.log("Game Over")
+                setRandomAlbum(
+                    getRandomAlbum()
+                )
+                setAttempts(4)
+                setNum(8)
+
+            } else {
+
+                setAttempts(
+                    attempts - 1
+                )
+                setNum(
+                    num - 2
+                )
+
+            }
+
+            console.log(attempts)
+
+
+        }
+    }
 
 
     return (
@@ -39,14 +79,8 @@ const Album = ({ currentScore, totalScore, streak, inputAnswer, setInputAnswer }
                 alt="album cover"
             />
             <InputForm
-                name={name}
-                attempts={attempts}
-                setAttempts={setAttempts}
-                num={num}
-                setNum={setNum}
-                inputAnswer={inputAnswer}
-                setInputAnswer={setInputAnswer}
-                setRandomAlbum={setRandomAlbum}
+                giveAnswer={attempts === 0 ? giveAnswer : null}
+                compareInput={compareInput}
             />
         </div>
     )

@@ -1,33 +1,25 @@
 import PropTypes from 'prop-types';
-import albuminfo from "../dummy_data_album.json"
+import { useState } from 'react';
 
 
-const InputForm = ({ name, attempts, setAttempts, num, setNum, inputAnswer, setInputAnswer, getRandomAlbum, setRandomAlbum }) => {
+const InputForm = ({ compareInput, giveAnswer }) => {
+
+    const [inputAnswer, setInputAnswer] = useState("")
     const handleSubmit = (event) => {
         event.preventDefault()
 
-        if (inputAnswer.trim().toLowerCase() === name.toLowerCase()) {
-            setInputAnswer('')
-            
-            console.log("Correct")
-        } else {
-            setAttempts(attempts--)
-            setNum(
-                num = num - 2
-            )
-            console.log("Incorrect!")
-        }
+        compareInput(inputAnswer)
+        setInputAnswer('')
     }
 
     const handleChange = (event) => {
-        setInputAnswer(event.target.value);
+        giveAnswer ? setInputAnswer(giveAnswer) : setInputAnswer(event.target.value);
     };
 
 
     return (
-        <div className="amswer-box">
+        <div className="answer-box">
             <form id="answer" onSubmit={handleSubmit}>
-
                 <div className="answer-input">
                     <input
                         type="text"
@@ -39,7 +31,6 @@ const InputForm = ({ name, attempts, setAttempts, num, setNum, inputAnswer, setI
                         required
                     />
                 </div>
-
                 <div>
                     <button
                         type="submit"
@@ -49,7 +40,6 @@ const InputForm = ({ name, attempts, setAttempts, num, setNum, inputAnswer, setI
                         Enter
                     </button>
                 </div>
-
             </form>
         </div>
     )

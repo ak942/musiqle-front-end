@@ -7,7 +7,7 @@ import { useState } from "react";
 
 function App() {
 
-  const [inputAnswer, setInputAnswer] = useState("")
+  
 
 
   return (
@@ -23,14 +23,16 @@ function App() {
           path="/album"
           element={
             <Album
-              inputAnswer={inputAnswer}
-              setInputAnswer={setInputAnswer}
+              // inputAnswer={inputAnswer}
+              // setInputAnswer={setInputAnswer}
             />}
         />
         <Route
           path="/song"
           element={
             <Song
+              // inputAnswer={inputAnswer}
+              // setInputAnswer={setInputAnswer}
             />}
         />
       </Routes>
