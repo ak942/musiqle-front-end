@@ -1,10 +1,12 @@
 import React from 'react'
 import InputForm from './InputForm'
 import ScoreBoard from './ScoreBoard'
+import NavBar from './NavBar'
 
 const song = ({ name, currentScore, totalScore, streak, attempts = 4, inputAnswer, setInputAnswer }) => {
     return (
         <div className="center game">
+            <NavBar />
             <h1>Guess the Song</h1>
             <ScoreBoard
                 currentScore={currentScore}
@@ -20,6 +22,7 @@ const song = ({ name, currentScore, totalScore, streak, attempts = 4, inputAnswe
                 inputAnswer={inputAnswer}
                 setInputAnswer={setInputAnswer}
             />
+
         </div>
     )
 }

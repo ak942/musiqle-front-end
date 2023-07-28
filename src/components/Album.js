@@ -4,6 +4,7 @@ import InputForm from './InputForm';
 import ScoreBoard from './ScoreBoard';
 import albuminfo from "../dummy_data_album.json"
 import { useState } from 'react';
+import NavBar from './NavBar';
 
 
 const Album = ({ currentScore, totalScore, streak, inputAnswer, setInputAnswer }) => {
@@ -31,6 +32,7 @@ const Album = ({ currentScore, totalScore, streak, inputAnswer, setInputAnswer }
 
     return (
         <div className="center game">
+            <NavBar />
             <h1>Guess the Album</h1>
             <ScoreBoard
                 currentScore={currentScore}

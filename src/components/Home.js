@@ -6,15 +6,19 @@ const Home = () => {
     return (
         <div className="home">
             <h1 className="welcome-header">Play! Pick Your Path</h1>
-            <div>
-                <button className="circular">Sign in to Spotify</button>
-                <button className="circular">Sign in as Guest</button>
+            <div className="right">
+                <button className="circular signin">
+                    Sign in to Spotify
+                </button>
+                <button className="circular signin">
+                    Sign in as Guest
+                </button>
             </div>
             <br />
             <ul className="link-container">
-                <li className="link-home">
+                {/* <li className="link-home">
                     <Link to="/"></Link>
-                </li>
+                </li> */}
                 <li className="link-list">
                     <div className="link">
                         <Link to="/album">Album</Link>

@@ -11,34 +11,32 @@ function App() {
 
 
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route
-            exact path="/"
-            element={
-              <Home />
-            }
-          />
-          <Route
-            path="/album"
-            element={
-              <Album
-                // url={albumImage}
-                // name={albumName}
-                inputAnswer={inputAnswer}
-                setInputAnswer={setInputAnswer}
-              />}
-          />
-          <Route
-            path="/song"
-            element={
-              <Song
-              />}
-          />
-        </Routes>
-      </Router>
-    </>
+    <Router>
+      <Routes>
+        <Route
+          exact path="/"
+          element={
+            <Home />
+          }
+        />
+        <Route
+          path="/album"
+          element={
+            <Album
+              // url={albumImage}
+              // name={albumName}
+              inputAnswer={inputAnswer}
+              setInputAnswer={setInputAnswer}
+            />}
+        />
+        <Route
+          path="/song"
+          element={
+            <Song
+            />}
+        />
+      </Routes>
+    </Router>
   );
 }
 
