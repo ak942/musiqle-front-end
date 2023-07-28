@@ -8,11 +8,10 @@ const InputForm = ({ name, attempts, setAttempts, num, setNum, inputAnswer, setI
 
         if (inputAnswer.trim().toLowerCase() === name.toLowerCase()) {
             setInputAnswer('')
+            
             console.log("Correct")
         } else {
-            setAttempts(
-                attempts--
-            )
+            setAttempts(attempts--)
             setNum(
                 num = num - 2
             )

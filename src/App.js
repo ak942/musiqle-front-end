@@ -7,7 +7,6 @@ import { useState } from "react";
 
 function App() {
 
-
   const [inputAnswer, setInputAnswer] = useState("")
 
 
