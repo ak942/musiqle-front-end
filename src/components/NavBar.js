@@ -4,21 +4,13 @@ import './NavBar.css'
 
 const NavBar = () => {
     return (
-        <>
-            <Nav>
-                <NavMenu className="nav-container">
-                    <NavLink to="/home" activeStyle>
-                        Home
-                    </NavLink>
-                    <NavLink to="/album" activeStyle>
-                        Album
-                    </NavLink>
-                    <NavLink to="/song" activeStyle>
-                        Song
-                    </NavLink>
-                </NavMenu>
-            </Nav>
-        </>
+        <Nav>
+            <NavMenu className="nav-container">
+                <NavLink className="nav-link" to="/" activeStyle>
+                    Return to Home
+                </NavLink>
+            </NavMenu>
+        </Nav>
     );
 };
 

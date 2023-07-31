@@ -1,0 +1,15 @@
+[
+    {
+        "user": {
+            "id": 1,
+            "name": "Sydney",
+            "score": 0,
+            "streak": 0,
+            "totalScore": 0,
+            "longestStreak": 0,
+            "bestOverallScore": 0,
+            "bestScoreAlbum": 0,
+            "bestScoreSong": 0
+        }
+    }
+]

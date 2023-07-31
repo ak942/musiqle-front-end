@@ -1,11 +1,14 @@
-#nav-link {
-    border: 2px black solid;
-    display: flex;
-    color: pink;
+.nav-link {
+    border: 2px #1db954 solid;
+    color: white;
+    background-color: #1ed760;
+    padding: 10px;
+    border-radius: 10px;
 }
 
-#nav-container {
-    border: 3px black solid;
-    height: 15vh;
+.nav-container {
+    position: fixed;
     text-align: center;
+    top: 40px;
+    left: 40px;
 }

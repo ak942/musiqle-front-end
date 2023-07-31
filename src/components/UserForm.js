@@ -1,30 +1,27 @@
-import PropTypes from 'prop-types';
-import { useState } from 'react';
+import React from 'react'
+import { useState } from 'react'
 
+const UserForm = () => {
 
-const InputForm = ({ compareInput, giveAnswer }) => {
-
-    const [inputAnswer, setInputAnswer] = useState("")
+    const [user, setUser] = useState("")
     const handleSubmit = (event) => {
         event.preventDefault()
 
-        compareInput(inputAnswer)
-        setInputAnswer('')
+        setUser("")
     }
 
     const handleChange = (event) => {
-        giveAnswer ? setInputAnswer(giveAnswer) : setInputAnswer(event.target.value);
+        setUser(event.target.value);
     };
 
-
     return (
-        <div className="answer-box">
+        <div>
             <form id="answer" onSubmit={handleSubmit}>
-                <div className="answer-input">
+                <div className="create-user">
                     <input
                         type="text"
                         name="answer"
-                        value={inputAnswer}
+                        value={user}
                         onChange={handleChange}
                         className="input-form"
                         placeholder='Type Here'
@@ -39,15 +36,10 @@ const InputForm = ({ compareInput, giveAnswer }) => {
                     >
                         Enter
                     </button>
-                    <button className="circular">Skip</button>
                 </div>
             </form>
         </div>
     )
 }
 
-InputForm.propTypes = {
-    inputAnswer: PropTypes.func.isRequired
-};
-
-export default InputForm;
+export default UserForm
