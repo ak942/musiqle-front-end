@@ -5,7 +5,7 @@ import NavBar from './NavBar'
 import songinfo from "../dummy_data_song.json"
 import { useState } from 'react'
 
-const Song = ({ currentScore, totalScore, streak }) => {
+const Song = ({ points, currentScore, totalScore, streak, increaseScore, increaseStreak, resetStreak, increaseTotalScore }) => {
 
     const [attempts, setAttempts] = useState(4)
 
