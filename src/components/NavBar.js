@@ -1,6 +1,7 @@
 import React from "react";
 import { Nav, NavLink, NavMenu } from "./NavBarElements";
 import './navbar.css'
+import UserForm from './UserForm';
 
 const NavBar = () => {
     return (
@@ -9,6 +10,7 @@ const NavBar = () => {
                 <NavLink className="nav-link" to="/" activeStyle>
                     Return to Home
                 </NavLink>
+                <UserForm/>
             </NavMenu>
         </Nav>
     );

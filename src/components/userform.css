@@ -1,0 +1,43 @@
+.score {
+    color: white
+}
+
+.score-btn {
+    border: 2px #1db954 solid;
+    color: black;
+    background-color: #1ed760;
+    padding: 10px;
+    border-radius: 10px;
+    height: 100%;
+    margin-top: 0;
+}
+
+.nav-container {
+    position: fixed;
+    text-align: center;
+    top: 40px;
+    left: 40px;
+}
+
+.score-input-form {
+    height: 5vh;
+    width: 11vh;
+    font-size: small;
+}
+
+.popup-container {
+    justify-content: center;
+    /* border:white solid 2px; */
+    align-items: center;
+    float: right;
+    margin-left: 50vh;
+}
+
+.user-submit-btn {
+    color: black;
+}
+
+.user-submit-container {
+    display: flex;
+    flex-direction: column;
+}

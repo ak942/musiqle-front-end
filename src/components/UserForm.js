@@ -1,12 +1,13 @@
-import React from 'react'
 import { useState } from 'react'
+import Popup from 'reactjs-popup'
+import './userform.css'
 
 const UserForm = () => {
 
     const [user, setUser] = useState("")
     const handleSubmit = (event) => {
         event.preventDefault()
-
+        console.log(user)
         setUser("")
     }
 
@@ -15,29 +16,29 @@ const UserForm = () => {
     };
 
     return (
-        <div>
-            <form id="answer" onSubmit={handleSubmit}>
-                <div className="create-user">
+        <div className="popup-container">
+            <Popup trigger=
+                {<button className="score-btn"> Submit Score </button>}
+                position="left down">
+                <div className="user-submit-container">
                     <input
                         type="text"
                         name="answer"
                         value={user}
                         onChange={handleChange}
-                        className="input-form"
-                        placeholder='Type Here'
+                        className="score-input-form"
+                        placeholder='username'
                         required
                     />
-                </div>
-                <div>
                     <button
                         type="submit"
-                        className="circular"
+                        className="user-submit-btn"
                         onClick={handleSubmit}
-                    >
+                        >
                         Enter
                     </button>
                 </div>
-            </form>
+            </Popup>            
         </div>
     )
 }
