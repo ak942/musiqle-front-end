@@ -28,12 +28,12 @@ const Song = ({ currentScore, totalScore, streak }) => {
                             s_track_rating: "desc",
                             q_track: "lover"
                         },
-            //             headers: {
-            //                 "Access-Control-Allow-Origin": "*",
-            //                 "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, authorization",
-            //                 "Accept": "application/json",
-            // "Content-Type": "application/json"
-            //             },
+                        headers: {
+                            "Access-Control-Allow-Origin": "*",
+                            "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, authorization",
+                            "Accept": "application/json",
+            "Content-Type": "application/json"
+                        },
                     }
                 )
                 console.log(response.json())
