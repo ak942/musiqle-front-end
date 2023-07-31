@@ -7,7 +7,7 @@ import { useState } from 'react';
 import NavBar from './NavBar';
 
 
-const Album = ({ currentScore, totalScore, streak }) => {
+const Album = ({ points, resetScore, currentScore, totalScore, streak, increaseCurrentScore, increaseStreak, resetStreak, increaseTotalScore }) => {
 
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
@@ -18,6 +18,11 @@ const Album = ({ currentScore, totalScore, streak }) => {
     }
 
     const [randomAlbum, setRandomAlbum] = useState(getRandomAlbum())
+
+    const resetScoreBoard = () => {
+        setAttempts(4)
+        setNum(8)
+    }
 
     const name = randomAlbum.album.name
     const url = randomAlbum.album.images[0].url
@@ -33,17 +38,21 @@ const Album = ({ currentScore, totalScore, streak }) => {
             setRandomAlbum(
                 getRandomAlbum()
             )
+            increaseCurrentScore(attempts)
+            increaseStreak()
+            resetScoreBoard()
 
         } else {
-            console.log(attempts)
             if (attempts === 0) {
 
                 console.log("Game Over")
                 setRandomAlbum(
                     getRandomAlbum()
                 )
-                setAttempts(4)
-                setNum(8)
+                resetStreak()
+                resetScoreBoard()
+                resetScore()
+                increaseTotalScore()
 
             } else {
 
@@ -53,12 +62,7 @@ const Album = ({ currentScore, totalScore, streak }) => {
                 setNum(
                     num - 2
                 )
-
             }
-
-            console.log(attempts)
-
-
         }
     }
 
