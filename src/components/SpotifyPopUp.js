@@ -29,7 +29,6 @@ const SpotifyPopUp = ({closeCallBack, findUser}) => {
                         value={user}
                         onChange={handleChange}
                         placeholder='username'
-                        required
                         className="popup-input"/>
                 <br />
 

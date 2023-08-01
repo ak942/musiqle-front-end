@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import './home.css'
-import GuestSignIn from "./GuestSignIn";
-import SpotifyLoginIn from "./SpotifyLoginIn";
 import SpotifyPopUp from './SpotifyPopUp'
 
 const Home = ({user, findUser}) => {
@@ -14,11 +12,9 @@ const Home = ({user, findUser}) => {
     const close = () => {
         setClicked(false)
     }
-    return (
-        <div className="home">
-            <h1 className="welcome-header">Play! Pick Your Path</h1>
-            <div className="right">
-                {user? `Welcome back ${user.toUpperCase()}` :  
+    const signIn = () => {
+        if (!clicked && !user){
+            return (
                 <div>
                 <button className="circular signin" onClick={spotifyClick}>
                     Sign In To Spotify
@@ -27,7 +23,18 @@ const Home = ({user, findUser}) => {
                     Sign In As Guest
                 </button>
                 </div>
-                }
+            )
+        } else if (user) {
+            return (
+                `Welcome back ${user.toUpperCase()}`
+            )
+        }
+    }
+    return (
+        <div className="home">
+            <h1 className="welcome-header">Play! Pick Your Path</h1>
+            <div className="right">
+                {signIn()}
                 {clicked? <SpotifyPopUp closeCallBack={close} findUser={findUser}/> : null}
             </div>
             <br />
