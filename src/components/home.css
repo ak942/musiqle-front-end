@@ -1,4 +1,4 @@
-.home {
+.home, html {
     background-color: black;
     color: white;
     height: 100vh;
@@ -35,6 +35,17 @@ a:visited {
     color: #191414;
     background-color: #1ed760;
     margin: 4vh;
+    margin-top: 20vh;
     border-radius: 10px;
     border: 5px solid #1db954
+}
+
+.right {
+    /* display: flex;
+    flex-direction: row; */
+    right: 20px; 
+    top: 20px;
+    margin: 20px;
+    gap: 20px;
+    position: fixed;
 }
