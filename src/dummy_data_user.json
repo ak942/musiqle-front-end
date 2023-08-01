@@ -1,15 +1,46 @@
 [
     {
-        "user": {
-            "id": 1,
-            "name": "Sydney",
-            "score": 0,
-            "streak": 0,
-            "totalScore": 0,
-            "longestStreak": 0,
-            "bestOverallScore": 0,
-            "bestScoreAlbum": 0,
-            "bestScoreSong": 0
-        }
+        "id": 1,
+        "name": "Sydney",
+        "score": 0,
+        "streak": 0,
+        "totalScore": 0,
+        "longestStreak": 0,
+        "bestOverallScore": 0,
+        "bestScoreAlbum": 0,
+        "bestScoreSong": 0
+    },
+    {
+        "id": 2,
+        "name": "Bob",
+        "score": 0,
+        "streak": 0,
+        "totalScore": 0,
+        "longestStreak": 0,
+        "bestOverallScore": 0,
+        "bestScoreAlbum": 0,
+        "bestScoreSong": 0
+    },
+    {
+        "id": 3,
+        "name": "Lucy",
+        "score": 0,
+        "streak": 0,
+        "totalScore": 0,
+        "longestStreak": 0,
+        "bestOverallScore": 0,
+        "bestScoreAlbum": 0,
+        "bestScoreSong": 0
+    },
+    {
+        "id": 4,
+        "name": "Phil",
+        "score": 0,
+        "streak": 0,
+        "totalScore": 0,
+        "longestStreak": 0,
+        "bestOverallScore": 0,
+        "bestScoreAlbum": 0,
+        "bestScoreSong": 0
     }
 ]

@@ -17,9 +17,9 @@ const points = {
 function App() {
 
   // update to axios calls when back end deployed
-  const [score, setScore] = useState(userinfo[0].user.score)
-  const [totalScore, setTotalScore] = useState(userinfo[0].user.totalScore)
-  const [streak, setStreak] = useState(userinfo[0].user.streak)
+  const [score, setScore] = useState(userinfo[0].score)
+  const [totalScore, setTotalScore] = useState(userinfo[0].totalScore)
+  const [streak, setStreak] = useState(userinfo[0].streak)
 
   const increaseCurrentScore = (attemptsLeft) => {
     setScore(score + points[attemptsLeft])

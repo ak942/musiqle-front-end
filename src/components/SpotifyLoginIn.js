@@ -20,8 +20,10 @@ const SpotifyLoginIn = () => {
         <div className="popup-container">
             <Popup trigger=
                 {<button className="circular signin"> Sign In To Spotify </button>}
-                position="down">
-                <div className="user-submit-container">
+                model nested>
+                    {
+                close => (<div className="user-submit-container">
+                    <h4>Sign In to Spotify</h4>
                     <input
                         type="text"
                         name="answer"
@@ -34,11 +36,13 @@ const SpotifyLoginIn = () => {
                     <button
                         type="submit"
                         className="user-submit-btn"
-                        onClick={handleSubmit}
+                        // onClick={handleSubmit}
+                        onClick = {()=> close()}
                         >
                         Enter
                     </button>
                 </div>
+                    )   }
             </Popup>            
         </div>
     )
