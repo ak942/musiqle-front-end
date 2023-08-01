@@ -5,7 +5,7 @@ import GuestSignIn from "./GuestSignIn";
 import SpotifyLoginIn from "./SpotifyLoginIn";
 import SpotifyPopUp from './SpotifyPopUp'
 
-const Home = () => {
+const Home = ({user, findUser}) => {
     const [clicked, setClicked] = React.useState(false)
 
     const spotifyClick = ()=> {
@@ -18,12 +18,17 @@ const Home = () => {
         <div className="home">
             <h1 className="welcome-header">Play! Pick Your Path</h1>
             <div className="right">
+                {user? `Welcome back ${user.toUpperCase()}` :  
+                <div>
                 <button className="circular signin" onClick={spotifyClick}>
-                    Sign in to Spotify
+                    Sign In To Spotify
                 </button>
-                {clicked? <SpotifyPopUp closeCallBack={close}/> : null}
-                <SpotifyLoginIn/>
-                <GuestSignIn/>
+                <button className="circular signin" onClick={spotifyClick}>
+                    Sign In As Guest
+                </button>
+                </div>
+                }
+                {clicked? <SpotifyPopUp closeCallBack={close} findUser={findUser}/> : null}
             </div>
             <br />
             <ul className="link-container">

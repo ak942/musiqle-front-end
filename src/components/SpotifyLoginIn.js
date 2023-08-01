@@ -3,12 +3,13 @@ import { useState } from 'react'
 import Popup from 'reactjs-popup'
 import './guestsignin.css'
 
-const SpotifyLoginIn = () => {
+const SpotifyLoginIn = ({findUser}) => {
 
     const [user, setUser] = useState("")
     const handleSubmit = (event) => {
         event.preventDefault()
         console.log(user)
+        findUser(user)
         setUser("")
     }
 
@@ -37,7 +38,7 @@ const SpotifyLoginIn = () => {
                         type="submit"
                         className="user-submit-btn"
                         // onClick={handleSubmit}
-                        onClick = {()=> close()}
+                        onClick = {handleSubmit}
                         >
                         Enter
                     </button>

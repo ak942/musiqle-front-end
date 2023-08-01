@@ -20,7 +20,11 @@ function App() {
   const [score, setScore] = useState(userinfo[0].score)
   const [totalScore, setTotalScore] = useState(userinfo[0].totalScore)
   const [streak, setStreak] = useState(userinfo[0].streak)
+  const [user, setUser] = useState(null)
 
+  const findUser = (newuser)=> {
+      setUser(newuser)
+  }
   const increaseCurrentScore = (attemptsLeft) => {
     setScore(score + points[attemptsLeft])
   }
@@ -47,7 +51,7 @@ function App() {
         <Route
           exact path="/"
           element={
-            <Home />
+            <Home user={user} findUser = {findUser}/>
           }
         />
         <Route
