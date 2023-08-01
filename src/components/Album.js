@@ -9,6 +9,7 @@ import NavBar from './NavBar';
 
 const Album = ({ resetScore, currentScore, totalScore, streak, increaseCurrentScore, increaseStreak, resetStreak, increaseTotalScore }) => {
 
+    // console.log(getPlaylistTracks())
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
 
@@ -29,6 +30,16 @@ const Album = ({ resetScore, currentScore, totalScore, streak, increaseCurrentSc
 
     const giveAnswer = () => {
         return `The album is ${name}`
+    }
+
+    const skipAlbum = () => {
+        resetScoreBoard()
+        resetStreak()
+        increaseTotalScore()
+        resetScore()
+        setRandomAlbum(
+            getRandomAlbum()
+        )
     }
 
     const compareInput = (inputAnswer) => {
@@ -79,6 +90,7 @@ const Album = ({ resetScore, currentScore, totalScore, streak, increaseCurrentSc
                 alt="album cover"
             />
             <InputForm
+                skipAlbum={skipAlbum}
                 giveAnswer={attempts === 0 ? giveAnswer : null}
                 compareInput={compareInput}
             />
