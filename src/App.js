@@ -53,13 +53,7 @@ function App() {
         <Route
           exact path="/"
           element={
-<<<<<<< HEAD
             <Home user={user} findUser = {findUser}/>
-=======
-            <Home
-
-            />
->>>>>>> 019638ea09608e3d3174289fef0f9d151bfec817
           }
         />
         <Route
