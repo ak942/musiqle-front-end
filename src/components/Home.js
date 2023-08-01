@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import './home.css'
+import GuestSignIn from "./GuestSignIn";
+import SpotifyLoginIn from "./SpotifyLoginIn";
 
 const Home = () => {
 
@@ -8,12 +10,11 @@ const Home = () => {
         <div className="home">
             <h1 className="welcome-header">Play! Pick Your Path</h1>
             <div className="right">
-                <button className="circular signin">
+                {/* <button className="circular signin">
                     Sign in to Spotify
-                </button>
-                <button className="circular signin">
-                    Sign in as Guest
-                </button>
+                </button> */}
+                <SpotifyLoginIn/>
+                <GuestSignIn/>
             </div>
             <br />
             <ul className="link-container">

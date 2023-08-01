@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import Popup from 'reactjs-popup'
-import './userform.css'
+import './guestsignin.css'
 
-const UserForm = () => {
+const GuestSignIn = () => {
 
     const [user, setUser] = useState("")
     const handleSubmit = (event) => {
@@ -18,7 +18,7 @@ const UserForm = () => {
     return (
         <div className="popup-container">
             <Popup trigger=
-                {<button className="score-btn"> Submit Score </button>}
+                {<button className="circular signin"> Sign In As Guest </button>}
                 position="left down">
                 <div className="user-submit-container">
                     <input
@@ -43,4 +43,4 @@ const UserForm = () => {
     )
 }
 
-export default UserForm
+export default GuestSignIn

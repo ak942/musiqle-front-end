@@ -5,10 +5,11 @@
 .score-btn {
     border: 2px #1db954 solid;
     color: black;
-    background-color: #1ed760;
-    padding: 10px;
-    border-radius: 10px;
+    background-color: white;
+    width: 70%;
+    border-radius: 5px;
     height: 100%;
+    padding: 5px;
     margin-top: 0;
 }
 
@@ -23,14 +24,14 @@
     height: 5vh;
     width: 11vh;
     font-size: small;
+    background-color: white;
+    color: black;
 }
 
 .popup-container {
     justify-content: center;
-    /* border:white solid 2px; */
     align-items: center;
     float: right;
-    margin-left: 50vh;
 }
 
 .user-submit-btn {
