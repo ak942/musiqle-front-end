@@ -39,7 +39,9 @@ const InputForm = ({ compareInput, giveAnswer }) => {
                     >
                         Enter
                     </button>
-                    <button className="circular">Skip</button>
+                    <button className="circular">
+                        Skip
+                    </button>
                 </div>
             </form>
         </div>

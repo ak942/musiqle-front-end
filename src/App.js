@@ -4,7 +4,10 @@ import Home from "./components/Home";
 import Album from "./components/Album";
 import Song from "./components/Song";
 import userinfo from "./dummy_data_user.json"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
+
+
 
 const points = {
   4: 10,
@@ -12,7 +15,6 @@ const points = {
   2: 4,
   1: 1
 }
-
 
 function App() {
 
@@ -51,14 +53,19 @@ function App() {
         <Route
           exact path="/"
           element={
+<<<<<<< HEAD
             <Home user={user} findUser = {findUser}/>
+=======
+            <Home
+
+            />
+>>>>>>> 019638ea09608e3d3174289fef0f9d151bfec817
           }
         />
         <Route
           path="/album"
           element={
             <Album
-              points={points}
               currentScore={score}
               totalScore={totalScore}
               streak={streak}
@@ -74,7 +81,6 @@ function App() {
           path="/song"
           element={
             <Song
-              points={points}
               currentScore={score}
               totalScore={totalScore}
               streak={streak}
