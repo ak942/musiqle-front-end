@@ -4,7 +4,10 @@ import Home from "./components/Home";
 import Album from "./components/Album";
 import Song from "./components/Song";
 import userinfo from "./dummy_data_user.json"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
+
+
 
 const points = {
   4: 10,
@@ -13,13 +16,13 @@ const points = {
   1: 1
 }
 
-
 function App() {
 
-  // update to axios calls when back end deployed
+  // update to axios calls when back-end deployed
   const [score, setScore] = useState(userinfo[0].user.score)
   const [totalScore, setTotalScore] = useState(userinfo[0].user.totalScore)
   const [streak, setStreak] = useState(userinfo[0].user.streak)
+
 
   const increaseCurrentScore = (attemptsLeft) => {
     setScore(score + points[attemptsLeft])
@@ -47,14 +50,15 @@ function App() {
         <Route
           exact path="/"
           element={
-            <Home />
+            <Home
+
+            />
           }
         />
         <Route
           path="/album"
           element={
             <Album
-              points={points}
               currentScore={score}
               totalScore={totalScore}
               streak={streak}
@@ -70,7 +74,6 @@ function App() {
           path="/song"
           element={
             <Song
-              points={points}
               currentScore={score}
               totalScore={totalScore}
               streak={streak}

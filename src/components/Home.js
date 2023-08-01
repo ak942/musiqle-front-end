@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import './Home.css'
 
-const Home = () => {
+const Home = ({ createUser }) => {
 
     return (
         <div className="home">
@@ -11,7 +11,9 @@ const Home = () => {
                 <button className="circular signin">
                     Sign in to Spotify
                 </button>
-                <button className="circular signin">
+                <button
+                    className="circular signin"
+                >
                     Sign in as Guest
                 </button>
             </div>

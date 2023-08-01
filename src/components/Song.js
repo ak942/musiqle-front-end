@@ -5,7 +5,7 @@ import NavBar from './NavBar'
 import songinfo from "../dummy_data_song.json"
 import { useState } from 'react'
 
-const Song = ({ points, currentScore, totalScore, streak, increaseScore, increaseStreak, resetStreak, increaseTotalScore }) => {
+const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak, resetStreak, increaseTotalScore }) => {
 
     const [attempts, setAttempts] = useState(4)
 
@@ -25,7 +25,6 @@ const Song = ({ points, currentScore, totalScore, streak, increaseScore, increas
     const compareInput = (inputAnswer) => {
         if (inputAnswer === name) {
 
-            console.log(name)
             setRandomSong(
                 getRandomSong()
             )
@@ -33,8 +32,6 @@ const Song = ({ points, currentScore, totalScore, streak, increaseScore, increas
         } else {
             console.log(attempts)
             if (attempts === 0) {
-
-                console.log("Game Over")
                 setRandomSong(
                     getRandomSong()
                 )
