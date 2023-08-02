@@ -9,11 +9,11 @@ import NavBar from './NavBar';
 
 const Album = ({ resetScore, currentScore, totalScore, streak, increaseCurrentScore, increaseStreak, resetStreak, increaseTotalScore }) => {
 
-    // console.log(getPlaylistTracks())
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
 
     const getRandomAlbum = () => {
+        // console.log(tracks)
         const randomNum = Math.floor(Math.random() * albuminfo.length)
         return albuminfo[randomNum]
     }

@@ -57,7 +57,8 @@ const InputForm = ({ skipAlbum, compareInput, giveAnswer }) => {
 }
 
 InputForm.propTypes = {
-    inputAnswer: PropTypes.func.isRequired
+    compareInput: PropTypes.func.isRequired,
+    giveAnswer: PropTypes.func
 };
 
 export default InputForm;
