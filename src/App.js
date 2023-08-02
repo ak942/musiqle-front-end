@@ -20,10 +20,12 @@ const points = {
 
 function App() {
 
-  // update to axios calls when back-end deployed
-  const [score, setScore] = useState(userinfo[0].user.score)
-  const [totalScore, setTotalScore] = useState(userinfo[0].user.totalScore)
-  const [streak, setStreak] = useState(userinfo[0].user.streak)
+  // update to axios calls when back end deployed
+  const [score, setScore] = useState(userinfo[0].score)
+  const [totalScore, setTotalScore] = useState(userinfo[0].totalScore)
+  const [streak, setStreak] = useState(userinfo[0].streak)
+  const [user, setUser] = useState(null)
+  const [userData, setUserData] = useState({})
   const [accessToken, setAccessToken] = useState("")
   // const [playlistID, setPlaylistID] = useState("6Mdybhdl4DYWG1i5stZzfq")
   const [playlistData, setPlaylistData] = useState([])
@@ -93,9 +95,30 @@ function App() {
     return tracks
   }
 
-  const findUser = (newuser)=> {
-      setUser(newuser)
+  const getUserData = (newuser) => {
+    //useeffect to put all users into allData
+    const allData = userinfo
+    console.log(userData)
+    const specificUser = allData.find(user => {
+      return user.name === newuser 
+    })
+    const newUserData = {
+          "name": newuser,
+          "score": 0,
+          "streak": 0,
+          "totalScore": 0,
+          "longestStreak": 0,
+          "bestOverallScore": 0,
+          "bestScoreAlbum": 0,
+          "bestScoreSong": 0
+      }
+    const specificUserChoosen = specificUser? specificUser : newUserData //postnewuser
+    setUser(specificUserChoosen.name)
+    setUserData(specificUserChoosen)
+    console.log(specificUserChoosen, "new")
+    console.log(userData)
   }
+
   const increaseCurrentScore = (attemptsLeft) => {
     setScore(score + points[attemptsLeft])
   }
@@ -116,13 +139,14 @@ function App() {
     setStreak(0)
   }
 
+
   return (
     <Router>
       <Routes>
         <Route
           exact path="/"
           element={
-            <Home user={user} findUser = {findUser}/>
+            <Home user={user} findUser = {getUserData}/>
           }
         />
         <Route
