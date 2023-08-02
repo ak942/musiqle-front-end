@@ -5,6 +5,7 @@ import axios from 'axios'
 import NavBar from './NavBar'
 import songinfo from "../dummy_data_song.json"
 import { useState } from 'react'
+const qs =require('qs')
 
 const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak, resetStreak, increaseTotalScore }) => {
 
@@ -18,28 +19,27 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
     const [randomSong, setRandomSong] = useState(getRandomSong())
 
     const name = randomSong.song.name
+    const client_id= "1795c8e885804ba8b42333d75bd178af"
+    const client_secret= "f5a14d4710ee4ef196a8f08c84363b94"
+    const auth_token = (`${client_id}:${client_secret}`, 'utf-8').toString('base64');
+
     React.useEffect(() => {
         const getSong = async () => {
             try {
-                const response = await axios.get('http://api.musixmatch.com/ws/1.1/track.search',
+                const data = qs.stringify({'grant_type':'client_credentials'});
+                const response = await axios.post('https://accounts.spotify.com/api/token',data,
                     {
-                        params: {
-                            apikey: 'c9a60b4934a2596c302eda29d998f07f',
-                            s_track_rating: "desc",
-                            q_track: "lover"
-                        },
                         headers: {
-                            "Access-Control-Allow-Origin": "*",
-                            "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, authorization",
-                            "Accept": "application/json",
-            "Content-Type": "application/json"
+                            'Authorization': `Basic ${auth_token}`,
+                            'Content-Type': 'application/x-www-form-urlencoded' 
                         },
+                        
                     }
                 )
                 console.log(response.json())
-                setSongData(response.message.body.track_name)
+                // setSongData(response.message.body.track_name)
             } catch (err) {
-                console.log(err.message)
+                console.log(err)
             }
         }
         getSong()
