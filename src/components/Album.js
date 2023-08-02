@@ -13,6 +13,7 @@ const Album = ({ resetScore, currentScore, totalScore, streak, increaseCurrentSc
     const [num, setNum] = useState(8)
 
     const getRandomAlbum = () => {
+        // console.log(tracks)
         const randomNum = Math.floor(Math.random() * albuminfo.length)
         return albuminfo[randomNum]
     }
@@ -29,6 +30,16 @@ const Album = ({ resetScore, currentScore, totalScore, streak, increaseCurrentSc
 
     const giveAnswer = () => {
         return `The album is ${name}`
+    }
+
+    const skipAlbum = () => {
+        resetScoreBoard()
+        resetStreak()
+        increaseTotalScore()
+        resetScore()
+        setRandomAlbum(
+            getRandomAlbum()
+        )
     }
 
     const compareInput = (inputAnswer) => {
@@ -79,6 +90,7 @@ const Album = ({ resetScore, currentScore, totalScore, streak, increaseCurrentSc
                 alt="album cover"
             />
             <InputForm
+                skipAlbum={skipAlbum}
                 giveAnswer={attempts === 0 ? giveAnswer : null}
                 compareInput={compareInput}
             />

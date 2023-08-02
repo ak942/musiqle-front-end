@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 
-const InputForm = ({ compareInput, giveAnswer }) => {
+const InputForm = ({ skipAlbum, compareInput, giveAnswer }) => {
 
     const [inputAnswer, setInputAnswer] = useState("")
     const handleSubmit = (event) => {
@@ -10,6 +10,11 @@ const InputForm = ({ compareInput, giveAnswer }) => {
 
         compareInput(inputAnswer)
         setInputAnswer('')
+    }
+
+    const handleSkip = (event) => {
+        event.preventDefault()
+        skipAlbum()
     }
 
     const handleChange = (event) => {
@@ -39,7 +44,10 @@ const InputForm = ({ compareInput, giveAnswer }) => {
                     >
                         Enter
                     </button>
-                    <button className="circular">
+                    <button
+                        className="circular"
+                        onClick={handleSkip}
+                    >
                         Skip
                     </button>
                 </div>
@@ -49,7 +57,8 @@ const InputForm = ({ compareInput, giveAnswer }) => {
 }
 
 InputForm.propTypes = {
-    inputAnswer: PropTypes.func.isRequired
+    compareInput: PropTypes.func.isRequired,
+    giveAnswer: PropTypes.func
 };
 
 export default InputForm;
