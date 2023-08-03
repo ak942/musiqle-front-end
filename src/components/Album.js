@@ -2,20 +2,23 @@ import React from 'react';
 import "./Album.css"
 import InputForm from './InputForm';
 import ScoreBoard from './ScoreBoard';
-import albuminfo from "../dummy_data_album.json"
+// import albuminfo from "../dummy_data_album.json"
 import { useState } from 'react';
 import NavBar from './NavBar';
 
 
-const Album = ({ resetScore, currentScore, totalScore, streak, increaseCurrentScore, increaseStreak, resetStreak, increaseTotalScore }) => {
+const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, increaseCurrentScore, increaseStreak, resetStreak, increaseTotalScore }) => {
 
+    const songList = playlistData
+    console.log("These are my songs: ", songList)
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
 
     const getRandomAlbum = () => {
         // console.log(tracks)
-        const randomNum = Math.floor(Math.random() * albuminfo.length)
-        return albuminfo[randomNum]
+        const randomNum = Math.floor(Math.random() * songList.length)
+        console.log(songList[randomNum])
+        return songList[randomNum]
     }
 
     const [randomAlbum, setRandomAlbum] = useState(getRandomAlbum())
@@ -25,8 +28,8 @@ const Album = ({ resetScore, currentScore, totalScore, streak, increaseCurrentSc
         setNum(8)
     }
 
-    const name = randomAlbum.album.name
-    const url = randomAlbum.album.images[0].url
+    const name = randomAlbum.track.album.name
+    const url = randomAlbum.track.album.images[0].url
 
     const giveAnswer = () => {
         return `The album is ${name}`

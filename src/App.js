@@ -4,10 +4,8 @@ import Home from "./components/Home";
 import Album from "./components/Album";
 import Song from "./components/Song";
 import userinfo from "./dummy_data_user.json"
-import { useState, useEffect } from "react";
-import CLIENT_ID from './.env'
-import CLIENT_SECRET from './.env'
-import axios from 'axios';
+import { useState, useEffect, useCallback } from "react";
+// import axios from 'axios';
 
 
 
@@ -21,81 +19,76 @@ const points = {
 function App() {
 
   // update to axios calls when back-end deployed
-  const [score, setScore] = useState(userinfo[0].user.score)
-  const [totalScore, setTotalScore] = useState(userinfo[0].user.totalScore)
-  const [streak, setStreak] = useState(userinfo[0].user.streak)
-  const [accessToken, setAccessToken] = useState("")
-  // const [playlistID, setPlaylistID] = useState("6Mdybhdl4DYWG1i5stZzfq")
+  const [score, setScore] = useState(userinfo[0].score)
+  const [totalScore, setTotalScore] = useState(userinfo[0].totalScore)
+  const [streak, setStreak] = useState(userinfo[0].streak)
+  const [user, setUser] = useState(null)
+  const [accessToken, setAccessToken] = useState("BQCo2b6my_0TeDWD5sUr5Cy3HvldJn_6sqLjSUAd0hQ5FvOOkpGXRSAyzO0hmIrzCeCo69Oupk_jd_5Yi_gmXup5s-oHWL_xvG_YKeAxJPyTgbVo1aM")
+  const [playlistID, setPlaylistID] = useState("1ap9564Wpqxi2Bb8gVaSWc")
   const [playlistData, setPlaylistData] = useState([])
 
+  const client_id = process.env.REACT_APP_CLIENT_ID
+  const client_secret = process.env.REACT_APP_CLIENT_SECRET
 
-  const playlistID = "6Mdybhdl4DYWG1i5stZzfq"
-
-  
-  const getAccessToken = async () => {  
+  const getAccessToken = async () => {
     // API Access token
-    const response = 
-      await fetch("https://accounts.spotify.com/api/token", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Basic ' + {CLIENT_SECRET}
-        },
-        body: `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`
-      })
+    await fetch("https://accounts.spotify.com/api/token", {
+      method: 'POST',
+      headers: {
+        Authorization: 'Basic MGMyMzM2YTBkMDZhNGE4M2ExMGE1N2UzMDY2MDg0NWM6OTA5ZWM5ODYwNDc5NDlmYjgwYWJlY2IzMzFlM2I4Nzg=',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `grant_type=client_credentials&client_id=${client_id}&client_secret=${client_secret}`
+    })
       .then(result => result.json())
-      .then(response => console.log(response))
+      // .then(response => console.log(response))
+      .then(response => setAccessToken(response.access_token))
       .catch(err => console.log("Error! ", err))
 
-      console.log(response)
-
-
-
-    // var authParameters = {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/x-www-form-urlencoded'
-    //   },
-    //   body: `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`
-    // }
-    // fetch('https://accounts.spotify.com/api/token', authParameters)
-    // .then(result => result.json())
-    // .then(data => console.log(data.access_token))
-    // .then(data => setAccessToken(data.access_token))
-    // .catch(err => console.log("An error has occurred.", err))
-
   }
-  
+
   // Only gets access token once every hour
-  useEffect(()=> {
+  useEffect(() => {
     const interval = setInterval(() => {
-      getAccessToken();
-    }, 10*1000);
-      return () => clearInterval(interval);
-  }, [])
-  
-  const getPlaylist = () => {
+      setAccessToken(getAccessToken());
+    }, 3500 * 1000);
+    return () => clearInterval(interval);
+  })
+
+  const getPlaylist = useCallback(async () => {
+    // console.log("This is my access token: ", accessToken)
     let userParameters = {
-      method: 'GET',
+      // method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + accessToken
+        'Authorization': `Bearer ${accessToken}`
       }
     }
-    console.log("This is my access token: ", accessToken)
-    let tracks = () => {
-      axios.get(`http://api.spotify.com/v1/playlist/${playlistID}/tracks`, userParameters)
-        .then(response => response.json())
-        .then(data => setPlaylistData(data.items))
-        .catch(err => console.log("An error has occurred.", err))
-    }
-    console.log("Tracks info: ", tracks)
-    return tracks
+
+    await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, userParameters)
+      .then(async (response) => {
+        const { items } = await response.json()
+        // console.log("My response: ", items)
+        setPlaylistData(items)
+      })
+      // .then(response => setPlaylistData(response.items))
+      .catch(err => console.log("An error has occurred.", err))
+
+    // console.log("Tracks info: ", tracks)
+    // return tracks
+  }, [accessToken])
+
+
+  useEffect(() => {
+    getPlaylist()
+  }, [getPlaylist])
+
+  console.log(playlistData)
+
+  const findUser = (newuser) => {
+    setUser(newuser)
   }
 
-  const findUser = (newuser)=> {
-      setUser(newuser)
-  }
   const increaseCurrentScore = (attemptsLeft) => {
     setScore(score + points[attemptsLeft])
   }
@@ -122,14 +115,17 @@ function App() {
         <Route
           exact path="/"
           element={
-            <Home user={user} findUser = {findUser}/>
+            <Home
+              user={user}
+              findUser={findUser}
+            />
           }
         />
         <Route
           path="/album"
           element={
             <Album
-              getPlaylist={getPlaylist}
+              playlistData={playlistData}
               currentScore={score}
               totalScore={totalScore}
               streak={streak}
