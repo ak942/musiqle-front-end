@@ -23,6 +23,7 @@ function App() {
   const [totalScore, setTotalScore] = useState(userinfo[0].totalScore)
   const [streak, setStreak] = useState(userinfo[0].streak)
   const [user, setUser] = useState(null)
+  const [userData, setUserData] = useState({})
   const [accessToken, setAccessToken] = useState("BQCo2b6my_0TeDWD5sUr5Cy3HvldJn_6sqLjSUAd0hQ5FvOOkpGXRSAyzO0hmIrzCeCo69Oupk_jd_5Yi_gmXup5s-oHWL_xvG_YKeAxJPyTgbVo1aM")
   const [playlistID, setPlaylistID] = useState("1ap9564Wpqxi2Bb8gVaSWc")
   const [playlistData, setPlaylistData] = useState([])
@@ -85,8 +86,28 @@ function App() {
 
   console.log(playlistData)
 
-  const findUser = (newuser) => {
-    setUser(newuser)
+  const getUserData = (newuser) => {
+    //useeffect to put all users into allData
+    const allData = userinfo
+    console.log(userData)
+    const specificUser = allData.find(user => {
+      return user.name === newuser 
+    })
+    const newUserData = {
+          "name": newuser,
+          "score": 0,
+          "streak": 0,
+          "totalScore": 0,
+          "longestStreak": 0,
+          "bestOverallScore": 0,
+          "bestScoreAlbum": 0,
+          "bestScoreSong": 0
+      }
+    const specificUserChoosen = specificUser? specificUser : newUserData //postnewuser
+    setUser(specificUserChoosen.name)
+    setUserData(specificUserChoosen)
+    console.log(specificUserChoosen, "new")
+    console.log(userData)
   }
 
   const increaseCurrentScore = (attemptsLeft) => {
@@ -109,16 +130,14 @@ function App() {
     setStreak(0)
   }
 
+
   return (
     <Router>
       <Routes>
         <Route
           exact path="/"
           element={
-            <Home
-              user={user}
-              findUser={findUser}
-            />
+            <Home user={user} findUser = {getUserData}/>
           }
         />
         <Route

@@ -24,8 +24,8 @@
     {
         "id": 3,
         "name": "Lucy",
-        "score": 0,
-        "streak": 0,
+        "score": 40,
+        "streak": 1,
         "totalScore": 0,
         "longestStreak": 0,
         "bestOverallScore": 0,
