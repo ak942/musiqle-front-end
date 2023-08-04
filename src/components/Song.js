@@ -20,7 +20,6 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
 
     const name = randomSong.song.name
 
-
     const giveAnswer = () => {
         return `The song is ${name}`
     }
