@@ -10,7 +10,7 @@ const qs =require('qs')
 const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak, resetStreak, increaseTotalScore }) => {
 
     const [attempts, setAttempts] = useState(4)
-    // const [songData, setSongData] = useState(null)
+    const [songData, setSongData] = useState(null)
 
     const getRandomSong = () => {
         const randomNum = Math.floor(Math.random() * songinfo.length)

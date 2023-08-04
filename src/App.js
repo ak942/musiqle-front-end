@@ -19,12 +19,12 @@ const points = {
 function App() {
 
   // update to axios calls when back-end deployed
-  const [score, setScore] = useState(userinfo[0].score)
-  const [totalScore, setTotalScore] = useState(userinfo[0].totalScore)
-  const [streak, setStreak] = useState(userinfo[0].streak)
+  const [score, setScore] = useState(0)
+  const [totalScore, setTotalScore] = useState(0)
+  const [streak, setStreak] = useState(0)
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState({})
-  const [accessToken, setAccessToken] = useState("BQCo2b6my_0TeDWD5sUr5Cy3HvldJn_6sqLjSUAd0hQ5FvOOkpGXRSAyzO0hmIrzCeCo69Oupk_jd_5Yi_gmXup5s-oHWL_xvG_YKeAxJPyTgbVo1aM")
+  const [accessToken, setAccessToken] = useState("BQCONSNcxT8Obd2NNgH17wU8jJkhIYirdOSO2ck6oZfHSNaXAN8nbRrffTyFUfPZksB0MQPQ7yWFd7hhjzjMAuQdPPUaCMsQYOnffTXG1xXw_t8lt0k")
   const [playlistID, setPlaylistID] = useState("1ap9564Wpqxi2Bb8gVaSWc")
   const [playlistData, setPlaylistData] = useState([])
   const [allData, setAllData] = useState([])
@@ -70,14 +70,9 @@ function App() {
     await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, userParameters)
       .then(async (response) => {
         const { items } = await response.json()
-        // console.log("My response: ", items)
         setPlaylistData(items)
       })
-      // .then(response => setPlaylistData(response.items))
       .catch(err => console.log("An error has occurred.", err))
-
-    // console.log("Tracks info: ", tracks)
-    // return tracks
   }, [accessToken])
 
 
@@ -87,14 +82,16 @@ function App() {
 
   console.log(playlistData)
 
-//Getting all the Users from DB
+  // Getting all the Users from DB
   useEffect(()=> {
     axios.get('https://musiqle-back-end-w9vy.onrender.com/user').then((response)=>{
     setAllData(response.data)
     console.log(response.data)
     })
   },[]);
-//choosing the right user
+
+
+  //choosing the right user
   const getUserData = (newuser) => {
     const specificUser = allData.find(user => {
       return user.name === newuser 
@@ -109,9 +106,13 @@ function App() {
           "bestScoreAlbum": 0,
           "bestScoreSong": 0
       }
+
     const specificUserChoosen = specificUser? specificUser : newUserData //postnewuser
     setUser(specificUserChoosen.name)
     setUserData(specificUserChoosen)
+    setScore(specificUserChoosen.score)
+    setTotalScore(specificUserChoosen.totalScore)
+    setStreak(specificUserChoosen.streak)
     console.log(specificUserChoosen, "new")
     console.log(userData, "userdata")
   }
@@ -136,6 +137,8 @@ function App() {
     setStreak(0)
   }
 
+  const loggedIn = (user !== null) ? true : false
+  
 
   return (
     <Router>
