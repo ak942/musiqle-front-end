@@ -29,27 +29,28 @@ function App() {
   const [accessToken, setAccessToken] = useState("")
   // const [playlistID, setPlaylistID] = useState("6Mdybhdl4DYWG1i5stZzfq")
   const [playlistData, setPlaylistData] = useState([])
+  const [allData, setAllData] = useState([])
 
 
   const playlistID = "6Mdybhdl4DYWG1i5stZzfq"
 
   
-  const getAccessToken = async () => {  
-    // API Access token
-    const response = 
-      await fetch("https://accounts.spotify.com/api/token", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Basic ' + {CLIENT_SECRET}
-        },
-        body: `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`
-      })
-      .then(result => result.json())
-      .then(response => console.log(response))
-      .catch(err => console.log("Error! ", err))
+  // const getAccessToken = async () => {  
+  //   // API Access token
+  //   const response = 
+  //     await fetch("https://accounts.spotify.com/api/token", {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/x-www-form-urlencoded',
+  //         'Authorization': 'Basic ' + {CLIENT_SECRET}
+  //       },
+  //       body: `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`
+  //     })
+  //     .then(result => result.json())
+  //     .then(response => console.log(response))
+  //     .catch(err => console.log("Error! ", err))
 
-      console.log(response)
+  //     console.log(response)
 
 
 
@@ -66,15 +67,15 @@ function App() {
     // .then(data => setAccessToken(data.access_token))
     // .catch(err => console.log("An error has occurred.", err))
 
-  }
+  //}
   
   // Only gets access token once every hour
-  useEffect(()=> {
-    const interval = setInterval(() => {
-      getAccessToken();
-    }, 10*1000);
-      return () => clearInterval(interval);
-  }, [])
+  // useEffect(()=> {
+  //   const interval = setInterval(() => {
+  //     getAccessToken();
+  //   }, 10*1000);
+  //     return () => clearInterval(interval);
+  // }, [])
   
   const getPlaylist = () => {
     let userParameters = {
@@ -94,11 +95,17 @@ function App() {
     console.log("Tracks info: ", tracks)
     return tracks
   }
-
+//Getting all the Users from DB
+  useEffect(()=> {
+      axios.get('https://musiqle-back-end-w9vy.onrender.com/user').then((response)=>{
+      setAllData(response.data)
+      console.log(response.data)
+      })
+  },[]);
+//choosing the right user
   const getUserData = (newuser) => {
     //useeffect to put all users into allData
-    const allData = userinfo
-    console.log(userData)
+    // const allData = userinfo
     const specificUser = allData.find(user => {
       return user.name === newuser 
     })
@@ -114,9 +121,9 @@ function App() {
       }
     const specificUserChoosen = specificUser? specificUser : newUserData //postnewuser
     setUser(specificUserChoosen.name)
-    setUserData(specificUserChoosen)
+    setUserData({"name": "test"})
     console.log(specificUserChoosen, "new")
-    console.log(userData)
+    console.log(userData, "userdata")
   }
 
   const increaseCurrentScore = (attemptsLeft) => {

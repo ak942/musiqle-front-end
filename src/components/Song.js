@@ -19,8 +19,8 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
     const [randomSong, setRandomSong] = useState(getRandomSong())
 
     const name = randomSong.song.name
-    const client_id= "1795c8e885804ba8b42333d75bd178af"
-    const client_secret= "f5a14d4710ee4ef196a8f08c84363b94"
+    const client_id= ""
+    const client_secret= ""
     const auth_token = (`${client_id}:${client_secret}`, 'utf-8').toString('base64');
 
     React.useEffect(() => {
