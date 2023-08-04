@@ -9,15 +9,15 @@ import NavBar from './NavBar';
 
 const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, increaseCurrentScore, increaseStreak, resetStreak, increaseTotalScore }) => {
 
-    const songList = playlistData
-    console.log("These are my songs: ", songList)
+    const playlist = playlistData
+    console.log("These are my songs: ", playlist)
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
 
     const getRandomAlbum = () => {
-        const randomNum = Math.floor(Math.random() * songList.length)
-        console.log(songList[randomNum])
-        return songList[randomNum]
+        const randomNum = Math.floor(Math.random() * playlist.length)
+        console.log(playlist[randomNum])
+        return playlist[randomNum]
     }
 
     const [randomAlbum, setRandomAlbum] = useState(getRandomAlbum())
