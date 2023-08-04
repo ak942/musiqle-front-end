@@ -5,7 +5,7 @@ import Album from "./components/Album";
 import Song from "./components/Song";
 import userinfo from "./dummy_data_user.json"
 import { useState, useEffect, useCallback } from "react";
-// import axios from 'axios';
+import axios from 'axios';
 
 
 
@@ -27,6 +27,7 @@ function App() {
   const [accessToken, setAccessToken] = useState("BQCo2b6my_0TeDWD5sUr5Cy3HvldJn_6sqLjSUAd0hQ5FvOOkpGXRSAyzO0hmIrzCeCo69Oupk_jd_5Yi_gmXup5s-oHWL_xvG_YKeAxJPyTgbVo1aM")
   const [playlistID, setPlaylistID] = useState("1ap9564Wpqxi2Bb8gVaSWc")
   const [playlistData, setPlaylistData] = useState([])
+  const [allData, setAllData] = useState([])
 
   const client_id = process.env.REACT_APP_CLIENT_ID
   const client_secret = process.env.REACT_APP_CLIENT_SECRET
@@ -86,10 +87,15 @@ function App() {
 
   console.log(playlistData)
 
+//Getting all the Users from DB
+  useEffect(()=> {
+    axios.get('https://musiqle-back-end-w9vy.onrender.com/user').then((response)=>{
+    setAllData(response.data)
+    console.log(response.data)
+    })
+  },[]);
+//choosing the right user
   const getUserData = (newuser) => {
-    //useeffect to put all users into allData
-    const allData = userinfo
-    console.log(userData)
     const specificUser = allData.find(user => {
       return user.name === newuser 
     })
@@ -107,7 +113,7 @@ function App() {
     setUser(specificUserChoosen.name)
     setUserData(specificUserChoosen)
     console.log(specificUserChoosen, "new")
-    console.log(userData)
+    console.log(userData, "userdata")
   }
 
   const increaseCurrentScore = (attemptsLeft) => {
