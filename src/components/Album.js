@@ -15,7 +15,6 @@ const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, inc
     const [num, setNum] = useState(8)
 
     const getRandomAlbum = () => {
-        // console.log(tracks)
         const randomNum = Math.floor(Math.random() * songList.length)
         console.log(songList[randomNum])
         return songList[randomNum]

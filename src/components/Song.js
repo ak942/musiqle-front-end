@@ -19,31 +19,31 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
     const [randomSong, setRandomSong] = useState(getRandomSong())
 
     const name = randomSong.song.name
-    const client_id= 
-    const client_secret= 
-    const auth_token = (`${client_id}:${client_secret}`, 'utf-8').toString('base64');
+    // const client_id=process.env.REACT_APP_CLIENT_ID
+    // const client_secret=process.env.REACT_APP_CLIENT_SECRET
+    // const auth_token = (`${client_id}:${client_secret}`, 'utf-8').toString('base64');
 
-    React.useEffect(() => {
-        const getSong = async () => {
-            try {
-                const data = qs.stringify({'grant_type':'client_credentials'});
-                const response = await axios.post('https://accounts.spotify.com/api/token',data,
-                    {
-                        headers: {
-                            'Authorization': `Basic ${auth_token}`,
-                            'Content-Type': 'application/x-www-form-urlencoded' 
-                        },
+    // React.useEffect(() => {
+    //     const getSong = async () => {
+    //         try {
+    //             const data = qs.stringify({'grant_type':'client_credentials'});
+    //             const response = await axios.post('https://accounts.spotify.com/api/token',data,
+    //                 {
+    //                     headers: {
+    //                         'Authorization': `Basic ${auth_token}`,
+    //                         'Content-Type': 'application/x-www-form-urlencoded' 
+    //                     },
                         
-                    }
-                )
-                console.log(response.json())
-                // setSongData(response.message.body.track_name)
-            } catch (err) {
-                console.log(err)
-            }
-        }
-        getSong()
-    }, [])
+    //                 }
+    //             )
+    //             console.log(response.json())
+    //             // setSongData(response.message.body.track_name)
+    //         } catch (err) {
+    //             console.log(err)
+    //         }
+    //     }
+    //     getSong()
+    // }, [auth_token])
 
     const giveAnswer = () => {
         return `The song is ${name}`

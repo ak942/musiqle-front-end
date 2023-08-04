@@ -26,7 +26,7 @@ const Home = ({user, findUser}) => {
             )
         } else if (user) {
             return (
-                `Welcome back ${user}`
+                `Welcome back, ${user}!`
             )
         }
     }
