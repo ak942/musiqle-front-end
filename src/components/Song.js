@@ -1,53 +1,71 @@
-import React from 'react'
+import {useState, useEffect} from 'react'
 import ScoreBoard from './ScoreBoard'
 import InputForm from './InputForm'
 import axios from 'axios'
 import NavBar from './NavBar'
-import songinfo from "../dummy_data_song.json"
-import { useState } from 'react'
-const qs =require('qs')
 
 const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak, resetStreak, increaseTotalScore }) => {
-
     const [attempts, setAttempts] = useState(4)
-    // const [songData, setSongData] = useState(null)
+    const [songData, setSongData] = useState(null)
+    // const [randomSong, setRandomSong] = useState(getRandomSong())
+    const [trackId, setTrackId] = useState('256434132')
+    const [lyrics, setLyrics] =useState("")
+    const [trackName, setTrackName] = useState("")
+    const [artist, setArtist] = useState("")
+
+
 
     const getRandomSong = () => {
-        const randomNum = Math.floor(Math.random() * songinfo.length)
-        return songinfo[randomNum]
+        const randomNum = Math.floor(Math.random() * 10)
+        return randomNum
     }
-    const [randomSong, setRandomSong] = useState(getRandomSong())
 
-    const name = randomSong.song.name
+    useEffect(()=>{
+        findTracks()
+        // findLyrics()
+    },[]);
+
+    const findTracks = async() => {
+        const randomTrackNum = getRandomSong()
+        const response = await axios.get('https://musiqle-back-end-w9vy.onrender.com/musixmatch/track')
+        setTrackName(response.data.message.body.track_list[randomTrackNum].track.track_name)
+        setTrackId(response.data.message.body.track_list[randomTrackNum].track.track_id)
+        // console.log(response.data.message.body.track_list[randomTrackNum].track.track_name)
+        setArtist(response.data.message.body.track_list[randomTrackNum].track.artist_name)
+        findLyrics(response.data.message.body.track_list[randomTrackNum].track.track_id)
+    }
+
+    const findLyrics = async(id) => {
+        const response = await axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/track/${id}`)
+        setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
+        console.log(response.data.message.body.lyrics.lyrics_body.split("\n"))
+    }
 
     const giveAnswer = () => {
-        return `The song is ${name}`
+        return `The song is ${trackName}`
     }
 
-    const compareInput = (inputAnswer) => {
-        if (inputAnswer === name) {
+    // const compareInput = (inputAnswer) => {
+    //     if (inputAnswer === trackName) {
 
-            setRandomSong(
-                getRandomSong()
-            )
+            
+    //         )
 
-        } else {
-            console.log(attempts)
-            if (attempts === 0) {
-                setRandomSong(
-                    getRandomSong()
-                )
-                setAttempts(4)
+    //     } else {
+    //         console.log(attempts)
+    //         if (attempts === 0) {
+                
+    //             setAttempts(4)
 
-            } else {
+    //         } else {
 
-                setAttempts(
-                    attempts - 1
-                )
+    //             setAttempts(
+    //                 attempts - 1
+    //             )
 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
 
     return (
         <div className="center game">
@@ -61,8 +79,10 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
             <p>Attempts Left: {attempts}</p>
             <div className="size"></div>
             {songData}
+            <section>{lyrics[5]}</section>
+            <section>{trackName}</section>
             <InputForm
-                compareInput={compareInput}
+                // compareInput={compareInput}
                 giveAnswer={attempts === 0 ? giveAnswer : null}
             />
 
