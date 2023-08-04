@@ -3,27 +3,27 @@ import ScoreBoard from './ScoreBoard'
 import InputForm from './InputForm'
 import axios from 'axios'
 import NavBar from './NavBar'
+import SongInputForm from './SongInputForm'
 
 const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak, resetStreak, increaseTotalScore }) => {
     const [attempts, setAttempts] = useState(4)
     const [songData, setSongData] = useState(null)
-    // const [randomSong, setRandomSong] = useState(getRandomSong())
     const [trackId, setTrackId] = useState('256434132')
     const [lyrics, setLyrics] =useState("")
     const [trackName, setTrackName] = useState("")
     const [artist, setArtist] = useState("")
+    const [num, setNum] = useState(0)
 
 
-
+    useEffect(()=>{
+        findTracks()
+    },[]);
+    
+///INITIATE NEW GAME
     const getRandomSong = () => {
         const randomNum = Math.floor(Math.random() * 10)
         return randomNum
     }
-
-    useEffect(()=>{
-        findTracks()
-        // findLyrics()
-    },[]);
 
     const findTracks = async() => {
         const randomTrackNum = getRandomSong()
@@ -38,34 +38,38 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
     const findLyrics = async(id) => {
         const response = await axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/track/${id}`)
         setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
-        console.log(response.data.message.body.lyrics.lyrics_body.split("\n"))
+        // console.log(response.data.message.body.lyrics.lyrics_body.split("\n"))
     }
-
+///GET LYRICS
+    const lyricsShown=() => {
+        let endNum = num+1+5
+        let sliceLyrics = lyrics.slice(5,endNum)
+        // console.log(lyrics)
+        return(
+            <section>{sliceLyrics}</section>
+        )
+    }
+/// GIVES ANSWER 
     const giveAnswer = () => {
         return `The song is ${trackName}`
     }
 
-    // const compareInput = (inputAnswer) => {
-    //     if (inputAnswer === trackName) {
-
-            
-    //         )
-
-    //     } else {
-    //         console.log(attempts)
-    //         if (attempts === 0) {
-                
-    //             setAttempts(4)
-
-    //         } else {
-
-    //             setAttempts(
-    //                 attempts - 1
-    //             )
-
-    //         }
-    //     }
-    // }
+//CHECK THE INPUT AGAINST ANSWER
+    const compareInput = (inputAnswer) => {
+        if (inputAnswer === trackName) {
+            //reset the game
+        } else {
+            console.log(attempts)
+            if (attempts === 0) {
+                setAttempts(4)
+                setNum(0)
+                findTracks()
+            } else {
+                setAttempts(attempts - 1)
+                setNum(num+1)
+            }
+        }
+    }
 
     return (
         <div className="center game">
@@ -79,12 +83,13 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
             <p>Attempts Left: {attempts}</p>
             <div className="size"></div>
             {songData}
-            <section>{lyrics[5]}</section>
+            {lyricsShown()}
             <section>{trackName}</section>
-            <InputForm
+            {/* <InputForm
                 // compareInput={compareInput}
                 giveAnswer={attempts === 0 ? giveAnswer : null}
-            />
+            /> */}
+            <SongInputForm compareInput = {compareInput}/>
 
         </div>
     )
