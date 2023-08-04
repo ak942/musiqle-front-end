@@ -10,7 +10,7 @@ const qs =require('qs')
 const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak, resetStreak, increaseTotalScore }) => {
 
     const [attempts, setAttempts] = useState(4)
-    const [songData, setSongData] = useState(null)
+    // const [songData, setSongData] = useState(null)
 
     const getRandomSong = () => {
         const randomNum = Math.floor(Math.random() * songinfo.length)
@@ -19,31 +19,7 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
     const [randomSong, setRandomSong] = useState(getRandomSong())
 
     const name = randomSong.song.name
-    // const client_id= 
-    // const client_secret= 
-    // const auth_token = (`${client_id}:${client_secret}`, 'utf-8').toString('base64');
 
-    // React.useEffect(() => {
-    //     const getSong = async () => {
-    //         try {
-    //             const data = qs.stringify({'grant_type':'client_credentials'});
-    //             const response = await axios.post('https://accounts.spotify.com/api/token',data,
-    //                 {
-    //                     headers: {
-    //                         'Authorization': `Basic ${auth_token}`,
-    //                         'Content-Type': 'application/x-www-form-urlencoded' 
-    //                     },
-                        
-    //                 }
-    //             )
-    //             console.log(response.json())
-    //             // setSongData(response.message.body.track_name)
-    //         } catch (err) {
-    //             console.log(err)
-    //         }
-    //     }
-    //     getSong()
-    // }, [])
 
     const giveAnswer = () => {
         return `The song is ${name}`
