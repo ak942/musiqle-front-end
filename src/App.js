@@ -148,13 +148,17 @@ function App() {
     console.log(specificUserChosen, "new")
     console.log(userData, "userdata")
   }
+  /// SignOut User
+  const userSignOut = () => {
+    setUser(null)
+    setUserData({})
+  }
   ///Delete User
   const deleteUser = () => {
     const id = userData.id
     console.log(id)
-    // axios.delete(`https://musiqle-back-end-w9vy.onrender.com/user/${id}`)
-    setUser(null)
-    setUserData({})
+    axios.delete(`https://musiqle-back-end-w9vy.onrender.com/user/${id}`)
+    userSignOut()
   };
 
   //// NEED TO BE UPDATED TO REFLECT CHANGES IN DB FOR USER, CURRENTLY NOT GETTING SAVED AND RESETTING ON REFRESH
@@ -191,6 +195,7 @@ function App() {
               user={user}
               findUser={getUserData}
               deleteUser = {deleteUser}
+              userSignOut = {userSignOut}
               genreChanged={genreChanged}
               genreOptions={genres.listOfGenresFromAPI}
               selectedGenre={genres.selectedGenre}
