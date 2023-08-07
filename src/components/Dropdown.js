@@ -1,5 +1,5 @@
 import React from 'react'
-import Select from 'react-select'
+// import Select from 'react-select'
 import './Dropdown.css'
 
 const Dropdown = ({ genreOptions, genreChanged, selectedGenre, playlistOptions, selectedPlaylist, playlistChanged }) => {
