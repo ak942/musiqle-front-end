@@ -14,6 +14,7 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
     const [trackName, setTrackName] = useState("")
     const [artist, setArtist] = useState("")
     const [num, setNum] = useState(0)
+    const filters = ["(", ")", "live", "remastered", "edit", "remix", "-", "?", "!", "remaster"]
 
 
     useEffect(() => {
@@ -31,15 +32,20 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
         const response = await axios.get('https://musiqle-back-end-w9vy.onrender.com/musixmatch/track')
         setTrackName(response.data.message.body.track_list[randomTrackNum].track.track_name)
         // setTrackId(response.data.message.body.track_list[randomTrackNum].track.track_id)
-        console.log(response.data.message.body.track_list.length)
+        // console.log(response.data.message.body.track_list.length)
         setArtist(response.data.message.body.track_list[randomTrackNum].track.artist_name)
         findLyrics(response.data.message.body.track_list[randomTrackNum].track.track_id)
     }
 
     const findLyrics = async (id) => {
         const response = await axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/track/${id}`)
+        // console.log(response.data.message.body.lyrics.explicit)
+        // if (response.data.message.body.lyrics.explicit ===1) {
+        //     await findTracks()
+        // }  else {
         setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
         // console.log(response.data.message.body.lyrics.lyrics_body.split("\n"))
+        
     }
     ///GET LYRICS
     const lyricsShown = () => {
@@ -47,7 +53,7 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
         let lyricsArray = []
         let sliceLyrics = lyrics.slice(0,lyrics.length-1)
         for (let line of sliceLyrics) {
-            // console.log()
+            console.log()
             if (/[a-z]/i.test(line) && lyricsArray.indexOf(line) === -1){
                 lyricsArray.push(line) 
             } 
@@ -55,7 +61,7 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
         if (! lyricsArray) {
             findTracks()
         };
-        let showLyrics = lyricsArray.slice(4,endNum)
+        let showLyrics = lyricsArray.slice(3,endNum)
         console.log({trackName}, {artist})
         console.log(lyricsArray.slice(3,10))
         console.log(lyrics)
@@ -78,7 +84,16 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
 
     //CHECK THE INPUT AGAINST ANSWER
     const compareInput = (inputAnswer) => {
-        if (inputAnswer.toLowerCase() === trackName.toLowerCase()) {
+        let correctAnswer = trackName.toLowerCase().split(" ")
+        for (let word of correctAnswer){
+            if(filters.indexOf(word) !== -1 || /[a-z]/i.test(word) === false) {
+                let index = correctAnswer.indexOf(word)
+                correctAnswer.splice(index,1)
+            }
+        }
+        let correctAnswerString = correctAnswer.join(" ")
+        console.log(correctAnswerString, "newcorrectanswer")
+        if (inputAnswer.toLowerCase() === correctAnswerString ) {
             alert(`You are Correct! The song is ${trackName} by ${artist}`)
             resetGame()
             return

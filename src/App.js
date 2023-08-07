@@ -125,7 +125,7 @@ function App() {
       return user.name.toLowerCase() === newuser.toLowerCase()
     })
     const newUserData = {
-      "name": newuser,
+      "name": newuser.toLowerCase(),
       "score": 0,
       "streak": 0,
       "totalScore": 0,
