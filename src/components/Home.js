@@ -15,15 +15,8 @@ const Home = ({ user, findUser, genreChanged, genreOptions, selectedGenre, playl
     }
     const signIn = () => {
         if (!clicked && !user) {
-        if (!clicked && !user) {
             return (
                 <div>
-                    <button className="circular signin" onClick={spotifyClick}>
-                        Sign In To Spotify
-                    </button>
-                    <button className="circular signin" onClick={spotifyClick}>
-                        Sign In As Guest
-                    </button>
                     <button className="circular signin" onClick={spotifyClick}>
                         Sign In To Spotify
                     </button>
@@ -43,7 +36,6 @@ const Home = ({ user, findUser, genreChanged, genreOptions, selectedGenre, playl
             <h1 className="welcome-header">Play! Pick Your Path</h1>
             <div className="right">
                 {signIn()}
-                {clicked ? <SpotifyPopUp closeCallBack={close} findUser={findUser} /> : null}
                 {clicked ? <SpotifyPopUp closeCallBack={close} findUser={findUser} /> : null}
             </div>
             <br />
