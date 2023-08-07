@@ -4,7 +4,7 @@ import './home.css'
 import SpotifyPopUp from './SpotifyPopUp'
 import Dropdown from "./Dropdown";
 
-const Home = ({ user, findUser, genreChanged, genreOptions, selectedGenre, playlistOptions, selectedPlaylist, playlistChanged }) => {
+const Home = ({ user, deleteUser, findUser, genreChanged, genreOptions, selectedGenre, playlistOptions, selectedPlaylist, playlistChanged }) => {
     const [clicked, setClicked] = React.useState(false)
 
     const spotifyClick = () => {
@@ -27,7 +27,11 @@ const Home = ({ user, findUser, genreChanged, genreOptions, selectedGenre, playl
             )
         } else if (user) {
             return (
-                `Welcome back, ${user}!`
+                <section>
+                    <h4>Welcome back, {user}!</h4>
+                    {/* <button onClick  const [user, setUser] = useState(null)
+  const [userData, setUserData] = useState({})={deleteUser}> Delete User</button> */}
+                </section>
             )
         }
     }

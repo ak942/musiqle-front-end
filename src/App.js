@@ -30,36 +30,36 @@ function App() {
   const encoded = process.env.REACT_APP_ENCODED
 
   // One time call to get Spotify Access Token and access all Music Categories
-  useEffect(() => {
+  // useEffect(() => {
     // API Access token
-    axios("https://accounts.spotify.com/api/token", {
-      method: 'POST',
-      headers: {
-        'Authorization': `Basic ${encoded}=`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      data: 'grant_type=client_credentials'
-    })
-      .then(response => {
-        console.log("Access token: ", response.data.access_token)
-        setAccessToken(response.data.access_token);
+  //   axios("https://accounts.spotify.com/api/token", {
+  //     method: 'POST',
+  //     headers: {
+  //       'Authorization': `Basic ${encoded}=`,
+  //       'Content-Type': 'application/x-www-form-urlencoded',
+  //     },
+  //     data: 'grant_type=client_credentials'
+  //   })
+  //     .then(response => {
+  //       console.log("Access token: ", response.data.access_token)
+  //       setAccessToken(response.data.access_token);
 
-        axios('https://api.spotify.com/v1/browse/categories', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${response.data.access_token}`
-          }
-        })
-          .then(genreResponse => {
-            setGenres({
-              selectedGenre: genres.selectedGenre,
-              listOfGenresFromAPI: genreResponse.data.categories.items
-            })
-          })
-      })
-      .catch(err => console.log("Error! ", err))
-  }, [genres.selectedGenre, encoded]);
+  //       axios('https://api.spotify.com/v1/browse/categories', {
+  //         method: 'GET',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'Authorization': `Bearer ${response.data.access_token}`
+  //         }
+  //       })
+  //         .then(genreResponse => {
+  //           setGenres({
+  //             selectedGenre: genres.selectedGenre,
+  //             listOfGenresFromAPI: genreResponse.data.categories.items
+  //           })
+  //         })
+  //     })
+  //     .catch(err => console.log("Error! ", err))
+  // }, [genres.selectedGenre, encoded]);
 
   /// After selection of genre, produces category ID to retrieve appropriate playlists
   const genreChanged = val => {
@@ -115,10 +115,8 @@ function App() {
 
   /// Adding User to DB
   const addNewUser = (newUserData) => {
-    const newUser = {
-      "name": newUserData.name
-    }
-    axios.post('https://musiqle-back-end-w9vy.onrender.com/user', newUser)
+    console.log("addnewuser")
+    axios.post('https://musiqle-back-end-w9vy.onrender.com/user', newUserData)
   }
 
   /// choosing the right user
@@ -136,15 +134,28 @@ function App() {
       "bestScoreAlbum": 0,
       "bestScoreSong": 0
     }
-
-    const specificUserChosen = specificUser ? specificUser : newUserData //postnewuser
-    addNewUser(newUserData)
+    let specificUserChosen;
+    if (specificUser) {
+      specificUserChosen = specificUser
+    } else {
+      console.log("else")
+      specificUserChosen = newUserData
+      addNewUser(newUserData)
+    }
+    // const specificUserChosen = specificUser ? specificUser : newUserData //postnewuser
     setUser(specificUserChosen.name)
     setUserData(specificUserChosen)
     console.log(specificUserChosen, "new")
     console.log(userData, "userdata")
   }
-
+  ///Delete User
+  const deleteUser = () => {
+    const id = userData.id
+    console.log(id)
+    // axios.delete(`https://musiqle-back-end-w9vy.onrender.com/user/${id}`)
+    setUser(null)
+    setUserData({})
+  };
 
   //// NEED TO BE UPDATED TO REFLECT CHANGES IN DB FOR USER, CURRENTLY NOT GETTING SAVED AND RESETTING ON REFRESH
   const increaseCurrentScore = (attemptsLeft) => {
@@ -179,6 +190,7 @@ function App() {
             <Home
               user={user}
               findUser={getUserData}
+              deleteUser = {deleteUser}
               genreChanged={genreChanged}
               genreOptions={genres.listOfGenresFromAPI}
               selectedGenre={genres.selectedGenre}

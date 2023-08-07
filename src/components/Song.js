@@ -9,7 +9,7 @@ import './Song.css'
 const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak, resetStreak, increaseTotalScore }) => {
     const [attempts, setAttempts] = useState(4)
     // const [songData, setSongData] = useState(null)
-    const [trackId, setTrackId] = useState('256434132')
+    // const [trackId, setTrackId] = useState('256434132')
     const [lyrics, setLyrics] = useState("")
     const [trackName, setTrackName] = useState("")
     const [artist, setArtist] = useState("")
@@ -30,7 +30,7 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
         const randomTrackNum = getRandomSong()
         const response = await axios.get('https://musiqle-back-end-w9vy.onrender.com/musixmatch/track')
         setTrackName(response.data.message.body.track_list[randomTrackNum].track.track_name)
-        setTrackId(response.data.message.body.track_list[randomTrackNum].track.track_id)
+        // setTrackId(response.data.message.body.track_list[randomTrackNum].track.track_id)
         console.log(response.data.message.body.track_list.length)
         setArtist(response.data.message.body.track_list[randomTrackNum].track.artist_name)
         findLyrics(response.data.message.body.track_list[randomTrackNum].track.track_id)
@@ -67,16 +67,22 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
         return `The song is ${trackName} by ${artist}`
     }
 
+    ///Resets Game
+    const resetGame = () => {
+        setAttempts(4)
+        setNum(0)
+        findTracks()
+    }
+
     //CHECK THE INPUT AGAINST ANSWER
     const compareInput = (inputAnswer) => {
-        if (inputAnswer === trackName) {
-            //reset the game
+        if (inputAnswer.toLowerCase() === trackName.toLowerCase()) {
+            alert(`You are Correct! The song is ${trackName} by ${artist}`)
+            resetGame()
+            return
         } else {
-            // console.log(attempts)
             if (attempts === 0) {
-                setAttempts(4)
-                setNum(0)
-                findTracks()
+                resetGame()
             } else {
                 setAttempts(attempts - 1)
                 setNum(num + 1)
