@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import './home.css'
-import SpotifyPopUp from './SpotifyPopUp'
+import SignInPopUp from './SignInpPopUp'
 import Dropdown from "./Dropdown";
 
 const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOptions, selectedGenre, playlistOptions, selectedPlaylist, playlistChanged }) => {
@@ -28,7 +28,7 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
         } else if (user) {
             return (
                 <section>
-                    <h4>Welcome back, {user}!</h4>
+                    <h4>Welcome back, {user.charAt(0).toUpperCase() + user.slice(1)}!</h4>
                     <button onClick = {userSignOut}> Sign Out </button>
                     <button onClick = {deleteUser}> Delete User </button>
                 </section>
@@ -40,7 +40,7 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
             <h1 className="welcome-header">Play! Pick Your Path</h1>
             <div className="right">
                 {signIn()}
-                {clicked ? <SpotifyPopUp closeCallBack={close} findUser={findUser} /> : null}
+                {clicked ? <SignInPopUp closeCallBack={close} findUser={findUser} /> : null}
             </div>
             <br />
             <Dropdown

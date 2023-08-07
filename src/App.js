@@ -122,7 +122,7 @@ function App() {
   /// choosing the right user
   const getUserData = (newuser) => {
     const specificUser = allData.find(user => {
-      return user.name === newuser
+      return user.name.toLowerCase() === newuser.toLowerCase()
     })
     const newUserData = {
       "name": newuser,
@@ -148,7 +148,7 @@ function App() {
     console.log(specificUserChosen, "new")
     console.log(userData, "userdata")
   }
-  /// SignOut User
+  /// Sign Out User
   const userSignOut = () => {
     setUser(null)
     setUserData({})

@@ -43,20 +43,22 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
     }
     ///GET LYRICS
     const lyricsShown = () => {
-        let endNum = num + 1 + 5
+        let endNum = num + 1 + 3
         let lyricsArray = []
-        let sliceLyrics = lyrics.slice(0,lyrics.length)
+        let sliceLyrics = lyrics.slice(0,lyrics.length-1)
         for (let line of sliceLyrics) {
-            // console.log(line)
-            if (/[a-z]/i.test(line)){
-                lyricsArray.push(line)
+            // console.log()
+            if (/[a-z]/i.test(line) && lyricsArray.indexOf(line) === -1){
+                lyricsArray.push(line) 
             } 
         }
         if (! lyricsArray) {
             findTracks()
         };
-        let showLyrics = lyricsArray.slice(5,endNum)
-        console.log(lyricsArray.slice(5,11))
+        let showLyrics = lyricsArray.slice(4,endNum)
+        console.log({trackName}, {artist})
+        console.log(lyricsArray.slice(3,10))
+        console.log(lyrics)
         return (
             (showLyrics || []).map(lyric => <section className="lyric">{lyric}</section>
             )
@@ -102,7 +104,7 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
             <p>Attempts Left: {attempts}</p>
             <div className="size">{lyricsShown()}</div>
             
-            <section>{giveAnswer()}</section>
+            {/* <section>{giveAnswer()}</section> */}
             {/* <InputForm
                 // compareInput={compareInput}
                 giveAnswer={attempts === 0 ? giveAnswer : null}
