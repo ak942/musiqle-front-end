@@ -19,6 +19,9 @@ function App() {
   const [score, setScore] = useState(0)
   const [totalScore, setTotalScore] = useState(0)
   const [streak, setStreak] = useState(0)
+  const [score, setScore] = useState(0)
+  const [totalScore, setTotalScore] = useState(0)
+  const [streak, setStreak] = useState(0)
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState({})
   const [accessToken, setAccessToken] = useState(null)
@@ -168,6 +171,8 @@ function App() {
     setStreak(0)
   }
 
+  const loggedIn = (user !== null) ? true : false
+  
 
   return (
     <Router>
