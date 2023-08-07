@@ -12,10 +12,15 @@ const Dropdown = ({ genreOptions, genreChanged, selectedGenre, playlistOptions, 
         playlistChanged(e.target.value)
     }
 
+    const playlistButton = () => {
+        
+    }
 
+    const showPlaylistButton = selectedGenre !== '' ? playlistButton() : selectedGenre
 
     return (
         <div className="dropdown-container">
+            <h3>First, pick a genre...</h3>
             <select 
                 className="dropdown"
                 value={selectedGenre} 
@@ -30,6 +35,8 @@ const Dropdown = ({ genreOptions, genreChanged, selectedGenre, playlistOptions, 
                     </option>
                 )}
             </select>
+            {showPlaylistButton}
+            <h3>Now, pick a playlist...</h3>
             <select 
                 className="dropdown"
                 value={selectedPlaylist} 

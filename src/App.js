@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Album from "./components/Album";
 import Song from "./components/Song";
-import userinfo from "./dummy_data_user.json"
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import axios from 'axios';
 
 const points = {
@@ -26,12 +25,12 @@ function App() {
   // const [playlistID, setPlaylistID] = useState("1ap9564Wpqxi2Bb8gVaSWc")
   const [playlistData, setPlaylistData] = useState([])
   const [allData, setAllData] = useState([])
-  const [genres, setGenres] = useState({selectedGenre: '', listOfGenresFromAPI: []})
-  const [playlist, setPlaylist] = useState({selectedPlaylist: '', listOfPlaylistFromAPI: []})
+  const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
+  const [playlist, setPlaylist] = useState({ selectedPlaylist: '', listOfPlaylistFromAPI: [] })
 
   const encoded = process.env.REACT_APP_ENCODED
 
-  // One time call to get Spotify Access Token
+  // One time call to get Spotify Access Token and access all Music Categories
   useEffect(() => {
     // API Access token
     axios("https://accounts.spotify.com/api/token", {
@@ -53,16 +52,17 @@ function App() {
             'Authorization': `Bearer ${response.data.access_token}`
           }
         })
-        .then(genreResponse => {
-          setGenres({
-            selectedGenre: genres.selectedGenre,
-            listOfGenresFromAPI: genreResponse.data.categories.items
+          .then(genreResponse => {
+            setGenres({
+              selectedGenre: genres.selectedGenre,
+              listOfGenresFromAPI: genreResponse.data.categories.items
+            })
           })
-        })
       })
       .catch(err => console.log("Error! ", err))
   }, [genres.selectedGenre, encoded]);
 
+  /// After selection of genre, produces category ID to retrieve appropriate playlists
   const genreChanged = val => {
     setGenres({
       selectedGenre: val,
@@ -76,14 +76,15 @@ function App() {
         'Authorization': `Bearer ${accessToken}`
       }
     })
-    .then(playlistResponse => {
-      setPlaylist({
-        selectedPlaylist: playlist.selectedPlaylist,
-        listOfPlaylistFromAPI: playlistResponse.data.playlists.items
+      .then(playlistResponse => {
+        setPlaylist({
+          selectedPlaylist: playlist.selectedPlaylist,
+          listOfPlaylistFromAPI: playlistResponse.data.playlists.items
+        })
       })
-    })
   }
 
+  /// After selection of playlist, produces playlist ID to retrieve the tracks from playlist
   const playlistChanged = val => {
     setPlaylist({
       selectedPlaylist: val,
@@ -96,42 +97,32 @@ function App() {
         'Authorization': `Bearer ${accessToken}`
       }
     })
-    .then((response) => {
-      // const { items } = response.json()
-      console.log("My response: ", response)
-      setPlaylistData(response.data.items)
-    })
-    .catch(err => console.log("An error has occurred.", err))
+      .then((response) => {
+        // const { items } = response.json()
+        console.log("My response: ", response)
+        setPlaylistData(response.data.items)
+      })
+      .catch(err => console.log("An error has occurred.", err))
   }
 
 
-  // const getPlaylist = useCallback(async () => {
-  //   let userParameters = {
-  //     // method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${accessToken}`
-  //     }
-  //   }
-
-  //   await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, userParameters)
-  //     .then(async (response) => {
-  //       const { items } = await response.json()
-  //       // console.log("My response: ", items)
-  //       setPlaylistData(items)
-  //     })
-  //     .catch(err => console.log("An error has occurred.", err))
-  // }, [accessToken])
-
-  //Getting all the Users from DB
+  /// Getting all the Users from DB
   useEffect(() => {
     axios.get('https://musiqle-back-end-w9vy.onrender.com/user').then((response) => {
       setAllData(response.data)
-      console.log(response.data)
+      // console.log(response.data)
     })
   }, []);
 
-  //choosing the right user
+  /// Adding User to DB
+  const addNewUser = (newUserData) => {
+    const newUser = {
+      "name": newUserData.name
+    }
+    axios.post('https://musiqle-back-end-w9vy.onrender.com/user', newUser)
+  }
+
+  /// choosing the right user
   const getUserData = (newuser) => {
     const specificUser = allData.find(user => {
       return user.name === newuser
@@ -146,13 +137,17 @@ function App() {
       "bestScoreAlbum": 0,
       "bestScoreSong": 0
     }
+
     const specificUserChosen = specificUser ? specificUser : newUserData //postnewuser
+    addNewUser(newUserData)
     setUser(specificUserChosen.name)
     setUserData(specificUserChosen)
     console.log(specificUserChosen, "new")
     console.log(userData, "userdata")
   }
 
+
+  //// NEED TO BE UPDATED TO REFLECT CHANGES IN DB FOR USER, CURRENTLY NOT GETTING SAVED AND RESETTING ON REFRESH
   const increaseCurrentScore = (attemptsLeft) => {
     setScore(score + points[attemptsLeft])
   }
@@ -196,6 +191,7 @@ function App() {
           path="/album"
           element={
             <Album
+              playlistName={playlist.selectedPlaylist}
               playlistData={playlistData}
               currentScore={score}
               totalScore={totalScore}

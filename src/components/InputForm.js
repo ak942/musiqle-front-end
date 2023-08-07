@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import './InputForm.css'
 
 
 const InputForm = ({ skipAlbum, compareInput, giveAnswer }) => {
@@ -36,7 +37,7 @@ const InputForm = ({ skipAlbum, compareInput, giveAnswer }) => {
                         required
                     />
                 </div>
-                <div>
+                <div class="input-buttons">
                     <button
                         type="submit"
                         className="circular"

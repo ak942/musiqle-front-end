@@ -2,32 +2,29 @@ import React from 'react';
 import "./Album.css"
 import InputForm from './InputForm';
 import ScoreBoard from './ScoreBoard';
-// import albuminfo from "../dummy_data_album.json"
 import { useState } from 'react';
 import NavBar from './NavBar';
 
 
 const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, increaseCurrentScore, increaseStreak, resetStreak, increaseTotalScore }) => {
 
-    const playlist = playlistData
-    console.log("These are my songs: ", playlist)
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
 
     const getRandomAlbum = () => {
-        const randomNum = Math.floor(Math.random() * playlist.length)
-        console.log(playlist[randomNum])
-        return playlist[randomNum]
+        const randomNum = Math.floor(Math.random() * playlistData.length)
+        return playlistData[randomNum]
     }
 
     const [randomAlbum, setRandomAlbum] = useState(getRandomAlbum())
 
-    const resetScoreBoard = () => {
+    const resetGame = () => {
         setAttempts(4)
         setNum(8)
     }
 
     const name = randomAlbum.track.album.name
+    console.log(name)
     const url = randomAlbum.track.album.images[0].url
 
     const giveAnswer = () => {
@@ -35,7 +32,7 @@ const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, inc
     }
 
     const skipAlbum = () => {
-        resetScoreBoard()
+        resetGame()
         resetStreak()
         increaseTotalScore()
         resetScore()
@@ -51,7 +48,7 @@ const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, inc
             )
             increaseCurrentScore(attempts)
             increaseStreak()
-            resetScoreBoard()
+            resetGame()
 
         } else {
             if (attempts === 0) {
@@ -59,7 +56,7 @@ const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, inc
                     getRandomAlbum()
                 )
                 resetStreak()
-                resetScoreBoard()
+                resetGame()
                 increaseTotalScore()
                 resetScore()
 
