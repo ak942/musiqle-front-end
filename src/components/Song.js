@@ -22,7 +22,7 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
 
     ///INITIATE NEW GAME
     const getRandomSong = () => {
-        const randomNum = Math.floor(Math.random() * 10)
+        const randomNum = Math.floor(Math.random() * 100)
         return randomNum
     }
 
@@ -43,10 +43,15 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
     }
     ///GET LYRICS
     const lyricsShown = () => {
-        console.log(num, "num")
+        // console.log(num, "num")
         let endNum = num + 1 + 5
+        // let showLyrics = []
         let sliceLyrics = lyrics.slice(5, endNum)
-        // console.log(lyrics)
+        for (let line of sliceLyrics) {
+            if (line)
+            console.log(line)
+        }
+        // console.log(sliceLyrics)
         return (
             (sliceLyrics || []).map(lyric => <section className="lyric">{lyric}</section>
             )
@@ -62,7 +67,7 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
         if (inputAnswer === trackName) {
             //reset the game
         } else {
-            console.log(attempts)
+            // console.log(attempts)
             if (attempts === 0) {
                 setAttempts(4)
                 setNum(0)
