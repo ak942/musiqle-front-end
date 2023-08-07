@@ -31,7 +31,7 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
         const response = await axios.get('https://musiqle-back-end-w9vy.onrender.com/musixmatch/track')
         setTrackName(response.data.message.body.track_list[randomTrackNum].track.track_name)
         setTrackId(response.data.message.body.track_list[randomTrackNum].track.track_id)
-        // console.log(response.data.message.body.track_list[randomTrackNum].track.track_name)
+        console.log(response.data.message.body.track_list.length)
         setArtist(response.data.message.body.track_list[randomTrackNum].track.artist_name)
         findLyrics(response.data.message.body.track_list[randomTrackNum].track.track_id)
     }
@@ -43,17 +43,22 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
     }
     ///GET LYRICS
     const lyricsShown = () => {
-        // console.log(num, "num")
         let endNum = num + 1 + 5
-        // let showLyrics = []
-        let sliceLyrics = lyrics.slice(5, endNum)
+        let lyricsArray = []
+        let sliceLyrics = lyrics.slice(0,lyrics.length)
         for (let line of sliceLyrics) {
-            if (line)
-            console.log(line)
+            // console.log(line)
+            if (/[a-z]/i.test(line)){
+                lyricsArray.push(line)
+            } 
         }
-        // console.log(sliceLyrics)
+        if (! lyricsArray) {
+            findTracks()
+        };
+        let showLyrics = lyricsArray.slice(5,endNum)
+        console.log(lyricsArray.slice(5,11))
         return (
-            (sliceLyrics || []).map(lyric => <section className="lyric">{lyric}</section>
+            (showLyrics || []).map(lyric => <section className="lyric">{lyric}</section>
             )
         )
     }
