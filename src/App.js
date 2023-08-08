@@ -205,14 +205,8 @@ function App() {
             <Album
               playlistName={playlist.selectedPlaylist}
               playlistData={playlistData}
-              currentScore={score}
-              totalScore={totalScore}
-              streak={streak}
-              increaseCurrentScore={increaseCurrentScore}
-              resetScore={resetScore}
-              increaseStreak={increaseStreak}
-              resetStreak={resetStreak}
-              increaseTotalScore={increaseTotalScore}
+              userData = {userData}
+              increaseStreak={updateLongestStreak}
             />
           }
         />
