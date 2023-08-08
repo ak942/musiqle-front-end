@@ -49,7 +49,7 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
         // if (response.data.message.body.lyrics.explicit ===1) {
         //     await findTracks()
         // }  else {
-        const avoidTracks= ["Takku Tamaram Bandi"]
+        const avoidTracks= ["Takku Tamaram Bandi", "VENTE CONMIGO"]
         const spanish = ['Ponte', 'mi', 'jacket', 'por', 'si', 'hoy', 'te', 'da', 'frío']
         setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
         // console.log(response.data.message.body.lyrics.lyrics_body.split("\n"))
@@ -88,7 +88,6 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
         setAttempts(4)
         setNum(0)
         findTracks()
-        setScore(0)
     }
 
     //CHECK THE INPUT AGAINST ANSWER
@@ -105,13 +104,14 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
         if (inputAnswer.toLowerCase() === correctAnswerString ) {
             alert(`You are Correct! The song is ${trackName} by ${artist}`)
             setTotalScore(totalScore + points[attempts])
-            setScore(points[attempts])
-            setStreak(streak +1)
+            setScore(score + points[attempts])
+            setStreak(streak + 1)
             resetGame()
             return
         } else {
             if (attempts === 0) {
                 resetGame()
+                setStreak(0)
             } else {
                 setAttempts(attempts - 1)
                 setNum(num + 1)
@@ -125,7 +125,7 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
             <h1>Guess the Song</h1>
             <ScoreBoard
                 currentScore={score}
-                totalScore={userData.totalScore}
+                totalScore={totalScore}
                 streak={streak}
             />
             <p>Attempts Left: {attempts}</p>
