@@ -6,7 +6,7 @@ import NavBar from './NavBar'
 import SongInputForm from './SongInputForm'
 import './Song.css'
 
-const Song = ({ userData,currentScore, totalScore, streak, increaseScore, increaseStreak, resetStreak, increaseTotalScore }) => {
+const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, resetStreak, increaseTotalScore }) => {
     const [attempts, setAttempts] = useState(4)
     // const [songData, setSongData] = useState(null)
     // const [trackId, setTrackId] = useState('256434132')
@@ -43,13 +43,14 @@ const Song = ({ userData,currentScore, totalScore, streak, increaseScore, increa
         // if (response.data.message.body.lyrics.explicit ===1) {
         //     await findTracks()
         // }  else {
+        const spanish = ['Ponte', 'mi', 'jacket', 'por', 'si', 'hoy', 'te', 'da', 'frío']
         setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
         // console.log(response.data.message.body.lyrics.lyrics_body.split("\n"))
         
     }
     ///GET LYRICS
     const lyricsShown = () => {
-        let endNum = num + 1 + 3
+        let endNum = num + 1 + 2
         let lyricsArray = []
         let sliceLyrics = lyrics.slice(0,lyrics.length-1)
         for (let line of sliceLyrics) {
@@ -61,9 +62,9 @@ const Song = ({ userData,currentScore, totalScore, streak, increaseScore, increa
         if (! lyricsArray) {
             findTracks()
         };
-        let showLyrics = lyricsArray.slice(3,endNum)
+        let showLyrics = lyricsArray.slice(2,endNum)
         console.log({trackName}, {artist})
-        console.log(lyricsArray.slice(3,10))
+        console.log(lyricsArray.slice(2,7))
         console.log(lyrics)
         return (
             (showLyrics || []).map(lyric => <section className="lyric">{lyric}</section>
