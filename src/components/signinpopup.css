@@ -26,7 +26,7 @@ left: 42%;
 zoom: 1.5;
 } */
 
-.spotify-submit-btn {
+.enter-submit-btn {
 border-radius: 10px;
 /* background-color: white; */
 outline: none;
@@ -40,25 +40,25 @@ button:hover {
 background-color: white;
 }
 
-.modal {
+/* .modal { */
 /* position: fixed;
 z-index: 1;  */
-width: 50vh;
+/* width: 50vh;
 height: 50vh;
 position: relative;
 background-color: rgba(0, 0, 0, 0.25);
 justify-content: center;
-}
+} */
 
 .modal_content {
 background-color: black;
 color:white;
-/* position: absolute; */
-top: 20%;
-left: 30%;
+position: fixed;
+top: 18%;
+left: 18%;
 width: 40%;
 padding: 20px;
-margin: 10vh;
+margin-left: auto;
 border-radius: 5px;
 border: 2px solid #1db954;
 height: 50vh;

@@ -32,7 +32,7 @@ const SignInpPopUp = ({closeCallBack, findUser}) => {
                 <br />
 
                 <button
-                    className="spotify-submit-btn"
+                    className="enter-submit-btn"
                     onClick={handleSubmit}
                     >
                     Enter
