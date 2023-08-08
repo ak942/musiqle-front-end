@@ -47,9 +47,7 @@ const Song = ({ userData, increaseStreak, increaseTotalScore}) => {
     const findLyrics = async (id) => {
         const response = await axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/track/${id}`)
         // console.log(response.data.message.body.lyrics.explicit)
-        // if (response.data.message.body.lyrics.explicit ===1) {
-        //     await findTracks()
-        // }  else {
+
         const avoidTracks= ["Takku Tamaram Bandi", "VENTE CONMIGO"]
         const spanish = ['Ponte', 'mi', 'jacket', 'por', 'si', 'hoy', 'te', 'da', 'frío']
         setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
@@ -132,7 +130,11 @@ const Song = ({ userData, increaseStreak, increaseTotalScore}) => {
             />
             <p>Attempts Left: {attempts}</p>
             <div className="size">{lyricsShown()}</div>
-            <SongInputForm compareInput={compareInput} />
+            <SongInputForm 
+            compareInput={compareInput} 
+            giveAnswer = {attempts ===0? giveAnswer: null}
+            skipSong = {skipSong}
+            />
 
         </div>
     )
