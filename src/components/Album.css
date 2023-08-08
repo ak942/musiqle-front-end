@@ -47,13 +47,11 @@ input::placeholder {
     border-radius: 5px;
     height: 50px;
     width: 75px;
-    border: 2px solid white;
-    background-color: #1ed760;
+    border: 2px solid #1db954;
+    background-color: white;
     margin: 4px;
-    font-size: 2.5vh;
-    font-weight: bold;
-    color: black
 }
+
 button:hover{
     border: 2px solid darkgrey;
 

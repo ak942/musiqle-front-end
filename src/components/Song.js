@@ -8,14 +8,19 @@ import './Song.css'
 
 const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, resetStreak, increaseTotalScore }) => {
     const [attempts, setAttempts] = useState(4)
-    // const [songData, setSongData] = useState(null)
-    // const [trackId, setTrackId] = useState('256434132')
     const [lyrics, setLyrics] = useState("")
     const [trackName, setTrackName] = useState("")
     const [artist, setArtist] = useState("")
     const [num, setNum] = useState(0)
+    const [score, setScore] = useState(0)
+    const [streak, setStreak] = useState(0)
     const filters = ["(", ")", "live", "remastered", "edit", "remix", "-", "?", "!", "remaster"]
-
+    const points = {
+        4: 10,
+        3: 7,
+        2: 4,
+        1: 1
+    }
 
     useEffect(() => {
         findTracks()
@@ -96,6 +101,8 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
         console.log(correctAnswerString, "newcorrectanswer")
         if (inputAnswer.toLowerCase() === correctAnswerString ) {
             alert(`You are Correct! The song is ${trackName} by ${artist}`)
+            setScore(score + points[attempts])
+            setStreak(streak +1)
             resetGame()
             return
         } else {
@@ -113,9 +120,9 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
             <NavBar />
             <h1>Guess the Song</h1>
             <ScoreBoard
-                currentScore={userData.currentScore}
+                currentScore={score}
                 totalScore={userData.totalScore}
-                streak={userData.streak}
+                streak={streak}
             />
             <p>Attempts Left: {attempts}</p>
             <div className="size">{lyricsShown()}</div>
