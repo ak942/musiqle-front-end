@@ -31,6 +31,10 @@
     color: black
 }
 
+button:hover{
+    border: 2px solid darkgrey;
+    background-color: #1ed760;
+}
 a:link {
     text-decoration: none;
     color: black;

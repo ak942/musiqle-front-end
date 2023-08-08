@@ -13,7 +13,8 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
     const [artist, setArtist] = useState("")
     const [num, setNum] = useState(0)
     const [score, setScore] = useState(0)
-    const [streak, setStreak] = useState(0)
+    const [streak, setStreak] = useState(userData.streak)
+    const [totalScore, setTotalScore] = useState(userData.totalScore)
     const filters = ["(", ")", "live", "remastered", "edit", "remix", "-", "?", "!", "remaster"]
     const points = {
         4: 10,
@@ -48,6 +49,7 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
         // if (response.data.message.body.lyrics.explicit ===1) {
         //     await findTracks()
         // }  else {
+        const avoidTracks= ["Takku Tamaram Bandi"]
         const spanish = ['Ponte', 'mi', 'jacket', 'por', 'si', 'hoy', 'te', 'da', 'frío']
         setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
         // console.log(response.data.message.body.lyrics.lyrics_body.split("\n"))
@@ -55,7 +57,7 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
     }
     ///GET LYRICS
     const lyricsShown = () => {
-        let endNum = num + 1 + 2
+        let endNum = num + 1
         let lyricsArray = []
         let sliceLyrics = lyrics.slice(0,lyrics.length-1)
         for (let line of sliceLyrics) {
@@ -67,9 +69,9 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
         if (! lyricsArray) {
             findTracks()
         };
-        let showLyrics = lyricsArray.slice(2,endNum)
+        let showLyrics = lyricsArray.slice(0,endNum)
         console.log({trackName}, {artist})
-        console.log(lyricsArray.slice(2,7))
+        console.log(lyricsArray.slice(0,7))
         console.log(lyrics)
         return (
             (showLyrics || []).map(lyric => <section className="lyric">{lyric}</section>
@@ -86,6 +88,7 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
         setAttempts(4)
         setNum(0)
         findTracks()
+        setScore(0)
     }
 
     //CHECK THE INPUT AGAINST ANSWER
@@ -101,7 +104,8 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
         console.log(correctAnswerString, "newcorrectanswer")
         if (inputAnswer.toLowerCase() === correctAnswerString ) {
             alert(`You are Correct! The song is ${trackName} by ${artist}`)
-            setScore(score + points[attempts])
+            setTotalScore(totalScore + points[attempts])
+            setScore(points[attempts])
             setStreak(streak +1)
             resetGame()
             return
