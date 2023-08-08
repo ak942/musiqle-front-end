@@ -177,8 +177,6 @@ function App() {
     {"totalScore": totalscore})
   }
 
-  const loggedIn = (user !== null) ? true : false
-
   return (
     <Router>
       <Routes>
@@ -218,7 +216,7 @@ function App() {
               increaseStreak={updateLongestStreak}
               increaseTotalScore={updateTotalScore}
             />
-          : <SignInpPopUp/>}
+          : <SignInpPopUp findUser={getUserData}/>}
         />
       </Routes>
     </Router>

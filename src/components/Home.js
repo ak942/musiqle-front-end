@@ -7,10 +7,10 @@ import Dropdown from "./Dropdown";
 const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOptions, selectedGenre, playlistOptions, selectedPlaylist, playlistChanged }) => {
     const [clicked, setClicked] = React.useState(false)
 
-    const spotifyClick = () => {
+    const openPopUp = () => {
         setClicked(true)
     }
-    const close = () => {
+    const closePopUp = () => {
         setClicked(false)
     }
     const signIn = () => {
@@ -20,7 +20,7 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
                     {/* <button className="circular signin" onClick={spotifyClick}>
                         Sign In To Spotify
                     </button> */}
-                    <button className="signin-btn" onClick={spotifyClick}>
+                    <button className="signin-btn" onClick={openPopUp}>
                         Sign In
                     </button>
                 </div>
@@ -42,7 +42,7 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
                 {signIn()}
             </div>
             <div>
-                {clicked ? <SignInPopUp closeCallBack={close} findUser={findUser} /> : null}
+                {clicked ? <SignInPopUp closeCallBack={closePopUp} findUser={findUser} /> : null}
             </div>
             <br />
             <Dropdown
