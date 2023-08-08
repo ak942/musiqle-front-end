@@ -17,11 +17,11 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
         if (!clicked && !user) {
             return (
                 <div>
-                    <button className="circular signin" onClick={spotifyClick}>
+                    {/* <button className="circular signin" onClick={spotifyClick}>
                         Sign In To Spotify
-                    </button>
+                    </button> */}
                     <button className="circular signin" onClick={spotifyClick}>
-                        Sign In As Guest
+                        Sign In
                     </button>
                 </div>
             )
