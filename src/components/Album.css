@@ -49,6 +49,7 @@ input::placeholder {
     width: 75px;
     border: 2px solid #1db954;
     background-color: white;
+    margin: 4px;
 }
 
 form {

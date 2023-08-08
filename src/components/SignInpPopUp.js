@@ -1,11 +1,11 @@
 import {useState} from "react";
-import './spotifypopup.css'
+import './signinpopup.css'
 
-const SpotifyPopUp = ({closeCallBack, findUser}) => {
+const SignInpPopUp = ({closeCallBack, findUser}) => {
     const [user, setUser] = useState("")
     const handleSubmit = (event) => {
         event.preventDefault()
-        console.log(user)
+        console.log(user, "handlesubmit")
         findUser(user)
         setUser("")
         closeCallBack()
@@ -45,4 +45,4 @@ const SpotifyPopUp = ({closeCallBack, findUser}) => {
 }
 
 
-export default SpotifyPopUp;
+export default SignInpPopUp;
