@@ -6,7 +6,7 @@ import NavBar from './NavBar'
 import SongInputForm from './SongInputForm'
 import './Song.css'
 
-const Song = ({ userData, increaseStreak, }) => {
+const Song = ({ userData, increaseStreak, increaseTotalScore}) => {
     const [attempts, setAttempts] = useState(4)
     const [lyrics, setLyrics] = useState("")
     const [trackName, setTrackName] = useState("")
@@ -88,7 +88,7 @@ const Song = ({ userData, increaseStreak, }) => {
     const resetGame = () => {
         setAttempts(4)
         setNum(0)
-        increaseStreak(streak)
+        increaseStreak(streak +1)
         findTracks()
     }
 

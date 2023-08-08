@@ -21,6 +21,7 @@ function App() {
   const [streak, setStreak] = useState(0)
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState({})
+  const [userId, setUserId] = useState(null)
   const [accessToken, setAccessToken] = useState(null)
   const [playlistData, setPlaylistData] = useState([])
   const [allData, setAllData] = useState([])
@@ -142,9 +143,9 @@ function App() {
       addNewUser(newUserData)
     }
     setUser(specificUserChosen.name)
+    setUserId(specificUserChosen.id)
     setUserData(specificUserChosen)
     console.log(specificUserChosen, "new")
-    console.log(userData, "userdata")
   }
   /// Sign Out User
   const userSignOut = () => {
@@ -153,9 +154,7 @@ function App() {
   }
   ///Delete User
   const deleteUser = () => {
-    const id = userData.id
-    console.log(id)
-    axios.delete(`https://musiqle-back-end-w9vy.onrender.com/user/${id}`)
+    axios.delete(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}`)
     userSignOut()
   };
 
@@ -163,32 +162,22 @@ function App() {
   const updateLongestStreak=(streak) => {
     const currentStreak = userData.longestStreak
     if (streak > currentStreak) {
-      //do a patch request to update longestStreak
-      console.log(streak)
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
+      {"longestStreak": streak})
+      console.log(userId)
     }
   }
   const increaseCurrentScore = (attemptsLeft) => {
     setScore(score + points[attemptsLeft])
   }
 
-  const increaseStreak = () => {
-    setStreak(streak + 1)
-  }
-
-  const increaseTotalScore = () => {
-    setTotalScore(totalScore + score)
-  }
-
-  const resetScore = () => {
-    setScore(0)
-  }
-
-  const resetStreak = () => {
-    setStreak(0)
+  const updateTotalScore = (totalscore) => {
+    console.log(userId, "id")
+    axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
+    {"totalScore": totalscore})
   }
 
   const loggedIn = (user !== null) ? true : false
-  
 
   return (
     <Router>
@@ -233,7 +222,7 @@ function App() {
             <Song
               userData = {userData}
               increaseStreak={updateLongestStreak}
-              increaseTotalScore={increaseTotalScore}
+              increaseTotalScore={updateTotalScore}
             />
           }
         />
