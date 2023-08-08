@@ -6,13 +6,14 @@ import NavBar from './NavBar'
 import SongInputForm from './SongInputForm'
 import './Song.css'
 
-const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, resetStreak, increaseTotalScore }) => {
+const Song = ({ userData, increaseStreak, }) => {
     const [attempts, setAttempts] = useState(4)
     const [lyrics, setLyrics] = useState("")
     const [trackName, setTrackName] = useState("")
     const [artist, setArtist] = useState("")
     const [num, setNum] = useState(0)
     const [score, setScore] = useState(0)
+    const [bestScoreSong, setBestScoreSong] = useState(userData.bestScoreSong)
     const [streak, setStreak] = useState(userData.streak)
     const [totalScore, setTotalScore] = useState(userData.totalScore)
     const filters = ["(", ")", "live", "remastered", "edit", "remix", "-", "?", "!", "remaster"]
@@ -72,7 +73,7 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
         let showLyrics = lyricsArray.slice(0,endNum)
         console.log({trackName}, {artist})
         console.log(lyricsArray.slice(0,7))
-        console.log(lyrics)
+        // console.log(lyrics)
         return (
             (showLyrics || []).map(lyric => <section className="lyric">{lyric}</section>
             )
@@ -87,6 +88,7 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
     const resetGame = () => {
         setAttempts(4)
         setNum(0)
+        increaseStreak(streak)
         findTracks()
     }
 
@@ -94,7 +96,7 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
     const compareInput = (inputAnswer) => {
         let correctAnswer = trackName.toLowerCase().split(" ")
         for (let word of correctAnswer){
-            if(filters.indexOf(word) !== -1 || /[a-z]/i.test(word) === false) {
+            if(filters.indexOf(word) !== -1) {
                 let index = correctAnswer.indexOf(word)
                 correctAnswer.splice(index,1)
             }
@@ -130,12 +132,6 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
             />
             <p>Attempts Left: {attempts}</p>
             <div className="size">{lyricsShown()}</div>
-            
-            {/* <section>{giveAnswer()}</section> */}
-            {/* <InputForm
-                // compareInput={compareInput}
-                giveAnswer={attempts === 0 ? giveAnswer : null}
-            /> */}
             <SongInputForm compareInput={compareInput} />
 
         </div>

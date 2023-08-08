@@ -138,11 +138,9 @@ function App() {
     if (specificUser) {
       specificUserChosen = specificUser
     } else {
-      console.log("else")
       specificUserChosen = newUserData
       addNewUser(newUserData)
     }
-    // const specificUserChosen = specificUser ? specificUser : newUserData //postnewuser
     setUser(specificUserChosen.name)
     setUserData(specificUserChosen)
     console.log(specificUserChosen, "new")
@@ -162,6 +160,13 @@ function App() {
   };
 
   //// NEED TO BE UPDATED TO REFLECT CHANGES IN DB FOR USER, CURRENTLY NOT GETTING SAVED AND RESETTING ON REFRESH
+  const updateLongestStreak=(streak) => {
+    const currentStreak = userData.longestStreak
+    if (streak > currentStreak) {
+      //do a patch request to update longestStreak
+      console.log(streak)
+    }
+  }
   const increaseCurrentScore = (attemptsLeft) => {
     setScore(score + points[attemptsLeft])
   }
@@ -227,10 +232,7 @@ function App() {
           element={
             <Song
               userData = {userData}
-              increaseCurrentScore={increaseCurrentScore}
-              resetScore={resetScore}
-              increaseStreak={increaseStreak}
-              resetStreak={resetStreak}
+              increaseStreak={updateLongestStreak}
               increaseTotalScore={increaseTotalScore}
             />
           }
