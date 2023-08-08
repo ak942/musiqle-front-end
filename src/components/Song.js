@@ -82,13 +82,14 @@ const Song = ({ userData, increaseStreak, increaseTotalScore}) => {
         return `The song is ${trackName} by ${artist}`
     }
 
-    ///Resets Game
+    ///Resets Game + Skip Song Callback
     const resetGame = () => {
         setAttempts(4)
         setNum(0)
         increaseStreak(streak +1)
         findTracks()
     }
+
 
     //CHECK THE INPUT AGAINST ANSWER
     const compareInput = (inputAnswer) => {
@@ -133,7 +134,7 @@ const Song = ({ userData, increaseStreak, increaseTotalScore}) => {
             <SongInputForm 
             compareInput={compareInput} 
             giveAnswer = {attempts ===0? giveAnswer: null}
-            skipSong = {skipSong}
+            skipSong = {resetGame}
             />
 
         </div>

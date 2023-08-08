@@ -5,6 +5,7 @@ import Album from "./components/Album";
 import Song from "./components/Song";
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import SignInpPopUp from "./components/SignInpPopUp";
 
 const points = {
   4: 10,
@@ -164,7 +165,6 @@ function App() {
     if (streak > currentStreak) {
       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
       {"longestStreak": streak})
-      console.log(userId)
     }
   }
   const increaseCurrentScore = (attemptsLeft) => {
@@ -212,13 +212,13 @@ function App() {
         />
         <Route
           path="/song"
-          element={
+          element={ user?
             <Song
               userData = {userData}
               increaseStreak={updateLongestStreak}
               increaseTotalScore={updateTotalScore}
             />
-          }
+          : <SignInpPopUp/>}
         />
       </Routes>
     </Router>

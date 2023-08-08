@@ -5,7 +5,6 @@ const SignInpPopUp = ({closeCallBack, findUser}) => {
     const [user, setUser] = useState("")
     const handleSubmit = (event) => {
         event.preventDefault()
-        console.log(user, "handlesubmit")
         findUser(user)
         setUser("")
         closeCallBack()

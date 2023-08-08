@@ -27,10 +27,10 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
             )
         } else if (user) {
             return (
-                <section>
-                    <h4>Welcome back, {user.charAt(0).toUpperCase() + user.slice(1)}!</h4>
-                    <button onClick = {userSignOut}> Sign Out </button>
-                    <button onClick = {deleteUser}> Delete User </button>
+                <section className="user-login-page">
+                    <h4 className="user-header">Welcome Back, {user.charAt(0).toUpperCase() + user.slice(1)}!</h4>
+                    <button className = "user-login-btn" onClick = {userSignOut}> Sign Out </button>
+                    <button className = "user-login-btn" onClick = {deleteUser}> Delete </button>
                 </section>
             )
         }
@@ -40,6 +40,8 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
             <h1 className="welcome-header">Play! Pick Your Path</h1>
             <div className="right">
                 {signIn()}
+            </div>
+            <div>
                 {clicked ? <SignInPopUp closeCallBack={close} findUser={findUser} /> : null}
             </div>
             <br />
@@ -64,6 +66,7 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
                         <Link to="/song">
                             Song
                         </Link>
+                        
                     </div>
                 </li>
             </ul>
