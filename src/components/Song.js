@@ -6,7 +6,7 @@ import NavBar from './NavBar'
 import SongInputForm from './SongInputForm'
 import './Song.css'
 
-const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak, resetStreak, increaseTotalScore }) => {
+const Song = ({ userData,currentScore, totalScore, streak, increaseScore, increaseStreak, resetStreak, increaseTotalScore }) => {
     const [attempts, setAttempts] = useState(4)
     // const [songData, setSongData] = useState(null)
     // const [trackId, setTrackId] = useState('256434132')
@@ -112,9 +112,9 @@ const Song = ({ currentScore, totalScore, streak, increaseScore, increaseStreak,
             <NavBar />
             <h1>Guess the Song</h1>
             <ScoreBoard
-                currentScore={currentScore}
-                totalScore={totalScore}
-                streak={streak}
+                currentScore={userData.currentScore}
+                totalScore={userData.totalScore}
+                streak={userData.streak}
             />
             <p>Attempts Left: {attempts}</p>
             <div className="size">{lyricsShown()}</div>

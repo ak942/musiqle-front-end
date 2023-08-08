@@ -226,9 +226,10 @@ function App() {
           path="/song"
           element={
             <Song
-              currentScore={score}
-              totalScore={totalScore}
-              streak={streak}
+              // currentScore={score}
+              // totalScore={totalScore}
+              // streak={streak}
+              userData = {userData}
               increaseCurrentScore={increaseCurrentScore}
               resetScore={resetScore}
               increaseStreak={increaseStreak}
