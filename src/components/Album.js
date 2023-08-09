@@ -6,7 +6,7 @@ import { useState } from 'react';
 import NavBar from './NavBar';
 
 
-const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, increaseCurrentScore, increaseStreak, resetStreak, increaseTotalScore }) => {
+const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, increaseCurrentScore, increaseStreak, resetStreak, increaseTotalScore, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
 
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
@@ -75,7 +75,14 @@ const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, inc
 
     return (
         <div className="center game">
-            <NavBar />
+            <NavBar 
+                genreChanged={genreChanged}
+                genreOptions={genreOptions}
+                selectedGenre={selectedGenre}
+                playlistChanged={playlistChanged}
+                playlistOptions={playlistOptions}
+                selectedPlaylist={selectedPlaylist}
+            />
             <h1>Guess the Album</h1>
             <ScoreBoard
                 currentScore={currentScore}

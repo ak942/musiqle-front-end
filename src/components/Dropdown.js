@@ -8,6 +8,18 @@ const Dropdown = ({ options, changed, selected }) => {
         changed(e.target.value)
     }
 
+    const dropdownOptions = (options !== undefined) ?
+
+        options.map((item, idx) =>
+            <option key={idx} value={item.id}>
+                {item.name}
+            </option>)
+        : 
+        <option>
+            No options available
+        </option>
+
+
     return (
         <div className="dropdown-container">
             <select
@@ -15,11 +27,7 @@ const Dropdown = ({ options, changed, selected }) => {
                 value={selected}
                 onChange={dropdownChanged}
             >
-                {options.map((item, idx) =>
-                    <option key={idx} value={item.id}>
-                        {item.name}
-                    </option>
-                )}
+                {dropdownOptions}
             </select>
         </div>
     )
