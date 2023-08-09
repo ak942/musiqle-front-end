@@ -164,11 +164,11 @@ function App() {
   const increaseCurrentScore = (attemptsLeft) => {
     setScore(userData.score + points[attemptsLeft])
     try {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/score`, score) // Ask Agnes how to access userID and then replace //
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/score`, score) 
       .then(console.log("Score updated!"))
 
       if (userData.bestOverallScore < score) {
-        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/bestoverallstreak`, score)
+        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/bestoverallstreak`, score)
         .then(console.log("Best overall score updated!"))
       }
 
@@ -180,11 +180,11 @@ function App() {
   const increaseStreak = () => {
     setStreak(userData.streak + 1)
     try {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/streak`, streak)
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/streak`, streak)
       .then(console.log("Streak updated!"))
 
       if (userData.longestStreak < streak) {
-          axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/longeststreak`, streak)
+          axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/longeststreak`, streak)
           .then(console.log("Longest streak updated!"))
         }
 
@@ -230,8 +230,8 @@ function App() {
           exact path="/"
           element={
             <Home
-              user={user}
-              findUser={getUserData}
+              user = {user}
+              findUser = {getUserData}
               deleteUser = {deleteUser}
               userSignOut = {userSignOut}
             />
