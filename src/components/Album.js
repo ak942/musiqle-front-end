@@ -6,12 +6,10 @@ import { useState } from 'react';
 import NavBar from './NavBar';
 
 
-const Album = ({ playlistData, userData, increaseStreak }) => {
+const Album = ({ playlistData, userData, increaseStreak, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
     const [streak, setStreak] = useState(userData.streak)
     const [totalScore, setTotalScore] = useState(userData.totalScore)
     const [score, setScore] =useState(0)
-const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, increaseCurrentScore, increaseStreak, resetStreak, increaseTotalScore, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
-
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
     const [name, setName] = useState("")
@@ -23,8 +21,8 @@ const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, inc
         1: 1
     }
     const getRandomAlbum = () => {
-        const randomNum = playlistData !== undefined ? Math.floor(Math.random() * playlistData.length) : 0
-        return playlistData[randomNum]
+        // const randomNum = playlistData !== undefined ? Math.floor(Math.random() * playlistData.length) : 0
+        // return playlistData[randomNum]
     }
 
     const [randomAlbum, setRandomAlbum] = useState(getRandomAlbum())

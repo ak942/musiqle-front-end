@@ -17,7 +17,17 @@ const points = {
 
 function App() {
   
-  const [accessToken, setAccessToken] = useState(null)
+  // const [accessToken, setAccessToken] = useState(null)
+  const [user, setUser] = useState(null)
+  const [userData, setUserData] = useState({})
+  const [userId, setUserId] = useState(null)
+  const [allData, setAllData] = useState([])
+  const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
+  const [playlist, setPlaylist] = useState({ selectedPlaylist: '', listOfPlaylistFromAPI: [] })
+  const [clicked, setClicked] = useState(false)
+  const [score, setScore] = useState(0)
+  const [totalScore, setTotalScore] = useState(0)
+  const [streak, setStreak] = useState(0)
   
   useEffect(() => {
     try {
@@ -47,15 +57,6 @@ function App() {
       console.log("Could not retrieve tracks.")
     }
   }, [])
-
-  const [user, setUser] = useState(null)
-  const [userData, setUserData] = useState({})
-  const [userId, setUserId] = useState(null)
-  const [allData, setAllData] = useState([])
-  const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
-  const [playlist, setPlaylist] = useState({ selectedPlaylist: '', listOfPlaylistFromAPI: [] })
-  const [clicked, setClicked] = useState(false)
-
 
   /// Getting all the Users from DB
   useEffect(() => {
@@ -99,11 +100,13 @@ function App() {
     setUserData(specificUserChosen)
     console.log(specificUserChosen, "new")
   }
+
   /// Sign Out User
   const userSignOut = () => {
     setUser(null)
     setUserData({})
   }
+
   ///Delete User
   const deleteUser = () => {
     axios.delete(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}`)
@@ -179,10 +182,6 @@ function App() {
 
 
   //// Score mechanics to update state and user database
-  const [score, setScore] = useState(0)
-  const [totalScore, setTotalScore] = useState(0)
-  const [streak, setStreak] = useState(0)
-  
   const updateLongestStreak=(streak) => {
     const currentStreak = userData.longestStreak
     if (streak > currentStreak) {
@@ -190,8 +189,8 @@ function App() {
       {"longestStreak": streak})
     }
   }
-  const increaseCurrentScore = (attemptsLeft) => {
-    setScore(userData.score + points[attemptsLeft])
+
+  const increaseCurrentScore = (score) => {
     try {
       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/score`, score) 
       .then(console.log("Score updated!"))
@@ -207,7 +206,6 @@ function App() {
   }
 
   const increaseStreak = () => {
-    setStreak(userData.streak + 1)
     try {
       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/streak`, streak)
       .then(console.log("Streak updated!"))
@@ -223,7 +221,6 @@ function App() {
   }
 
   const increaseTotalScore = () => {
-    setTotalScore(userData.totalScore + score)
     try {
       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/totalscore`, totalScore)
       .then(console.log("Total score updated!"))
@@ -233,7 +230,6 @@ function App() {
   }
 
   const resetScore = () => {
-    setScore(0)
     try {
       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/score`, score)
       .then(console.log("Score returned to 0!"))
@@ -244,6 +240,8 @@ function App() {
 
   const resetStreak = () => {
     setStreak(0)
+  }
+
   const updateTotalScore = (totalscore) => {
     console.log(userId, "id")
     axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
@@ -271,6 +269,7 @@ function App() {
             <Album
               playlistData={playlistData}
               userData = {userData}
+              increaseCurrentScore={increaseCurrentScore}
               increaseStreak={updateLongestStreak}
               genreChanged={genreChanged}
               genreOptions={genres.listOfGenresFromAPI}
