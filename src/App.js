@@ -6,7 +6,6 @@ import Song from "./components/Song";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import SignInpPopUp from "./components/SignInpPopUp";
-import { toHaveFormValues } from "@testing-library/jest-dom/matchers";
 
 const points = {
   4: 10,
@@ -23,48 +22,35 @@ function App() {
   const [userId, setUserId] = useState(null)
   const [allData, setAllData] = useState([])
   const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
-  const [playlist, setPlaylist] = useState({ selectedPlaylist: '', listOfPlaylistFromAPI: [] })
+  const [playlist, setPlaylist] = useState({ selectedPlaylist: '1ap9564Wpqxi2Bb8gVaSWc', listOfPlaylistFromAPI: [] })
   const [clicked, setClicked] = useState(false)
   const [score, setScore] = useState(0)
   const [totalScore, setTotalScore] = useState(0)
   const [streak, setStreak] = useState(0)
-  
-  useEffect(() => {
-    try {
-      axios.delete('https://musiqle-back-end-w9vy.onrender.com/access_token')
-      axios.post('https://musiqle-back-end-w9vy.onrender.com/access_token')
-      // .then(response => response.json())
-      // .then(response => {
-      //   setAccessToken(response.access_token)
-      // })
-    } catch {
-      console.log("Could not retrieve access token.")
-    }
-  }, [])
-  
-
   const [playlistData, setPlaylistData] = useState([])
   
-  // Retrieves tracks from ADA C19 Playlist as default selected playlist
-  useEffect(() => {
-    const playlistID = "1ap9564Wpqxi2Bb8gVaSWc"
-    try {
-      axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${playlistID}`)
-      .then(tracksResponse => {
-        setPlaylistData(tracksResponse.data.items)
-      })
-    } catch {
-      console.log("Could not retrieve tracks.")
-    }
-  }, [])
+  // // Retrieves tracks from ADA C19 Playlist as default selected playlist
+  // useEffect(() => {
+  //   // const playlistID = "1ap9564Wpqxi2Bb8gVaSWc"
+  //   try {
+  //     axios.get(`http://localhost:8080/playlists/${playlist.selectedPlaylist}`)
+  //     .then(tracksResponse => {
+  //       console.log(tracksResponse)
+  //       setPlaylistData(tracksResponse.data.items)
+  //     })
+  //     .catch(err => console.log("Error! ", err))
+  //   } catch {
+  //     console.log("Could not retrieve tracks.")
+  //   }
+  // }, [playlist.selectedPlaylist])
 
   /// Getting all the Users from DB
   useEffect(() => {
     axios.get('https://musiqle-back-end-w9vy.onrender.com/user')
     .then((response) => {
       setAllData(response.data)
-      // console.log(response.data)
     })
+    .catch(err=>console.log("Error! ", err))
   }, []);
 
   /// Adding User to DB
@@ -118,28 +104,28 @@ function App() {
       console.log("here")
     }
   ///Song Component Rendered
-  const songComponent = () =>{
-    if (user) {
-      return (
-      <Song
-      userData = {userData}
-      increaseStreak={updateLongestStreak}
-      increaseTotalScore={updateTotalScore}
-    />)
-    } else if (clicked) {
-      return (
-            <SignInpPopUp 
-            closeCallBack = {closePopUp} 
-            findUser={getUserData}/>)
-    } else {
-      console.log("close")
-    }
-  }
+  // const songComponent = () =>{
+  //   if (user) {
+  //     return (
+  //     <Song
+  //     userData = {userData}
+  //     increaseStreak={updateLongestStreak}
+  //     increaseTotalScore={updateTotalScore}
+  //   />)
+  //   } else if (clicked) {
+  //     return (
+  //           <SignInpPopUp 
+  //           closeCallBack = {closePopUp} 
+  //           findUser={getUserData}/>)
+  //   } else {
+  //     console.log("close")
+  //   }
+  // }
   
   // Retrieves list of genres from Spotify API
   useEffect(() => {
     try {
-      axios.get("https://musiqle-back-end-w9vy.onrender.com/genres")
+      axios.get("http://localhost:8080/genres")
           .then(genreResponse => {
               setGenres({
                   selectedGenre: genres.selectedGenre,
@@ -149,7 +135,7 @@ function App() {
     } catch {
       console.log("Could not retrieve genres.")
     }
-  }, [genres.selectedGenre])
+  }, [])
 
   // Retrieves list of playlists from selected genre
   const genreChanged = val => {
@@ -158,13 +144,14 @@ function App() {
           listOfGenresFromAPI: genres.listOfGenresFromAPI
       })
 
-      axios.get(`https://musiqle-back-end-w9vy.onrender.com/genres/${val}/playlists`)
+      axios.get(`http://localhost:8080/genres/${val}/playlists`)
           .then(playlistResponse => {
               setPlaylist({
                   selectedPlaylist: playlist.selectedPlaylist,
                   listOfPlaylistFromAPI: playlistResponse.data.playlists.items
               })
           })
+          .catch(err=>console.log("Error! ", err))
   }
 
   // Retrieves list of tracks from selected playlist
@@ -174,10 +161,11 @@ function App() {
           listOfPlaylistFromAPI: playlist.listOfPlaylistFromAPI
       })
 
-      axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${val}`)
+      axios.get(`http://localhost:8080/playlists/${val}`)
           .then(tracksResponse => {
               setPlaylistData(tracksResponse.data.items)
           })
+          .catch(err=>console.log("Error! ", err))
   }
 
 
@@ -265,8 +253,7 @@ function App() {
         />
         <Route
           path="/album"
-          element={
-            <Album
+          element={user ? <Album
               playlistData={playlistData}
               userData = {userData}
               increaseCurrentScore={increaseCurrentScore}
@@ -277,12 +264,13 @@ function App() {
               playlistChanged={playlistChanged}
               playlistOptions={playlist.listOfPlaylistFromAPI}
               selectedPlaylist={playlist.selectedPlaylist}
-            />
-          }
+            /> : <SignInpPopUp 
+            closeCallBack = {closePopUp} 
+            findUser={getUserData}/>}
         />
         <Route
           path="/song"
-          element={user? <Song
+          element={user ? <Song
             userData = {userData}
             increaseStreak={updateLongestStreak}
             increaseTotalScore={updateTotalScore}
@@ -292,7 +280,7 @@ function App() {
             playlistChanged={playlistChanged}
             playlistOptions={playlist.listOfPlaylistFromAPI}
             selectedPlaylist={playlist.selectedPlaylist}
-          />: <SignInpPopUp 
+          /> : <SignInpPopUp 
           closeCallBack = {closePopUp} 
           findUser={getUserData}/>}
 

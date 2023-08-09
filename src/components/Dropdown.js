@@ -7,7 +7,7 @@ const Dropdown = ({ options, changed, selected }) => {
         changed(e.target.value)
     }
 
-    const dropdownOptions = (options !== undefined) ?
+    const dropdownOptions = (options) ?
         options.map((item, idx) =>
             <option key={idx} value={item.id}>
                 {item.name}

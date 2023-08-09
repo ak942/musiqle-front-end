@@ -7,9 +7,11 @@ import NavBar from './NavBar';
 
 
 const Album = ({ playlistData, userData, increaseStreak, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
+    
+    
     const [streak, setStreak] = useState(userData.streak)
     const [totalScore, setTotalScore] = useState(userData.totalScore)
-    const [score, setScore] =useState(0)
+    const [score, setScore] = useState(0)
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
     const [name, setName] = useState("")
@@ -20,14 +22,15 @@ const Album = ({ playlistData, userData, increaseStreak, genreOptions, genreChan
         2: 4,
         1: 1
     }
+
     const getRandomAlbum = () => {
-        // const randomNum = playlistData !== undefined ? Math.floor(Math.random() * playlistData.length) : 0
-        // return playlistData[randomNum]
+        const randomNum = playlistData ? Math.floor(Math.random() * playlistData.length) : 0
+        return playlistData[randomNum]
     }
 
     const [randomAlbum, setRandomAlbum] = useState(getRandomAlbum())
-    const albumName = randomAlbum !== undefined ? setName(randomAlbum.track.album.name) : name
-    const albumCover = randomAlbum !== undefined ? setUrl(randomAlbum.track.album.images[0].url) : url
+    const albumName = randomAlbum ? randomAlbum.track.album.name : name
+    const albumCover = randomAlbum ? randomAlbum.track.album.images[0].url : url
 
     const resetGame = () => {
         setAttempts(4)
@@ -81,7 +84,7 @@ const Album = ({ playlistData, userData, increaseStreak, genreOptions, genreChan
 
     return (
         <div className="center game">
-            <NavBar 
+            <NavBar
                 genreChanged={genreChanged}
                 genreOptions={genreOptions}
                 selectedGenre={selectedGenre}
