@@ -6,14 +6,16 @@ import NavBar from './NavBar'
 import SongInputForm from './SongInputForm'
 import './Song.css'
 
-const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, resetStreak, increaseTotalScore }) => {
+const Song = ({ userData, increaseStreak, increaseTotalScore}) => {
     const [attempts, setAttempts] = useState(4)
     const [lyrics, setLyrics] = useState("")
     const [trackName, setTrackName] = useState("")
     const [artist, setArtist] = useState("")
     const [num, setNum] = useState(0)
     const [score, setScore] = useState(0)
-    const [streak, setStreak] = useState(0)
+    const [bestScoreSong, setBestScoreSong] = useState(userData.bestScoreSong)
+    const [streak, setStreak] = useState(userData.streak)
+    const [totalScore, setTotalScore] = useState(userData.totalScore)
     const filters = ["(", ")", "live", "remastered", "edit", "remix", "-", "?", "!", "remaster"]
     const points = {
         4: 10,
@@ -45,9 +47,8 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
     const findLyrics = async (id) => {
         const response = await axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/track/${id}`)
         // console.log(response.data.message.body.lyrics.explicit)
-        // if (response.data.message.body.lyrics.explicit ===1) {
-        //     await findTracks()
-        // }  else {
+
+        const avoidTracks= ["Takku Tamaram Bandi", "VENTE CONMIGO"]
         const spanish = ['Ponte', 'mi', 'jacket', 'por', 'si', 'hoy', 'te', 'da', 'frío']
         setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
         // console.log(response.data.message.body.lyrics.lyrics_body.split("\n"))
@@ -55,7 +56,7 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
     }
     ///GET LYRICS
     const lyricsShown = () => {
-        let endNum = num + 1 + 2
+        let endNum = num + 1
         let lyricsArray = []
         let sliceLyrics = lyrics.slice(0,lyrics.length-1)
         for (let line of sliceLyrics) {
@@ -67,10 +68,10 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
         if (! lyricsArray) {
             findTracks()
         };
-        let showLyrics = lyricsArray.slice(2,endNum)
+        let showLyrics = lyricsArray.slice(0,endNum)
         console.log({trackName}, {artist})
-        console.log(lyricsArray.slice(2,7))
-        console.log(lyrics)
+        console.log(lyricsArray.slice(0,7))
+        // console.log(lyrics)
         return (
             (showLyrics || []).map(lyric => <section className="lyric">{lyric}</section>
             )
@@ -81,18 +82,20 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
         return `The song is ${trackName} by ${artist}`
     }
 
-    ///Resets Game
+    ///Resets Game + Skip Song Callback
     const resetGame = () => {
         setAttempts(4)
         setNum(0)
+        increaseStreak(streak +1)
         findTracks()
     }
+
 
     //CHECK THE INPUT AGAINST ANSWER
     const compareInput = (inputAnswer) => {
         let correctAnswer = trackName.toLowerCase().split(" ")
         for (let word of correctAnswer){
-            if(filters.indexOf(word) !== -1 || /[a-z]/i.test(word) === false) {
+            if(filters.indexOf(word) !== -1) {
                 let index = correctAnswer.indexOf(word)
                 correctAnswer.splice(index,1)
             }
@@ -101,13 +104,15 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
         console.log(correctAnswerString, "newcorrectanswer")
         if (inputAnswer.toLowerCase() === correctAnswerString ) {
             alert(`You are Correct! The song is ${trackName} by ${artist}`)
+            setTotalScore(totalScore + points[attempts])
             setScore(score + points[attempts])
-            setStreak(streak +1)
+            setStreak(streak + 1)
             resetGame()
             return
         } else {
             if (attempts === 0) {
                 resetGame()
+                setStreak(0)
             } else {
                 setAttempts(attempts - 1)
                 setNum(num + 1)
@@ -121,18 +126,16 @@ const Song = ({ userData, increaseCurrentScore, resetScore, increaseStreak, rese
             <h1>Guess the Song</h1>
             <ScoreBoard
                 currentScore={score}
-                totalScore={userData.totalScore}
+                totalScore={totalScore}
                 streak={streak}
             />
             <p>Attempts Left: {attempts}</p>
             <div className="size">{lyricsShown()}</div>
-            
-            {/* <section>{giveAnswer()}</section> */}
-            {/* <InputForm
-                // compareInput={compareInput}
-                giveAnswer={attempts === 0 ? giveAnswer : null}
-            /> */}
-            <SongInputForm compareInput={compareInput} />
+            <SongInputForm 
+            compareInput={compareInput} 
+            giveAnswer = {attempts ===0? giveAnswer: null}
+            skipSong = {resetGame}
+            />
 
         </div>
     )

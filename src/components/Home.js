@@ -9,10 +9,10 @@ const Home = ({ user, deleteUser, userSignOut, findUser }) => {
 
     const [clicked, setClicked] = useState(false)
 
-    const spotifyClick = () => {
+    const openPopUp = () => {
         setClicked(true)
     }
-    const close = () => {
+    const closePopUp = () => {
         setClicked(false)
     }
     const signIn = () => {
@@ -22,17 +22,17 @@ const Home = ({ user, deleteUser, userSignOut, findUser }) => {
                     {/* <button className="circular signin" onClick={spotifyClick}>
                         Sign In To Spotify
                     </button> */}
-                    <button className="signin-btn" onClick={spotifyClick}>
+                    <button className="signin-btn" onClick={openPopUp}>
                         Sign In
                     </button>
                 </div>
             )
         } else if (user) {
             return (
-                <section>
-                    <h4>Welcome back, {user.charAt(0).toUpperCase() + user.slice(1)}!</h4>
-                    <button onClick={userSignOut}> Sign Out </button>
-                    <button onClick={deleteUser}> Delete User </button>
+                <section className="user-login-page">
+                    <h4 className="user-header">Welcome Back, {user.charAt(0).toUpperCase() + user.slice(1)}!</h4>
+                    <button className = "user-login-btn" onClick = {userSignOut}> Sign Out </button>
+                    <button className = "user-login-btn" onClick = {deleteUser}> Delete </button>
                 </section>
             )
         }
@@ -42,7 +42,9 @@ const Home = ({ user, deleteUser, userSignOut, findUser }) => {
             <h1 className="welcome-header">Play! Pick Your Path</h1>
             <div className="right">
                 {signIn()}
-                {clicked ? <SignInPopUp closeCallBack={close} findUser={findUser} /> : null}
+            </div>
+            <div>
+                {clicked ? <SignInPopUp closeCallBack={closePopUp} findUser={findUser} /> : null}
             </div>
             <br />
 
@@ -59,6 +61,7 @@ const Home = ({ user, deleteUser, userSignOut, findUser }) => {
                         <Link to="/song">
                             Song
                         </Link>
+                        
                     </div>
                 </li>
             </ul>

@@ -52,10 +52,6 @@ input::placeholder {
     margin: 4px;
 }
 
-button:hover{
-    border: 2px solid darkgrey;
-
-}
 
 form {
     display: flex;

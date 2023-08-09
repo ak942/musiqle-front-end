@@ -6,13 +6,22 @@ import { useState } from 'react';
 import NavBar from './NavBar';
 
 
+const Album = ({ playlistData, userData, increaseStreak }) => {
+    const [streak, setStreak] = useState(userData.streak)
+    const [totalScore, setTotalScore] = useState(userData.totalScore)
+    const [score, setScore] =useState(0)
 const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, increaseCurrentScore, increaseStreak, resetStreak, increaseTotalScore, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
 
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
     const [name, setName] = useState("")
     const [url, setUrl] = useState("")
-
+    const points = {
+        4: 10,
+        3: 7,
+        2: 4,
+        1: 1
+    }
     const getRandomAlbum = () => {
         const randomNum = playlistData !== undefined ? Math.floor(Math.random() * playlistData.length) : 0
         return playlistData[randomNum]
@@ -25,6 +34,7 @@ const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, inc
     const resetGame = () => {
         setAttempts(4)
         setNum(8)
+        increaseStreak(streak + 1)
     }
 
     const giveAnswer = () => {
@@ -33,9 +43,8 @@ const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, inc
 
     const skipAlbum = () => {
         resetGame()
-        resetStreak()
-        increaseTotalScore()
-        resetScore()
+        setStreak(0)
+        setScore(0)
         setRandomAlbum(
             getRandomAlbum()
         )
@@ -46,8 +55,9 @@ const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, inc
             setRandomAlbum(
                 getRandomAlbum()
             )
-            increaseCurrentScore(attempts)
-            increaseStreak()
+            setTotalScore(totalScore + points[attempts])
+            setScore(score + points[attempts])
+            setStreak(streak + 1)
             resetGame()
 
         } else {
@@ -55,10 +65,8 @@ const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, inc
                 setRandomAlbum(
                     getRandomAlbum()
                 )
-                resetStreak()
+                setStreak(0)
                 resetGame()
-                increaseTotalScore()
-                resetScore()
 
             } else {
 
@@ -85,7 +93,7 @@ const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, inc
             />
             <h1>Guess the Album</h1>
             <ScoreBoard
-                currentScore={currentScore}
+                currentScore={score}
                 totalScore={totalScore}
                 streak={streak}
             />

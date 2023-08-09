@@ -5,7 +5,6 @@ const SignInpPopUp = ({closeCallBack, findUser}) => {
     const [user, setUser] = useState("")
     const handleSubmit = (event) => {
         event.preventDefault()
-        console.log(user, "handlesubmit")
         findUser(user)
         setUser("")
         closeCallBack()
@@ -22,18 +21,20 @@ const SignInpPopUp = ({closeCallBack, findUser}) => {
                 &times;
             </span>
             <form className="user-form">
-                <h3 className="header">Sign In</h3>
+                <h3 className="header">LOGIN</h3>
+                <h4>Enter Your Name</h4>
                 <input
                         type="text"
                         name="answer"
                         value={user}
                         onChange={handleChange}
-                        placeholder='username'
-                        className="popup-input"/>
+                        placeholder='write your name here'
+                        className="popup-input"
+                        />
                 <br />
-
+                <h6>If you are a new user, register your name to save your progress</h6>
                 <button
-                    className="spotify-submit-btn"
+                    className="enter-submit-btn"
                     onClick={handleSubmit}
                     >
                     Enter

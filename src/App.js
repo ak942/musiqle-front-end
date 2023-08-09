@@ -5,6 +5,8 @@ import Album from "./components/Album";
 import Song from "./components/Song";
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import SignInpPopUp from "./components/SignInpPopUp";
+import { toHaveFormValues } from "@testing-library/jest-dom/matchers";
 
 const points = {
   4: 10,
@@ -48,7 +50,12 @@ function App() {
 
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState({})
+  const [userId, setUserId] = useState(null)
   const [allData, setAllData] = useState([])
+  const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
+  const [playlist, setPlaylist] = useState({ selectedPlaylist: '', listOfPlaylistFromAPI: [] })
+  const [clicked, setClicked] = useState(false)
+
 
   /// Getting all the Users from DB
   useEffect(() => {
@@ -84,15 +91,13 @@ function App() {
     if (specificUser) {
       specificUserChosen = specificUser
     } else {
-      console.log("else")
       specificUserChosen = newUserData
       addNewUser(newUserData)
     }
-    // const specificUserChosen = specificUser ? specificUser : newUserData //postnewuser
     setUser(specificUserChosen.name)
+    setUserId(specificUserChosen.id)
     setUserData(specificUserChosen)
     console.log(specificUserChosen, "new")
-    console.log(userData, "userdata")
   }
   /// Sign Out User
   const userSignOut = () => {
@@ -101,13 +106,32 @@ function App() {
   }
   ///Delete User
   const deleteUser = () => {
-    const id = userData.id
-    console.log(id)
-    axios.delete(`https://musiqle-back-end-w9vy.onrender.com/user/${id}`)
+    axios.delete(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}`)
     userSignOut()
   };
-
-  const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
+  ///Close Pop Up
+    const closePopUp = () => {
+      setClicked(false)
+      console.log("here")
+    }
+  ///Song Component Rendered
+  const songComponent = () =>{
+    if (user) {
+      return (
+      <Song
+      userData = {userData}
+      increaseStreak={updateLongestStreak}
+      increaseTotalScore={updateTotalScore}
+    />)
+    } else if (clicked) {
+      return (
+            <SignInpPopUp 
+            closeCallBack = {closePopUp} 
+            findUser={getUserData}/>)
+    } else {
+      console.log("close")
+    }
+  }
   
   // Retrieves list of genres from Spotify API
   useEffect(() => {
@@ -140,8 +164,6 @@ function App() {
           })
   }
 
-  const [playlist, setPlaylist] = useState({ selectedPlaylist: '', listOfPlaylistFromAPI: [] })
-
   // Retrieves list of tracks from selected playlist
   const playlistChanged = val => {
       setPlaylist({
@@ -161,6 +183,13 @@ function App() {
   const [totalScore, setTotalScore] = useState(0)
   const [streak, setStreak] = useState(0)
   
+  const updateLongestStreak=(streak) => {
+    const currentStreak = userData.longestStreak
+    if (streak > currentStreak) {
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
+      {"longestStreak": streak})
+    }
+  }
   const increaseCurrentScore = (attemptsLeft) => {
     setScore(userData.score + points[attemptsLeft])
     try {
@@ -215,13 +244,11 @@ function App() {
 
   const resetStreak = () => {
     setStreak(0)
+  const updateTotalScore = (totalscore) => {
+    console.log(userId, "id")
+    axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
+    {"totalScore": totalscore})
   }
-
-
-
-
-  const loggedIn = (user !== null) ? true : false
-  
 
   return (
     <Router>
@@ -230,8 +257,9 @@ function App() {
           exact path="/"
           element={
             <Home
-              user = {user}
-              findUser = {getUserData}
+              user={user}
+              findUser={getUserData}
+              closePopUp = {closePopUp}
               deleteUser = {deleteUser}
               userSignOut = {userSignOut}
             />
@@ -242,14 +270,8 @@ function App() {
           element={
             <Album
               playlistData={playlistData}
-              currentScore={score}
-              totalScore={totalScore}
-              streak={streak}
-              increaseCurrentScore={increaseCurrentScore}
-              resetScore={resetScore}
-              increaseStreak={increaseStreak}
-              resetStreak={resetStreak}
-              increaseTotalScore={increaseTotalScore}
+              userData = {userData}
+              increaseStreak={updateLongestStreak}
               genreChanged={genreChanged}
               genreOptions={genres.listOfGenresFromAPI}
               selectedGenre={genres.selectedGenre}
@@ -261,22 +283,21 @@ function App() {
         />
         <Route
           path="/song"
-          element={
-            <Song
-              userData = {userData}
-              increaseCurrentScore={increaseCurrentScore}
-              resetScore={resetScore}
-              increaseStreak={increaseStreak}
-              resetStreak={resetStreak}
-              increaseTotalScore={increaseTotalScore}
-              genreChanged={genreChanged}
-              genreOptions={genres.listOfGenresFromAPI}
-              selectedGenre={genres.selectedGenre}
-              playlistChanged={playlistChanged}
-              playlistOptions={playlist.listOfPlaylistFromAPI}
-              selectedPlaylist={playlist.selectedPlaylist}
-            />
-          }
+          element={user? <Song
+            userData = {userData}
+            increaseStreak={updateLongestStreak}
+            increaseTotalScore={updateTotalScore}
+            genreChanged={genreChanged}
+            genreOptions={genres.listOfGenresFromAPI}
+            selectedGenre={genres.selectedGenre}
+            playlistChanged={playlistChanged}
+            playlistOptions={playlist.listOfPlaylistFromAPI}
+            selectedPlaylist={playlist.selectedPlaylist}
+          />: <SignInpPopUp 
+          closeCallBack = {closePopUp} 
+          findUser={getUserData}/>}
+
+        
         />
       </Routes>
     </Router>
