@@ -7,15 +7,8 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import SignInpPopUp from "./components/SignInpPopUp";
 
-const points = {
-  4: 10,
-  3: 7,
-  2: 4,
-  1: 1
-}
 
 function App() {
-  
   // const [accessToken, setAccessToken] = useState(null)
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState({})
@@ -24,8 +17,6 @@ function App() {
   const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
   const [playlist, setPlaylist] = useState({ selectedPlaylist: '1ap9564Wpqxi2Bb8gVaSWc', listOfPlaylistFromAPI: [] })
   const [clicked, setClicked] = useState(false)
-  const [score, setScore] = useState(0)
-  const [totalScore, setTotalScore] = useState(0)
   const [streak, setStreak] = useState(0)
   const [playlistData, setPlaylistData] = useState([])
   
@@ -49,6 +40,7 @@ function App() {
     axios.get('https://musiqle-back-end-w9vy.onrender.com/user')
     .then((response) => {
       setAllData(response.data)
+      console.log(response.data)
     })
     .catch(err=>console.log("Error! ", err))
   }, []);
@@ -103,6 +95,7 @@ function App() {
       setClicked(false)
       console.log("here")
     }
+    
   ///Song Component Rendered
   // const songComponent = () =>{
   //   if (user) {
@@ -208,7 +201,7 @@ function App() {
     }
   }
 
-  const increaseTotalScore = () => {
+  const increaseTotalScore = (totalScore) => {
     try {
       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/totalscore`, totalScore)
       .then(console.log("Total score updated!"))
@@ -217,7 +210,7 @@ function App() {
     }
   }
 
-  const resetScore = () => {
+  const resetScore = (score) => {
     try {
       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/score`, score)
       .then(console.log("Score returned to 0!"))
@@ -232,6 +225,7 @@ function App() {
 
   const updateTotalScore = (totalscore) => {
     console.log(userId, "id")
+    const currentTotalScore = userData.totalScore
     axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
     {"totalScore": totalscore})
   }
@@ -244,8 +238,9 @@ function App() {
           element={
             <Home
               user={user}
+              userData = {userData}
               findUser={getUserData}
-              closePopUp = {closePopUp}
+              // closePopUp = {closePopUp}
               deleteUser = {deleteUser}
               userSignOut = {userSignOut}
             />
