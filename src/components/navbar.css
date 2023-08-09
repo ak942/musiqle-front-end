@@ -7,8 +7,10 @@
 }
 
 .nav-container {
-    position: fixed;
-    text-align: center;
-    top: 40px;
-    left: 40px;
+    display: flex;
+    justify-content: space-around;
+    height: 70px;
+    width: 80vw;
+    max-width: 100vw;
+    align-items: center;
 }

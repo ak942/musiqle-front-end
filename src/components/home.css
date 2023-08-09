@@ -1,4 +1,5 @@
-.home, html {
+.home,
+html {
     background-color: black;
     color: white;
     height: 100vh;
@@ -17,6 +18,11 @@
     border: black, solid, 3px;
     justify-content: center;
     align-items: center;
+    gap: 30px
+}
+
+.link-container li {
+    display: inline;
 }
 
 .signin-btn {
@@ -55,7 +61,7 @@ a:visited {
 .right {
     /* display: flex;
     flex-direction: row; */
-    right: 20px; 
+    right: 20px;
     top: 20px;
     margin: 20px;
     gap: 20px;
