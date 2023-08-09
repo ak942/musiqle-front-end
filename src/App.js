@@ -22,86 +22,77 @@ function App() {
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState({})
   const [accessToken, setAccessToken] = useState(null)
-  const [playlistData, setPlaylistData] = useState([])
   const [allData, setAllData] = useState([])
-  const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
-  const [playlist, setPlaylist] = useState({ selectedPlaylist: '', listOfPlaylistFromAPI: [] })
-
-  const encoded = process.env.REACT_APP_ENCODED
-
-  // One time call to get Spotify Access Token and access all Music Categories
-  // useEffect(() => {
-    // API Access token
-  //   axios("https://accounts.spotify.com/api/token", {
-  //     method: 'POST',
-  //     headers: {
-  //       'Authorization': `Basic ${encoded}=`,
-  //       'Content-Type': 'application/x-www-form-urlencoded',
-  //     },
-  //     data: 'grant_type=client_credentials'
-  //   })
-  //     .then(response => {
-  //       console.log("Access token: ", response.data.access_token)
-  //       setAccessToken(response.data.access_token);
-
-  //       axios('https://api.spotify.com/v1/browse/categories', {
-  //         method: 'GET',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           'Authorization': `Bearer ${response.data.access_token}`
-  //         }
-  //       })
-  //         .then(genreResponse => {
-  //           setGenres({
-  //             selectedGenre: genres.selectedGenre,
-  //             listOfGenresFromAPI: genreResponse.data.categories.items
-  //           })
-  //         })
-  //     })
-  //     .catch(err => console.log("Error! ", err))
-  // }, [genres.selectedGenre, encoded]);
-
-  /// After selection of genre, produces category ID to retrieve appropriate playlists
-  const genreChanged = val => {
-    setGenres({
-      selectedGenre: val,
-      listOfGenresFromAPI: genres.listOfGenresFromAPI
-    })
-
-    axios(`https://api.spotify.com/v1/browse/categories/${val}/playlists`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
-      }
-    })
-      .then(playlistResponse => {
-        setPlaylist({
-          selectedPlaylist: playlist.selectedPlaylist,
-          listOfPlaylistFromAPI: playlistResponse.data.playlists.items
-        })
+  
+  
+  
+  useEffect(() => {
+    try {
+      axios.delete('https://musiqle-back-end-w9vy.onrender.com/access_token')
+      axios.post('https://musiqle-back-end-w9vy.onrender.com/access_token')
+      .then(response => response.json())
+      .then(response => {
+        setAccessToken(response.access_token)
       })
+    } catch {
+      console.log("Could not retrieve access token.")
+    }
+  })
+  
+
+  const [playlistData, setPlaylistData] = useState([])
+  
+  // Retrieves tracks from ADA C19 Playlist as default selected playlist
+  useEffect(() => {
+    const playlistID = "1ap9564Wpqxi2Bb8gVaSWc"
+    axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${playlistID}`)
+    .then(tracksResponse => {
+      setPlaylistData(tracksResponse.data.items)
+    })
+  }, [])
+
+  const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
+  
+  // Retrieves list of genres from Spotify API
+  useEffect(() => {
+      axios.get("https://musiqle-back-end-w9vy.onrender.com/genres")
+          .then(genreResponse => {
+              setGenres({
+                  selectedGenre: genres.selectedGenre,
+                  listOfGenresFromAPI: genreResponse.data.categories.items
+              })
+          })
+  }, [genres.selectedGenre])
+
+  // Retrieves list of playlists from selected genre
+  const genreChanged = val => {
+      setGenres({
+          selectedGenre: val,
+          listOfGenresFromAPI: genres.listOfGenresFromAPI
+      })
+
+      axios.get(`https://musiqle-back-end-w9vy.onrender.com/genres/${val}/playlists`)
+          .then(playlistResponse => {
+              setPlaylist({
+                  selectedPlaylist: playlist.selectedPlaylist,
+                  listOfPlaylistFromAPI: playlistResponse.data.playlists.items
+              })
+          })
   }
 
-  /// After selection of playlist, produces playlist ID to retrieve the tracks from playlist
+  const [playlist, setPlaylist] = useState({ selectedPlaylist: '', listOfPlaylistFromAPI: [] })
+
+  // Retrieves list of tracks from selected playlist
   const playlistChanged = val => {
-    setPlaylist({
-      selectedPlaylist: val,
-      listOfPlaylistFromAPI: playlist.listOfPlaylistFromAPI
-    })
-    axios(`https://api.spotify.com/v1/playlists/${val}/tracks`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
-      }
-    })
-      .then((response) => {
-        // const { items } = response.json()
-        console.log("My response: ", response)
-        setPlaylistData(response.data.items)
+      setPlaylist({
+          selectedPlaylist: val,
+          listOfPlaylistFromAPI: playlist.listOfPlaylistFromAPI
       })
-      .catch(err => console.log("An error has occurred.", err))
+
+      axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${val}`)
+          .then(tracksResponse => {
+              setPlaylistData(tracksResponse.data.items)
+          })
   }
 
 
@@ -196,12 +187,12 @@ function App() {
               findUser={getUserData}
               deleteUser = {deleteUser}
               userSignOut = {userSignOut}
-              genreChanged={genreChanged}
-              genreOptions={genres.listOfGenresFromAPI}
-              selectedGenre={genres.selectedGenre}
-              playlistChanged={playlistChanged}
-              playlistOptions={playlist.listOfPlaylistFromAPI}
-              selectedPlaylist={playlist.selectedPlaylist}
+              // genreChanged={genreChanged}
+              // genreOptions={genres.listOfGenresFromAPI}
+              // selectedGenre={genres.selectedGenre}
+              // playlistChanged={playlistChanged}
+              // playlistOptions={playlist.listOfPlaylistFromAPI}
+              // selectedPlaylist={playlist.selectedPlaylist}
             />
           }
         />
@@ -209,7 +200,6 @@ function App() {
           path="/album"
           element={
             <Album
-              playlistName={playlist.selectedPlaylist}
               playlistData={playlistData}
               currentScore={score}
               totalScore={totalScore}
