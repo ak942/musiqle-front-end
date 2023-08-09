@@ -16,101 +16,52 @@ const points = {
 }
 
 function App() {
-
-  // update to axios calls when back-end deployed
-  const [score, setScore] = useState(0)
-  const [totalScore, setTotalScore] = useState(0)
-  const [streak, setStreak] = useState(0)
+  
+  // const [accessToken, setAccessToken] = useState(null)
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState({})
   const [userId, setUserId] = useState(null)
-  const [accessToken, setAccessToken] = useState(null)
-  const [playlistData, setPlaylistData] = useState([])
   const [allData, setAllData] = useState([])
   const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
   const [playlist, setPlaylist] = useState({ selectedPlaylist: '', listOfPlaylistFromAPI: [] })
   const [clicked, setClicked] = useState(false)
-  const encoded = process.env.REACT_APP_ENCODED
+  const [score, setScore] = useState(0)
+  const [totalScore, setTotalScore] = useState(0)
+  const [streak, setStreak] = useState(0)
+  
+  useEffect(() => {
+    try {
+      axios.delete('https://musiqle-back-end-w9vy.onrender.com/access_token')
+      axios.post('https://musiqle-back-end-w9vy.onrender.com/access_token')
+      // .then(response => response.json())
+      // .then(response => {
+      //   setAccessToken(response.access_token)
+      // })
+    } catch {
+      console.log("Could not retrieve access token.")
+    }
+  }, [])
+  
 
-  // One time call to get Spotify Access Token and access all Music Categories
-  // useEffect(() => {
-    // API Access token
-  //   axios("https://accounts.spotify.com/api/token", {
-  //     method: 'POST',
-  //     headers: {
-  //       'Authorization': `Basic ${encoded}=`,
-  //       'Content-Type': 'application/x-www-form-urlencoded',
-  //     },
-  //     data: 'grant_type=client_credentials'
-  //   })
-  //     .then(response => {
-  //       console.log("Access token: ", response.data.access_token)
-  //       setAccessToken(response.data.access_token);
-
-  //       axios('https://api.spotify.com/v1/browse/categories', {
-  //         method: 'GET',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           'Authorization': `Bearer ${response.data.access_token}`
-  //         }
-  //       })
-  //         .then(genreResponse => {
-  //           setGenres({
-  //             selectedGenre: genres.selectedGenre,
-  //             listOfGenresFromAPI: genreResponse.data.categories.items
-  //           })
-  //         })
-  //     })
-  //     .catch(err => console.log("Error! ", err))
-  // }, [genres.selectedGenre, encoded]);
-
-  /// After selection of genre, produces category ID to retrieve appropriate playlists
-  const genreChanged = val => {
-    setGenres({
-      selectedGenre: val,
-      listOfGenresFromAPI: genres.listOfGenresFromAPI
-    })
-
-    axios(`https://api.spotify.com/v1/browse/categories/${val}/playlists`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
-      }
-    })
-      .then(playlistResponse => {
-        setPlaylist({
-          selectedPlaylist: playlist.selectedPlaylist,
-          listOfPlaylistFromAPI: playlistResponse.data.playlists.items
-        })
+  const [playlistData, setPlaylistData] = useState([])
+  
+  // Retrieves tracks from ADA C19 Playlist as default selected playlist
+  useEffect(() => {
+    const playlistID = "1ap9564Wpqxi2Bb8gVaSWc"
+    try {
+      axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${playlistID}`)
+      .then(tracksResponse => {
+        setPlaylistData(tracksResponse.data.items)
       })
-  }
-
-  /// After selection of playlist, produces playlist ID to retrieve the tracks from playlist
-  const playlistChanged = val => {
-    setPlaylist({
-      selectedPlaylist: val,
-      listOfPlaylistFromAPI: playlist.listOfPlaylistFromAPI
-    })
-    axios(`https://api.spotify.com/v1/playlists/${val}/tracks`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
-      }
-    })
-      .then((response) => {
-        // const { items } = response.json()
-        console.log("My response: ", response)
-        setPlaylistData(response.data.items)
-      })
-      .catch(err => console.log("An error has occurred.", err))
-  }
-
+    } catch {
+      console.log("Could not retrieve tracks.")
+    }
+  }, [])
 
   /// Getting all the Users from DB
   useEffect(() => {
-    axios.get('https://musiqle-back-end-w9vy.onrender.com/user').then((response) => {
+    axios.get('https://musiqle-back-end-w9vy.onrender.com/user')
+    .then((response) => {
       setAllData(response.data)
       // console.log(response.data)
     })
@@ -149,11 +100,13 @@ function App() {
     setUserData(specificUserChosen)
     console.log(specificUserChosen, "new")
   }
+
   /// Sign Out User
   const userSignOut = () => {
     setUser(null)
     setUserData({})
   }
+
   ///Delete User
   const deleteUser = () => {
     axios.delete(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}`)
@@ -183,8 +136,53 @@ function App() {
       console.log("close")
     }
   }
+  
+  // Retrieves list of genres from Spotify API
+  useEffect(() => {
+    try {
+      axios.get("https://musiqle-back-end-w9vy.onrender.com/genres")
+          .then(genreResponse => {
+              setGenres({
+                  selectedGenre: genres.selectedGenre,
+                  listOfGenresFromAPI: genreResponse.data.categories.items
+              })
+          })
+    } catch {
+      console.log("Could not retrieve genres.")
+    }
+  }, [genres.selectedGenre])
 
-  //// NEED TO BE UPDATED TO REFLECT CHANGES IN DB FOR USER, CURRENTLY NOT GETTING SAVED AND RESETTING ON REFRESH
+  // Retrieves list of playlists from selected genre
+  const genreChanged = val => {
+      setGenres({
+          selectedGenre: val,
+          listOfGenresFromAPI: genres.listOfGenresFromAPI
+      })
+
+      axios.get(`https://musiqle-back-end-w9vy.onrender.com/genres/${val}/playlists`)
+          .then(playlistResponse => {
+              setPlaylist({
+                  selectedPlaylist: playlist.selectedPlaylist,
+                  listOfPlaylistFromAPI: playlistResponse.data.playlists.items
+              })
+          })
+  }
+
+  // Retrieves list of tracks from selected playlist
+  const playlistChanged = val => {
+      setPlaylist({
+          selectedPlaylist: val,
+          listOfPlaylistFromAPI: playlist.listOfPlaylistFromAPI
+      })
+
+      axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${val}`)
+          .then(tracksResponse => {
+              setPlaylistData(tracksResponse.data.items)
+          })
+  }
+
+
+  //// Score mechanics to update state and user database
   const updateLongestStreak=(streak) => {
     const currentStreak = userData.longestStreak
     if (streak > currentStreak) {
@@ -192,8 +190,57 @@ function App() {
       {"longestStreak": streak})
     }
   }
-  const increaseCurrentScore = (attemptsLeft) => {
-    setScore(score + points[attemptsLeft])
+
+  const increaseCurrentScore = (score) => {
+    try {
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/score`, score) 
+      .then(console.log("Score updated!"))
+
+      if (userData.bestOverallScore < score) {
+        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/bestoverallstreak`, score)
+        .then(console.log("Best overall score updated!"))
+      }
+
+    } catch {
+      console.log("Score could not be updated.")
+    }
+  }
+
+  const increaseStreak = () => {
+    try {
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/streak`, streak)
+      .then(console.log("Streak updated!"))
+
+      if (userData.longestStreak < streak) {
+          axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/longeststreak`, streak)
+          .then(console.log("Longest streak updated!"))
+        }
+
+    } catch {
+      console.log("Streak could not be updated.")
+    }
+  }
+
+  const increaseTotalScore = () => {
+    try {
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/totalscore`, totalScore)
+      .then(console.log("Total score updated!"))
+    } catch {
+      console.log("Total score could not be updated.")
+    }
+  }
+
+  const resetScore = () => {
+    try {
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/score`, score)
+      .then(console.log("Score returned to 0!"))
+    } catch {
+      console.log("Score could not be updated.")
+    }
+  }
+
+  const resetStreak = () => {
+    setStreak(0)
   }
 
   const updateTotalScore = (totalscore) => {
@@ -216,6 +263,17 @@ function App() {
               // closePopUp = {closePopUp}
               deleteUser = {deleteUser}
               userSignOut = {userSignOut}
+            />
+          }
+        />
+        <Route
+          path="/album"
+          element={
+            <Album
+              playlistData={playlistData}
+              userData = {userData}
+              increaseCurrentScore={increaseCurrentScore}
+              increaseStreak={updateLongestStreak}
               genreChanged={genreChanged}
               genreOptions={genres.listOfGenresFromAPI}
               selectedGenre={genres.selectedGenre}
@@ -226,25 +284,26 @@ function App() {
           }
         />
         <Route
-          path="/album"
-          element={
-            <Album
-              playlistName={playlist.selectedPlaylist}
-              playlistData={playlistData}
-              userData = {userData}
-              increaseStreak={updateLongestStreak}
-            />
-          }
-        />
-        <Route
           path="/song"
           element={user? <Song
             userData = {userData}
             increaseStreak={updateLongestStreak}
+<<<<<<< HEAD
             updateTotalScore={updateTotalScore}
+=======
+            increaseTotalScore={updateTotalScore}
+            genreChanged={genreChanged}
+            genreOptions={genres.listOfGenresFromAPI}
+            selectedGenre={genres.selectedGenre}
+            playlistChanged={playlistChanged}
+            playlistOptions={playlist.listOfPlaylistFromAPI}
+            selectedPlaylist={playlist.selectedPlaylist}
+>>>>>>> d21281babd28864c227d011fe407decae494f6f6
           />: <SignInpPopUp 
           closeCallBack = {closePopUp} 
           findUser={getUserData}/>}
+
+        
         />
       </Routes>
     </Router>

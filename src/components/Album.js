@@ -6,12 +6,14 @@ import { useState } from 'react';
 import NavBar from './NavBar';
 
 
-const Album = ({ playlistData, userData, increaseStreak }) => {
+const Album = ({ playlistData, userData, increaseStreak, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
     const [streak, setStreak] = useState(userData.streak)
     const [totalScore, setTotalScore] = useState(userData.totalScore)
     const [score, setScore] =useState(0)
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
+    const [name, setName] = useState("")
+    const [url, setUrl] = useState("")
     const points = {
         4: 10,
         3: 7,
@@ -19,11 +21,13 @@ const Album = ({ playlistData, userData, increaseStreak }) => {
         1: 1
     }
     const getRandomAlbum = () => {
-        const randomNum = Math.floor(Math.random() * playlistData.length)
-        return playlistData[randomNum]
+        // const randomNum = playlistData !== undefined ? Math.floor(Math.random() * playlistData.length) : 0
+        // return playlistData[randomNum]
     }
 
     const [randomAlbum, setRandomAlbum] = useState(getRandomAlbum())
+    const albumName = randomAlbum !== undefined ? setName(randomAlbum.track.album.name) : name
+    const albumCover = randomAlbum !== undefined ? setUrl(randomAlbum.track.album.images[0].url) : url
 
     const resetGame = () => {
         setAttempts(4)
@@ -31,12 +35,8 @@ const Album = ({ playlistData, userData, increaseStreak }) => {
         increaseStreak(streak + 1)
     }
 
-    const name = randomAlbum.track.album.name
-    console.log(name)
-    const url = randomAlbum.track.album.images[0].url
-
     const giveAnswer = () => {
-        return `The album is ${name}`
+        return `The album is ${albumName}`
     }
 
     const skipAlbum = () => {
@@ -49,7 +49,7 @@ const Album = ({ playlistData, userData, increaseStreak }) => {
     }
 
     const compareInput = (inputAnswer) => {
-        if (inputAnswer === name) {
+        if (inputAnswer === albumName) {
             setRandomAlbum(
                 getRandomAlbum()
             )
@@ -81,7 +81,14 @@ const Album = ({ playlistData, userData, increaseStreak }) => {
 
     return (
         <div className="center game">
-            <NavBar />
+            <NavBar 
+                genreChanged={genreChanged}
+                genreOptions={genreOptions}
+                selectedGenre={selectedGenre}
+                playlistChanged={playlistChanged}
+                playlistOptions={playlistOptions}
+                selectedPlaylist={selectedPlaylist}
+            />
             <h1>Guess the Album</h1>
             <ScoreBoard
                 currentScore={score}
@@ -91,7 +98,7 @@ const Album = ({ playlistData, userData, increaseStreak }) => {
             <p>Attempts Left: {attempts}</p>
             <img
                 className={`blur${num} size image`}
-                src={url}
+                src={albumCover}
                 alt="album cover"
             />
             <InputForm
