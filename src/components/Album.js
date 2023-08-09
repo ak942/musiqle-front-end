@@ -10,25 +10,25 @@ const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, inc
 
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
+    const [name, setName] = useState("")
+    const [url, setUrl] = useState("")
 
     const getRandomAlbum = () => {
-        const randomNum = Math.floor(Math.random() * playlistData.length)
+        const randomNum = playlistData !== undefined ? Math.floor(Math.random() * playlistData.length) : 0
         return playlistData[randomNum]
     }
 
     const [randomAlbum, setRandomAlbum] = useState(getRandomAlbum())
+    const albumName = randomAlbum !== undefined ? setName(randomAlbum.track.album.name) : name
+    const albumCover = randomAlbum !== undefined ? setUrl(randomAlbum.track.album.images[0].url) : url
 
     const resetGame = () => {
         setAttempts(4)
         setNum(8)
     }
 
-    const name = randomAlbum.track.album.name
-    console.log(name)
-    const url = randomAlbum.track.album.images[0].url
-
     const giveAnswer = () => {
-        return `The album is ${name}`
+        return `The album is ${albumName}`
     }
 
     const skipAlbum = () => {
@@ -42,7 +42,7 @@ const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, inc
     }
 
     const compareInput = (inputAnswer) => {
-        if (inputAnswer === name) {
+        if (inputAnswer === albumName) {
             setRandomAlbum(
                 getRandomAlbum()
             )
@@ -85,7 +85,7 @@ const Album = ({ playlistData, resetScore, currentScore, totalScore, streak, inc
             <p>Attempts Left: {attempts}</p>
             <img
                 className={`blur${num} size image`}
-                src={url}
+                src={albumCover}
                 alt="album cover"
             />
             <InputForm
