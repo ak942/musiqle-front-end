@@ -2,10 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import './home.css'
 import SignInPopUp from './SignInpPopUp'
-import Dropdown from "./Dropdown";
+import { useState } from "react";
 
-const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOptions, selectedGenre, playlistOptions, selectedPlaylist, playlistChanged }) => {
-    const [clicked, setClicked] = React.useState(false)
+const Home = ({ user, deleteUser, userSignOut, findUser }) => {
+
+
+    const [clicked, setClicked] = useState(false)
 
     const spotifyClick = () => {
         setClicked(true)
@@ -29,8 +31,8 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
             return (
                 <section>
                     <h4>Welcome back, {user.charAt(0).toUpperCase() + user.slice(1)}!</h4>
-                    <button onClick = {userSignOut}> Sign Out </button>
-                    <button onClick = {deleteUser}> Delete User </button>
+                    <button onClick={userSignOut}> Sign Out </button>
+                    <button onClick={deleteUser}> Delete User </button>
                 </section>
             )
         }
@@ -43,14 +45,7 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
                 {clicked ? <SignInPopUp closeCallBack={close} findUser={findUser} /> : null}
             </div>
             <br />
-            <Dropdown
-                genreOptions={genreOptions}
-                genreChanged={genreChanged}
-                selectedGenre={selectedGenre}
-                playlistChanged={playlistChanged}
-                playlistOptions={playlistOptions}
-                selectedPlaylist={selectedPlaylist}
-            />
+
             <ul className="link-container">
                 <li className="link-list">
                     <div className="link">
