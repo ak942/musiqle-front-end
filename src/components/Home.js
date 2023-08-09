@@ -37,6 +37,7 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
     }
     return (
         <div className="home">
+            <h1 className="musiqle-header">Musiqle</h1>
             <h1 className="welcome-header">Play! Pick Your Path</h1>
             <div className="right">
                 {signIn()}

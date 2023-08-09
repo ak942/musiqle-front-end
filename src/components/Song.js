@@ -6,7 +6,7 @@ import NavBar from './NavBar'
 import SongInputForm from './SongInputForm'
 import './Song.css'
 
-const Song = ({ userData, increaseStreak, increaseTotalScore}) => {
+const Song = ({ userData, increaseStreak, updateTotalScore}) => {
     const [attempts, setAttempts] = useState(4)
     const [lyrics, setLyrics] = useState("")
     const [trackName, setTrackName] = useState("")
@@ -82,12 +82,18 @@ const Song = ({ userData, increaseStreak, increaseTotalScore}) => {
         return `The song is ${trackName} by ${artist}`
     }
 
-    ///Resets Game + Skip Song Callback
+    ///Resets Game 
     const resetGame = () => {
         setAttempts(4)
         setNum(0)
-        increaseStreak(streak +1)
         findTracks()
+    }
+    // Skip Song Callback
+    const skipSong = ()=> {
+        setAttempts(4)
+        setNum(0)
+        findTracks()
+        setStreak(0)
     }
 
 
@@ -106,6 +112,7 @@ const Song = ({ userData, increaseStreak, increaseTotalScore}) => {
             alert(`You are Correct! The song is ${trackName} by ${artist}`)
             setTotalScore(totalScore + points[attempts])
             setScore(score + points[attempts])
+            increaseStreak(streak +1)
             setStreak(streak + 1)
             resetGame()
             return
@@ -134,7 +141,7 @@ const Song = ({ userData, increaseStreak, increaseTotalScore}) => {
             <SongInputForm 
             compareInput={compareInput} 
             giveAnswer = {attempts ===0? giveAnswer: null}
-            skipSong = {resetGame}
+            skipSong = {skipSong}
             />
 
         </div>

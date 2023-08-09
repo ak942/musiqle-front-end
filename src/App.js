@@ -164,6 +164,7 @@ function App() {
       setClicked(false)
       console.log("here")
     }
+    
   ///Song Component Rendered
   const songComponent = () =>{
     if (user) {
@@ -197,6 +198,7 @@ function App() {
 
   const updateTotalScore = (totalscore) => {
     console.log(userId, "id")
+    const currentTotalScore = userData.totalScore
     axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
     {"totalScore": totalscore})
   }
@@ -210,7 +212,7 @@ function App() {
             <Home
               user={user}
               findUser={getUserData}
-              closePopUp = {closePopUp}
+              // closePopUp = {closePopUp}
               deleteUser = {deleteUser}
               userSignOut = {userSignOut}
               genreChanged={genreChanged}
@@ -238,7 +240,7 @@ function App() {
           element={user? <Song
             userData = {userData}
             increaseStreak={updateLongestStreak}
-            increaseTotalScore={updateTotalScore}
+            updateTotalScore={updateTotalScore}
           />: <SignInpPopUp 
           closeCallBack = {closePopUp} 
           findUser={getUserData}/>}
