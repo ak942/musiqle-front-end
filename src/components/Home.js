@@ -5,7 +5,7 @@ import SignInPopUp from './SignInpPopUp'
 import Dropdown from "./Dropdown";
 import Stats from './Stats'
 
-const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOptions, selectedGenre, playlistOptions, selectedPlaylist, playlistChanged }) => {
+const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged, genreOptions, selectedGenre, playlistOptions, selectedPlaylist, playlistChanged }) => {
     const [clicked, setClicked] = React.useState(false)
     const [stats, setStats] = React.useState(false)
 
@@ -14,6 +14,19 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
     }
     const closePopUp = () => {
         setClicked(false)
+    }
+    const openStats = () => {
+        setStats(true)
+    }
+    const closeStats = () => {
+        setStats(false)
+    }
+    const showUserStats= () => {
+        if (stats) {
+            return <Stats closeStats={closeStats} userData={userData}/>
+        } else {
+            return <button className ="user-login-btn" onClick = {openStats}>Stats</button>
+        }
     }
     const signIn = () => {
         if (!clicked && !user) {
@@ -31,7 +44,7 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
             return (
                 <section className="user-login-page">
                     <h4 className="user-header">Welcome Back, {user.charAt(0).toUpperCase() + user.slice(1)}!</h4>
-                    <button className ="user-login-btn">Stats</button>
+                    {showUserStats()}
                     <button className = "user-login-btn" onClick = {deleteUser}> Delete </button>
                     <button className = "user-login-btn" onClick = {userSignOut}> Sign Out </button>
                 </section>
@@ -49,14 +62,14 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
                 {clicked ? <SignInPopUp closeCallBack={closePopUp} findUser={findUser} /> : null}
             </div>
             <br />
-            <Dropdown
+            {/* <Dropdown
                 genreOptions={genreOptions}
                 genreChanged={genreChanged}
                 selectedGenre={selectedGenre}
                 playlistChanged={playlistChanged}
                 playlistOptions={playlistOptions}
                 selectedPlaylist={selectedPlaylist}
-            />
+            /> */}
             <ul className="link-container">
                 <li className="link-list">
                     <div className="link">

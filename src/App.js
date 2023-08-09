@@ -211,6 +211,7 @@ function App() {
           element={
             <Home
               user={user}
+              userData = {userData}
               findUser={getUserData}
               // closePopUp = {closePopUp}
               deleteUser = {deleteUser}
