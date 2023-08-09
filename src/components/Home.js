@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import './home.css'
 import SignInPopUp from './SignInpPopUp'
 import Dropdown from "./Dropdown";
+import Stats from './Stats'
 
 const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOptions, selectedGenre, playlistOptions, selectedPlaylist, playlistChanged }) => {
     const [clicked, setClicked] = React.useState(false)
+    const [stats, setStats] = React.useState(false)
 
     const openPopUp = () => {
         setClicked(true)
@@ -29,8 +31,9 @@ const Home = ({ user, deleteUser, userSignOut, findUser, genreChanged, genreOpti
             return (
                 <section className="user-login-page">
                     <h4 className="user-header">Welcome Back, {user.charAt(0).toUpperCase() + user.slice(1)}!</h4>
-                    <button className = "user-login-btn" onClick = {userSignOut}> Sign Out </button>
+                    <button className ="user-login-btn">Stats</button>
                     <button className = "user-login-btn" onClick = {deleteUser}> Delete </button>
+                    <button className = "user-login-btn" onClick = {userSignOut}> Sign Out </button>
                 </section>
             )
         }
