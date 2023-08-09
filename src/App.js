@@ -8,15 +8,8 @@ import axios from 'axios';
 import SignInpPopUp from "./components/SignInpPopUp";
 import { toHaveFormValues } from "@testing-library/jest-dom/matchers";
 
-const points = {
-  4: 10,
-  3: 7,
-  2: 4,
-  1: 1
-}
 
 function App() {
-  
   // const [accessToken, setAccessToken] = useState(null)
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState({})
@@ -25,8 +18,6 @@ function App() {
   const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
   const [playlist, setPlaylist] = useState({ selectedPlaylist: '', listOfPlaylistFromAPI: [] })
   const [clicked, setClicked] = useState(false)
-  const [score, setScore] = useState(0)
-  const [totalScore, setTotalScore] = useState(0)
   const [streak, setStreak] = useState(0)
   
   useEffect(() => {
@@ -63,7 +54,7 @@ function App() {
     axios.get('https://musiqle-back-end-w9vy.onrender.com/user')
     .then((response) => {
       setAllData(response.data)
-      // console.log(response.data)
+      console.log(response.data)
     })
   }, []);
 
@@ -221,7 +212,7 @@ function App() {
     }
   }
 
-  const increaseTotalScore = () => {
+  const increaseTotalScore = (totalScore) => {
     try {
       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/totalscore`, totalScore)
       .then(console.log("Total score updated!"))
@@ -230,7 +221,7 @@ function App() {
     }
   }
 
-  const resetScore = () => {
+  const resetScore = (score) => {
     try {
       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/score`, score)
       .then(console.log("Score returned to 0!"))
@@ -288,9 +279,6 @@ function App() {
           element={user? <Song
             userData = {userData}
             increaseStreak={updateLongestStreak}
-<<<<<<< HEAD
-            updateTotalScore={updateTotalScore}
-=======
             increaseTotalScore={updateTotalScore}
             genreChanged={genreChanged}
             genreOptions={genres.listOfGenresFromAPI}
@@ -298,7 +286,6 @@ function App() {
             playlistChanged={playlistChanged}
             playlistOptions={playlist.listOfPlaylistFromAPI}
             selectedPlaylist={playlist.selectedPlaylist}
->>>>>>> d21281babd28864c227d011fe407decae494f6f6
           />: <SignInpPopUp 
           closeCallBack = {closePopUp} 
           findUser={getUserData}/>}
