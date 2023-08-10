@@ -16,7 +16,7 @@ function App() {
   const [allData, setAllData] = useState([])
   const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
   const [playlist, setPlaylist] = useState({ selectedPlaylist: '1ap9564Wpqxi2Bb8gVaSWc', listOfPlaylistFromAPI: [] })
-  const [clicked, setClicked] = useState(false)
+  const [showSignIn, setShowSignIn] = useState(false)
   const [playlistData, setPlaylistData] = useState([])
   
   // Retrieves tracks from ADA C19 Playlist as default selected playlist
@@ -88,29 +88,6 @@ function App() {
     axios.delete(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}`)
     userSignOut()
   };
-  ///Close Pop Up
-    const closePopUp = () => {
-      setClicked(false)
-    }
-    
-  ///Song Component Rendered--> REFACTOR OR DELETE 
-  // const songComponent = () =>{
-  //   if (user) {
-  //     return (
-  //     <Song
-  //     userData = {userData}
-  //     increaseStreak={updateLongestAndCurrentStreak}
-  //     increaseTotalScore={updateTotalScore}
-  //   />)
-  //   } else if (clicked) {
-  //     return (
-  //           <SignInpPopUp 
-  //           closeCallBack = {closePopUp} 
-  //           findUser={getUserData}/>)
-  //   } else {
-  //     console.log("close")
-  //   }
-  // }
   
   // Retrieves list of genres from Spotify API
   useEffect(() => {
@@ -214,6 +191,51 @@ function App() {
   } catch {
     console.log("Total score could not be updated")
   }}}
+  ///Close Pop Up
+  const closePopUp = () => {
+    setShowSignIn(false)
+    console.log("app/close")
+  }
+  ///Open Pop Up
+  const openPopUp = () => {
+    setShowSignIn(true)
+    console.log("app/open")
+  }
+    
+  //Album Component Render
+  const albumComponent = () =>{
+    if (user && ! showSignIn) {
+      return (
+        <Album
+        playlistData={playlistData}
+        userData = {userData}
+        increaseCurrentScore={updateCurrentScore}
+        increaseStreak={updateLongestAndCurrentStreak}
+        updateBestScoreSong={updateBestScoreSong}
+        genreChanged={genreChanged}
+        genreOptions={genres.listOfGenresFromAPI}
+        selectedGenre={genres.selectedGenre}
+        playlistChanged={playlistChanged}
+        playlistOptions={playlist.listOfPlaylistFromAPI}
+        selectedPlaylist={playlist.selectedPlaylist}
+      />)
+    } else if (!user) {
+      return (
+        <SignInpPopUp 
+        closeCallBack = {closePopUp} 
+        findUser={getUserData} openCallBack = {openPopUp}/>)
+    } else if (!user && showSignIn) {
+      return (
+        <Home
+            user={user}
+            userData = {userData}
+            findUser={getUserData}
+            closePopUp = {closePopUp}
+            deleteUser = {deleteUser}
+            userSignOut = {userSignOut}
+          />)
+    }
+  }
   
 
   return (
@@ -226,7 +248,7 @@ function App() {
               user={user}
               userData = {userData}
               findUser={getUserData}
-              // closePopUp = {closePopUp}
+              closePopUp = {closePopUp}
               deleteUser = {deleteUser}
               userSignOut = {userSignOut}
             />
@@ -246,9 +268,10 @@ function App() {
               playlistChanged={playlistChanged}
               playlistOptions={playlist.listOfPlaylistFromAPI}
               selectedPlaylist={playlist.selectedPlaylist}
-            /> : <SignInpPopUp 
+            /> : 
+            <SignInpPopUp 
             closeCallBack = {closePopUp} 
-            findUser={getUserData}/>}
+            findUser={getUserData} openCallBack = {openPopUp}/>}
         />
         <Route
           path="/song"

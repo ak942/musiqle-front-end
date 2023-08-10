@@ -8,15 +8,15 @@ import logo from '../Resources/Musiqle-logo.png'
 import DeleteUser from "./DeleteUser";
 
 const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged, genreOptions, selectedGenre, playlistOptions, selectedPlaylist, playlistChanged }) => {
-    const [clicked, setClicked] = React.useState(false)
+    const [signInClicked, setSignInClicked] = React.useState(false)
     const [stats, setStats] = React.useState(false)
     const [deleteModal, setDeleteModal] = React.useState(false)
 
     const openPopUp = () => {
-        setClicked(true)
+        setSignInClicked(true)
     }
     const closePopUp = () => {
-        setClicked(false)
+        setSignInClicked(false)
     }
     const openStats = () => {
         setStats(true)
@@ -49,12 +49,9 @@ const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged,
         }
     }
     const signIn = () => {
-        if (!clicked && !user) {
+        if (!signInClicked && !user) {
             return (
                 <div>
-                    {/* <button className="circular signin" onClick={spotifyClick}>
-                        Sign In To Spotify
-                    </button> */}
                     <button className="signin-btn" onClick={openPopUp}>
                         Sign In
                     </button>
@@ -80,7 +77,7 @@ const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged,
                 {signIn()}
             </div>
             <div>
-                {clicked ? <SignInPopUp closeCallBack={closePopUp} findUser={findUser} /> : null}
+                {signInClicked ? <SignInPopUp closeCallBack={closePopUp} findUser={findUser} /> : null}
             </div>
             <br />
             <ul className="link-container">
