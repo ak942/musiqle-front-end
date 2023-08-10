@@ -23,7 +23,7 @@ function App() {
   useEffect(() => {
     // const playlistID = "1ap9564Wpqxi2Bb8gVaSWc"
     try {
-      axios.get(`http://localhost:8080/playlists/${playlist.selectedPlaylist}`)
+      axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${playlist.selectedPlaylist}`)
       .then(tracksResponse => {
         console.log(tracksResponse)
         setPlaylistData(tracksResponse.data.items)
@@ -116,7 +116,7 @@ function App() {
   // Retrieves list of genres from Spotify API
   useEffect(() => {
     try {
-      axios.get("http://localhost:8080/genres")
+      axios.get("https://musiqle-back-end-w9vy.onrender.com/genres")
           .then(genreResponse => {
               setGenres({
                   selectedGenre: genres.selectedGenre,
@@ -126,7 +126,7 @@ function App() {
     } catch {
       console.log("Could not retrieve genres.")
     } try {
-      axios.get(`http://localhost:8080/playlists/${playlist.selectedPlaylist}`)
+      axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${playlist.selectedPlaylist}`)
         .then(tracksResponse => {
           console.log(tracksResponse)
           setPlaylistData(tracksResponse.data.items)
@@ -144,7 +144,7 @@ function App() {
           listOfGenresFromAPI: genres.listOfGenresFromAPI
       })
 
-      axios.get(`http://localhost:8080/genres/${val}/playlists`)
+      axios.get(`https://musiqle-back-end-w9vy.onrender.com/genres/${val}/playlists`)
           .then(playlistResponse => {
               setPlaylist({
                   selectedPlaylist: playlist.selectedPlaylist,
@@ -161,7 +161,7 @@ function App() {
           listOfPlaylistFromAPI: playlist.listOfPlaylistFromAPI
       })
 
-      axios.get(`http://localhost:8080/playlists/${val}`)
+      axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${val}`)
           .then(tracksResponse => {
               setPlaylistData(tracksResponse.data.items)
           })

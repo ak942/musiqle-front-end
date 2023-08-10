@@ -54,7 +54,7 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
     // console.log("Artist: ", artistName)
 
     const findTrackLyrics = (name, artist, album) => {
-        axios.get(`http://localhost:8080/musixmatch/search_track/${songName}/${artistName}`)
+        axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/search_track/${songName}/${artistName}`)
             .then(response => response.json())
             .then(response => {
                 setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
