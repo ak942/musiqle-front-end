@@ -20,20 +20,20 @@ function App() {
   const [streak, setStreak] = useState(0)
   const [playlistData, setPlaylistData] = useState([])
   
-  // // Retrieves tracks from ADA C19 Playlist as default selected playlist
-  // useEffect(() => {
-  //   // const playlistID = "1ap9564Wpqxi2Bb8gVaSWc"
-  //   try {
-  //     axios.get(`http://localhost:8080/playlists/${playlist.selectedPlaylist}`)
-  //     .then(tracksResponse => {
-  //       console.log(tracksResponse)
-  //       setPlaylistData(tracksResponse.data.items)
-  //     })
-  //     .catch(err => console.log("Error! ", err))
-  //   } catch {
-  //     console.log("Could not retrieve tracks.")
-  //   }
-  // }, [playlist.selectedPlaylist])
+  // Retrieves tracks from ADA C19 Playlist as default selected playlist
+  useEffect(() => {
+    // const playlistID = "1ap9564Wpqxi2Bb8gVaSWc"
+    try {
+      axios.get(`http://localhost:8080/playlists/${playlist.selectedPlaylist}`)
+      .then(tracksResponse => {
+        console.log(tracksResponse)
+        setPlaylistData(tracksResponse.data.items)
+      })
+      .catch(err => console.log("Error! ", err))
+    } catch {
+      console.log("Could not retrieve tracks.")
+    }
+  }, [playlist.selectedPlaylist])
 
   /// Getting all the Users from DB
   useEffect(() => {
@@ -127,6 +127,15 @@ function App() {
           })
     } catch {
       console.log("Could not retrieve genres.")
+    } try {
+      axios.get(`http://localhost:8080/playlists/${playlist.selectedPlaylist}`)
+        .then(tracksResponse => {
+          console.log(tracksResponse)
+          setPlaylistData(tracksResponse.data.items)
+        })
+        .catch(err => console.log("Error! ", err))
+    } catch {
+      console.log("Could not retrieve tracks.")
     }
   }, [])
 
@@ -266,6 +275,7 @@ function App() {
         <Route
           path="/song"
           element={user ? <Song
+            playlistData = {playlistData}
             userData = {userData}
             increaseStreak={updateLongestStreak}
             increaseTotalScore={updateTotalScore}
