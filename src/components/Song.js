@@ -10,13 +10,16 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
 
     const [attempts, setAttempts] = useState(4)
     const [lyrics, setLyrics] = useState("")
-    const [trackkName, setTrackName] = useState("")
-    const [artistName, setArtistName] = useState("")
+    const [trackName, setTrackName] = useState("")
+    const [artist, setArtist] = useState("")
     const [num, setNum] = useState(0)
     const [score, setScore] = useState(0)
     // const [bestScoreSong, setBestScoreSong] = useState(userData.bestScoreSong)
     const [streak, setStreak] = useState(userData.streak)
     const [totalScore, setTotalScore] = useState(userData.totalScore)
+    const [randomSong, setRandomSong] = useState(0)
+
+
     const filters = ["(", ")", "live", "remastered", "edit", "remix", "-", "?", "!", "remaster"]
     const points = {
         4: 10,
@@ -36,7 +39,6 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
     }
 
 
-    const [randomSong, setRandomSong] = useState(getRandomSong())
 
     const findTracks = async () => {
         const randomTrackNum = getRandomSong()
@@ -53,7 +55,7 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
     const artistName = randomSong.track.artists[0].name
     // console.log("Artist: ", artistName)
 
-    const findTrackLyrics = (name, artist, album) => {
+    const findTrackLyrics = (name, artist) => {
         axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/search_track/${songName}/${artistName}`)
             .then(response => response.json())
             .then(response => {
@@ -67,16 +69,16 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
     }, [songName, artistName])
 
 
-    // const findLyrics = async (id) => {
-    //     const response = await axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/track/${id}`)
-    //     // console.log(response.data.message.body.lyrics.explicit)
+    const findLyrics = async (id) => {
+        const response = await axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/track/${id}`)
+        // console.log(response.data.message.body.lyrics.explicit)
 
-    //     const avoidTracks= ["Takku Tamaram Bandi", "VENTE CONMIGO"]
-    //     const spanish = ['Ponte', 'mi', 'jacket', 'por', 'si', 'hoy', 'te', 'da', 'frío']
-    //     setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
-    //     // console.log(response.data.message.body.lyrics.lyrics_body.split("\n"))
+        const avoidTracks= ["Takku Tamaram Bandi", "VENTE CONMIGO"]
+        const spanish = ['Ponte', 'mi', 'jacket', 'por', 'si', 'hoy', 'te', 'da', 'frío']
+        setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
+        // console.log(response.data.message.body.lyrics.lyrics_body.split("\n"))
 
-    // }
+    }
     ///GET LYRICS
     const lyricsShown = () => {
         let endNum = num + 1
