@@ -3,7 +3,7 @@ import { Nav, NavLink, NavMenu } from "./NavBarElements";
 import Dropdown from './Dropdown'
 import './navbar.css'
 
-const NavBar = ({ genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
+const NavBar = ({ handleReset, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
     return (
         <Nav>
             <NavMenu className="nav-container">
@@ -24,6 +24,12 @@ const NavBar = ({ genreOptions, genreChanged, selectedGenre, playlistOptions, pl
                         selected={selectedPlaylist}
                     />
                 </div>
+                <button 
+                    className="circular"
+                    onClick={handleReset}
+                >
+                    Reset
+                </button>
             </NavMenu>
         </Nav>
     );

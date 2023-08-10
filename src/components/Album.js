@@ -22,13 +22,14 @@ const Album = ({ playlistData, userData, increaseStreak, genreOptions, genreChan
         2: 4,
         1: 1
     }
-
+    
     const getRandomAlbum = () => {
         const randomNum = playlistData ? Math.floor(Math.random() * playlistData.length) : 0
         return playlistData[randomNum]
     }
-
+    
     const [randomAlbum, setRandomAlbum] = useState(getRandomAlbum())
+
     const albumName = randomAlbum ? randomAlbum.track.album.name : name
     const albumCover = randomAlbum ? randomAlbum.track.album.images[0].url : url
 
@@ -46,6 +47,12 @@ const Album = ({ playlistData, userData, increaseStreak, genreOptions, genreChan
         resetGame()
         setStreak(0)
         setScore(0)
+        setRandomAlbum(
+            getRandomAlbum()
+        )
+    }
+
+    const handleReset = () => {
         setRandomAlbum(
             getRandomAlbum()
         )
@@ -85,6 +92,7 @@ const Album = ({ playlistData, userData, increaseStreak, genreOptions, genreChan
     return (
         <div className="center game">
             <NavBar
+                handleReset={handleReset}
                 genreChanged={genreChanged}
                 genreOptions={genreOptions}
                 selectedGenre={selectedGenre}
