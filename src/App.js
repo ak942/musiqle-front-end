@@ -18,7 +18,8 @@ function App() {
   const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
   const [playlist, setPlaylist] = useState({ selectedPlaylist: '', listOfPlaylistFromAPI: [] })
   const [clicked, setClicked] = useState(false)
-  const [streak, setStreak] = useState(0)
+  const [playlistData, setPlaylistData] = useState([])
+
   
   useEffect(() => {
     try {
@@ -32,10 +33,7 @@ function App() {
       console.log("Could not retrieve access token.")
     }
   }, [])
-  
-
-  const [playlistData, setPlaylistData] = useState([])
-  
+    
   // Retrieves tracks from ADA C19 Playlist as default selected playlist
   useEffect(() => {
     const playlistID = "1ap9564Wpqxi2Bb8gVaSWc"
@@ -54,7 +52,6 @@ function App() {
     axios.get('https://musiqle-back-end-w9vy.onrender.com/user')
     .then((response) => {
       setAllData(response.data)
-      console.log(response.data)
     })
   }, []);
 
@@ -109,24 +106,24 @@ function App() {
       console.log("here")
     }
     
-  ///Song Component Rendered
-  const songComponent = () =>{
-    if (user) {
-      return (
-      <Song
-      userData = {userData}
-      increaseStreak={updateLongestAndCurrentStreak}
-      increaseTotalScore={updateTotalScore}
-    />)
-    } else if (clicked) {
-      return (
-            <SignInpPopUp 
-            closeCallBack = {closePopUp} 
-            findUser={getUserData}/>)
-    } else {
-      console.log("close")
-    }
-  }
+  ///Song Component Rendered--> REFACTOR OR DELETE 
+  // const songComponent = () =>{
+  //   if (user) {
+  //     return (
+  //     <Song
+  //     userData = {userData}
+  //     increaseStreak={updateLongestAndCurrentStreak}
+  //     increaseTotalScore={updateTotalScore}
+  //   />)
+  //   } else if (clicked) {
+  //     return (
+  //           <SignInpPopUp 
+  //           closeCallBack = {closePopUp} 
+  //           findUser={getUserData}/>)
+  //   } else {
+  //     console.log("close")
+  //   }
+  // }
   
   // Retrieves list of genres from Spotify API
   useEffect(() => {
@@ -173,7 +170,7 @@ function App() {
   }
 
 
-  //// Score mechanics to update state and user database
+  //// Updates Longest Streak and Streak API Call to DD
   const updateLongestAndCurrentStreak=(streak) => {
     const currentLongestStreak = userData.longestStreak
     const currentStreak = userData.streak
@@ -189,64 +186,37 @@ function App() {
       console.log("Longest Streak could not be updated")
   }}}
 
-  const increaseCurrentScore = (score) => {
+  /// Update Current Score API Call to DB
+  const updateCurrentScore = (score) => {
     try {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/score`, score) 
-      .then(console.log("Score updated!"))
-
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/score`, 
+      {"score": score}) 
       if (userData.bestOverallScore < score) {
-        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/bestoverallstreak`, score)
-        .then(console.log("Best overall score updated!"))
+        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/bestoverallscore`, 
+        {"bestOverallScore": score})
       }
-
     } catch {
       console.log("Score could not be updated.")
-    }
-  }
+    }}
 
-  const increaseStreak = () => {
-    try {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/streak`, streak)
-      .then(console.log("Streak updated!"))
-
-      if (userData.longestStreak < streak) {
-          axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/longeststreak`, streak)
-          .then(console.log("Longest streak updated!"))
-        }
-
-    } catch {
-      console.log("Streak could not be updated.")
-    }
-  }
-
-  const increaseTotalScore = (totalScore) => {
-    try {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/totalscore`, totalScore)
-      .then(console.log("Total score updated!"))
-    } catch {
-      console.log("Total score could not be updated.")
-    }
-  }
-
-  const resetScore = (score) => {
-    try {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/score`, score)
-      .then(console.log("Score returned to 0!"))
-    } catch {
-      console.log("Score could not be updated.")
-    }
-  }
-
-  const resetStreak = () => {
-    setStreak(0)
-  }
-
-  const updateTotalScore = (totalscore) => {
-    console.log(userId, "id")
-    const currentTotalScore = userData.totalScore
-    axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
+  ///Update Total Score Call API Patch to DB
+  const updateBestOverallScore = (totalscore) => {
+    try { axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
     {"totalScore": totalscore})
-  }
+  } catch {
+    console.log("Total score could not be updated")
+  }}
+
+  ///Update BestScore Song API Patch Call to DB
+  const updateBestScoreSong = (score) => {
+    const bestDBScoreSong = userData.bestScoreSong
+    if (bestDBScoreSong > score) {
+    try { axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
+    {"totalScore": score})
+  } catch {
+    console.log("Total score could not be updated")
+  }}}
+  
 
   return (
     <Router>
@@ -270,8 +240,9 @@ function App() {
             <Album
               playlistData={playlistData}
               userData = {userData}
-              increaseCurrentScore={increaseCurrentScore}
+              increaseCurrentScore={updateCurrentScore}
               increaseStreak={updateLongestAndCurrentStreak}
+              updateBestScoreSong={updateBestScoreSong}
               genreChanged={genreChanged}
               genreOptions={genres.listOfGenresFromAPI}
               selectedGenre={genres.selectedGenre}
@@ -285,8 +256,9 @@ function App() {
           path="/song"
           element={user? <Song
             userData = {userData}
-            increaseStreak={updateLongestAndCurrentStreak}
-            increaseTotalScore={updateTotalScore}
+            updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
+            updateBestOverallScore={updateBestOverallScore}
+            updateCurrentScore = {updateCurrentScore}
             genreChanged={genreChanged}
             genreOptions={genres.listOfGenresFromAPI}
             selectedGenre={genres.selectedGenre}
