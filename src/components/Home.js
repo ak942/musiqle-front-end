@@ -4,6 +4,7 @@ import './home.css'
 import SignInPopUp from './SignInpPopUp'
 // import Dropdown from "./Dropdown";
 import Stats from './Stats'
+import logo from '../Resources/Musiqle-logo.png'
 
 const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged, genreOptions, selectedGenre, playlistOptions, selectedPlaylist, playlistChanged }) => {
     const [clicked, setClicked] = React.useState(false)
@@ -53,7 +54,8 @@ const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged,
     }
     return (
         <div className="home">
-            <h1 className="musiqle-header">Musiqle</h1>
+            {/* <h1 className="musiqle-header">Musiqle</h1> */}
+            <img className="musiqle-logo" alt="musiqle logo" src={logo}/>
             <h1 className="welcome-header">Play! Pick Your Path</h1>
             <div className="right">
                 {signIn()}
