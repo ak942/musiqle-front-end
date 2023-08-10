@@ -17,30 +17,40 @@ function App() {
   const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
   const [playlist, setPlaylist] = useState({ selectedPlaylist: '1ap9564Wpqxi2Bb8gVaSWc', listOfPlaylistFromAPI: [] })
   const [clicked, setClicked] = useState(false)
-  const [streak, setStreak] = useState(0)
   const [playlistData, setPlaylistData] = useState([])
+
   
-  // // Retrieves tracks from ADA C19 Playlist as default selected playlist
-  // useEffect(() => {
-  //   // const playlistID = "1ap9564Wpqxi2Bb8gVaSWc"
-  //   try {
-  //     axios.get(`http://localhost:8080/playlists/${playlist.selectedPlaylist}`)
-  //     .then(tracksResponse => {
-  //       console.log(tracksResponse)
-  //       setPlaylistData(tracksResponse.data.items)
-  //     })
-  //     .catch(err => console.log("Error! ", err))
-  //   } catch {
-  //     console.log("Could not retrieve tracks.")
-  //   }
-  // }, [playlist.selectedPlaylist])
+  useEffect(() => {
+    try {
+      axios.delete('https://musiqle-back-end-w9vy.onrender.com/access_token')
+      axios.post('https://musiqle-back-end-w9vy.onrender.com/access_token')
+      // .then(response => response.json())
+      // .then(response => {
+      //   setAccessToken(response.access_token)
+      // })
+    } catch {
+      console.log("Could not retrieve access token.")
+    }
+  }, [])
+    
+  // Retrieves tracks from ADA C19 Playlist as default selected playlist
+  useEffect(() => {
+    const playlistID = "1ap9564Wpqxi2Bb8gVaSWc"
+    try {
+      axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${playlistID}`)
+      .then(tracksResponse => {
+        setPlaylistData(tracksResponse.data.items)
+      })
+    } catch {
+      console.log("Could not retrieve tracks.")
+    }
+  }, [])
 
   /// Getting all the Users from DB
   useEffect(() => {
     axios.get('https://musiqle-back-end-w9vy.onrender.com/user')
     .then((response) => {
       setAllData(response.data)
-      console.log(response.data)
     })
     .catch(err=>console.log("Error! ", err))
   }, []);
@@ -96,13 +106,13 @@ function App() {
       console.log("here")
     }
     
-  ///Song Component Rendered
+  ///Song Component Rendered--> REFACTOR OR DELETE 
   // const songComponent = () =>{
   //   if (user) {
   //     return (
   //     <Song
   //     userData = {userData}
-  //     increaseStreak={updateLongestStreak}
+  //     increaseStreak={updateLongestAndCurrentStreak}
   //     increaseTotalScore={updateTotalScore}
   //   />)
   //   } else if (clicked) {
@@ -162,73 +172,53 @@ function App() {
   }
 
 
-  //// Score mechanics to update state and user database
-  const updateLongestStreak=(streak) => {
-    const currentStreak = userData.longestStreak
-    if (streak > currentStreak) {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
+  //// Updates Longest Streak and Streak API Call to DD
+  const updateLongestAndCurrentStreak=(streak) => {
+    const currentLongestStreak = userData.longestStreak
+    const currentStreak = userData.streak
+    if (streak > currentLongestStreak) {
+      try {axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
       {"longestStreak": streak})
-    }
-  }
+    } catch {
+      console.log("Longest Streak could not be updated")
+    }} else if (streak > currentStreak) {
+      try {axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/streak`,
+      {"streak": streak})
+    } catch {
+      console.log("Longest Streak could not be updated")
+  }}}
 
-  const increaseCurrentScore = (score) => {
+  /// Update Current Score API Call to DB
+  const updateCurrentScore = (score) => {
     try {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/score`, score) 
-      .then(console.log("Score updated!"))
-
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/score`, 
+      {"score": score}) 
       if (userData.bestOverallScore < score) {
-        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/bestoverallstreak`, score)
-        .then(console.log("Best overall score updated!"))
+        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/bestoverallscore`, 
+        {"bestOverallScore": score})
       }
-
     } catch {
       console.log("Score could not be updated.")
-    }
-  }
+    }}
 
-  const increaseStreak = () => {
-    try {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/streak`, streak)
-      .then(console.log("Streak updated!"))
-
-      if (userData.longestStreak < streak) {
-          axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/longeststreak`, streak)
-          .then(console.log("Longest streak updated!"))
-        }
-
-    } catch {
-      console.log("Streak could not be updated.")
-    }
-  }
-
-  const increaseTotalScore = (totalScore) => {
-    try {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/totalscore`, totalScore)
-      .then(console.log("Total score updated!"))
-    } catch {
-      console.log("Total score could not be updated.")
-    }
-  }
-
-  const resetScore = (score) => {
-    try {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/{userID}/score`, score)
-      .then(console.log("Score returned to 0!"))
-    } catch {
-      console.log("Score could not be updated.")
-    }
-  }
-
-  const resetStreak = () => {
-    setStreak(0)
-  }
-
-  const updateTotalScore = (totalscore) => {
-    console.log(userId, "id")
-    const currentTotalScore = userData.totalScore
-    axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
+  ///Update Total Score Call API Patch to DB
+  const updateBestOverallScore = (totalscore) => {
+    try { axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
     {"totalScore": totalscore})
-  }
+  } catch {
+    console.log("Total score could not be updated")
+  }}
+
+  ///Update BestScore Song API Patch Call to DB
+  const updateBestScoreSong = (score) => {
+    const bestDBScoreSong = userData.bestScoreSong
+    if (bestDBScoreSong > score) {
+    try { axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
+    {"totalScore": score})
+  } catch {
+    console.log("Total score could not be updated")
+  }}}
+  
 
   return (
     <Router>
@@ -251,8 +241,9 @@ function App() {
           element={user ? <Album
               playlistData={playlistData}
               userData = {userData}
-              increaseCurrentScore={increaseCurrentScore}
-              increaseStreak={updateLongestStreak}
+              increaseCurrentScore={updateCurrentScore}
+              increaseStreak={updateLongestAndCurrentStreak}
+              updateBestScoreSong={updateBestScoreSong}
               genreChanged={genreChanged}
               genreOptions={genres.listOfGenresFromAPI}
               selectedGenre={genres.selectedGenre}
@@ -267,8 +258,9 @@ function App() {
           path="/song"
           element={user ? <Song
             userData = {userData}
-            increaseStreak={updateLongestStreak}
-            increaseTotalScore={updateTotalScore}
+            updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
+            updateBestOverallScore={updateBestOverallScore}
+            updateCurrentScore = {updateCurrentScore}
             genreChanged={genreChanged}
             genreOptions={genres.listOfGenresFromAPI}
             selectedGenre={genres.selectedGenre}
