@@ -10,8 +10,8 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
 
     const [attempts, setAttempts] = useState(4)
     const [lyrics, setLyrics] = useState("")
-    const [trackName, setTrackName] = useState("")
-    const [artist, setArtist] = useState("")
+    const [songName, setSongName] = useState("")
+    const [artistName, setArtistName] = useState("")
     const [num, setNum] = useState(0)
     const [score, setScore] = useState(0)
     // const [bestScoreSong, setBestScoreSong] = useState(userData.bestScoreSong)
@@ -21,6 +21,7 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
 
 
     const filters = ["(", ")", "live", "remastered", "edit", "remix", "-", "?", "!", "remaster"]
+    
     const points = {
         4: 10,
         3: 7,
@@ -38,37 +39,23 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
         return playlistData[randomNum]
     }
 
+    const getRandomTrackNum = () => {
+        const randomTrackNum = Math.floor(Math.random() * 100)
+        return randomTrackNum
+    }
 
-
+    /// Get Random Track from MusixMatch
     const findTracks = async () => {
-        const randomTrackNum = getRandomSong()
+        const randomTrackNum = getRandomTrackNum()
         const response = await axios.get('https://musiqle-back-end-w9vy.onrender.com/musixmatch/track')
-        setTrackName(response.data.message.body.track_list[randomTrackNum].track.track_name)
+            setSongName(response.data.message.body.track_list[randomTrackNum].track.track_name)
         // setTrackId(response.data.message.body.track_list[randomTrackNum].track.track_id)
         // console.log(response.data.message.body.track_list.length)
-        setArtist(response.data.message.body.track_list[randomTrackNum].track.artist_name)
+            setArtistName(response.data.message.body.track_list[randomTrackNum].track.artist_name)
         findLyrics(response.data.message.body.track_list[randomTrackNum].track.track_id)
     }
 
-    const songName = randomSong.track.name;
-    // console.log("Song: ", songName)
-    const artistName = randomSong.track.artists[0].name
-    // console.log("Artist: ", artistName)
-
-    const findTrackLyrics = (name, artist) => {
-        axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/search_track/${songName}/${artistName}`)
-            .then(response => response.json())
-            .then(response => {
-                setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
-            })
-            .catch(err => console.log("Error, ", err))
-    }
-
-    useEffect(() => {
-        findTrackLyrics(songName, artistName)
-    }, [songName, artistName])
-
-
+    /// Get Lyrics from MusixMatch with Track ID from findTracks()
     const findLyrics = async (id) => {
         const response = await axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/track/${id}`)
         // console.log(response.data.message.body.lyrics.explicit)
@@ -79,6 +66,31 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
         // console.log(response.data.message.body.lyrics.lyrics_body.split("\n"))
 
     }
+
+    /// Get Lyrics from MusixMatch with track name and artist from specific playlist
+    const findTrackLyrics = (name, artist) => {
+        axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/search_track/${songName}/${artistName}`)
+            .then(response => response.json())
+            .then(response => {
+                setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
+            })
+            .catch(err => console.log("Error, ", err))
+    }
+
+    if (playlistData) {
+        setSongName(randomSong.track.name)
+        setArtistName(randomSong.track.artists[0].name)
+        findTrackLyrics(songName, artistName)
+    }
+
+
+    // useEffect(() => {
+    //     findTrackLyrics(songName, artistName)
+    // }, [songName, artistName])
+
+
+    
+
     ///GET LYRICS
     const lyricsShown = () => {
         let endNum = num + 1
@@ -140,7 +152,7 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
         let correctAnswerString = correctAnswer.join(" ")
         console.log(correctAnswerString, "newcorrectanswer")
         if (inputAnswer.toLowerCase() === correctAnswerString ) {
-            alert(`You are Correct! The song is ${trackName} by ${artist}`)
+            alert(`You are Correct! The song is ${songName} by ${artistName}`)
             setScore(score + points[attempts])
             setTotalScore(totalScore + points[attempts])
             updateBestOverallScore(totalScore + points[attempts])
