@@ -1,0 +1,25 @@
+.delete-btn {
+    border-radius: 10px;
+    outline: none;
+    border: 2px solid white;
+    padding: 15px;
+    background-color: #1ed760;
+    border-radius: 5px;
+    margin: 1vh;
+}
+
+.delete-modal {
+    background-color: black;
+    color:white;
+    position: fixed;
+    top: 22%;
+    left: 18%;
+    width: 40%;
+    padding: 20px;
+    margin-left: auto;
+    border-radius: 5px;
+    border: 2px solid #1db954;
+    height: 32vh;
+    width: 60%;
+    justify-content: center;
+}

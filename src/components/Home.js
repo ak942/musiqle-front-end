@@ -5,10 +5,12 @@ import SignInPopUp from './SignInpPopUp'
 // import Dropdown from "./Dropdown";
 import Stats from './Stats'
 import logo from '../Resources/Musiqle-logo.png'
+import DeleteUser from "./DeleteUser";
 
 const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged, genreOptions, selectedGenre, playlistOptions, selectedPlaylist, playlistChanged }) => {
     const [clicked, setClicked] = React.useState(false)
     const [stats, setStats] = React.useState(false)
+    const [deleteModal, setDeleteModal] = React.useState(false)
 
     const openPopUp = () => {
         setClicked(true)
@@ -22,11 +24,28 @@ const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged,
     const closeStats = () => {
         setStats(false)
     }
+    const openDeleteUser = () => {
+        setDeleteModal(true)
+    }
+    const closeDeleteUser = () => {
+        setDeleteModal(false)
+    }
+    const deleteAndCloseUser = ()=> {
+        deleteUser()
+        closeDeleteUser()
+    }
     const showUserStats= () => {
         if (stats) {
             return <Stats closeStats={closeStats} userData={userData}/>
         } else {
             return <button className ="user-login-btn" onClick = {openStats}>Stats</button>
+        }
+    }
+    const showDeleteUser = () => {
+        if (deleteModal) {
+            return <DeleteUser userData={userData} deleteUser={deleteAndCloseUser} closeDeleteUser = {closeDeleteUser}/>
+        } else {
+            return <button className = "user-login-btn" onClick = {openDeleteUser}> Delete </button>
         }
     }
     const signIn = () => {
@@ -46,7 +65,7 @@ const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged,
                 <section className="user-login-page">
                     <h4 className="user-header">Welcome Back, {user.charAt(0).toUpperCase() + user.slice(1)}!</h4>
                     {showUserStats()}
-                    <button className = "user-login-btn" onClick = {deleteUser}> Delete </button>
+                    {showDeleteUser()}
                     <button className = "user-login-btn" onClick = {userSignOut}> Sign Out </button>
                 </section>
             )

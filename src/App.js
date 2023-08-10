@@ -39,13 +39,13 @@ function App() {
     axios.get('https://musiqle-back-end-w9vy.onrender.com/user')
     .then((response) => {
       setAllData(response.data)
+      console.log(response.data)
     })
     .catch(err=>console.log("Error! ", err))
   }, []);
 
   /// Adding User to DB
   const addNewUser = (newUserData) => {
-    console.log("addnewuser")
     axios.post('https://musiqle-back-end-w9vy.onrender.com/user', newUserData)
   }
 
@@ -85,13 +85,12 @@ function App() {
 
   ///Delete User
   const deleteUser = () => {
-    axios.delete(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}`)
+    axios.delete(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}`)
     userSignOut()
   };
   ///Close Pop Up
     const closePopUp = () => {
       setClicked(false)
-      console.log("here")
     }
     
   ///Song Component Rendered--> REFACTOR OR DELETE 
