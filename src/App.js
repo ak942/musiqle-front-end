@@ -115,7 +115,7 @@ function App() {
       return (
       <Song
       userData = {userData}
-      increaseStreak={updateLongestStreak}
+      increaseStreak={updateLongestAndCurrentStreak}
       increaseTotalScore={updateTotalScore}
     />)
     } else if (clicked) {
@@ -174,13 +174,20 @@ function App() {
 
 
   //// Score mechanics to update state and user database
-  const updateLongestStreak=(streak) => {
-    const currentStreak = userData.longestStreak
-    if (streak > currentStreak) {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
+  const updateLongestAndCurrentStreak=(streak) => {
+    const currentLongestStreak = userData.longestStreak
+    const currentStreak = userData.streak
+    if (streak > currentLongestStreak) {
+      try {axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
       {"longestStreak": streak})
-    }
-  }
+    } catch {
+      console.log("Longest Streak could not be updated")
+    }} else if (streak > currentStreak) {
+      try {axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/streak`,
+      {"streak": streak})
+    } catch {
+      console.log("Longest Streak could not be updated")
+  }}}
 
   const increaseCurrentScore = (score) => {
     try {
@@ -264,7 +271,7 @@ function App() {
               playlistData={playlistData}
               userData = {userData}
               increaseCurrentScore={increaseCurrentScore}
-              increaseStreak={updateLongestStreak}
+              increaseStreak={updateLongestAndCurrentStreak}
               genreChanged={genreChanged}
               genreOptions={genres.listOfGenresFromAPI}
               selectedGenre={genres.selectedGenre}
@@ -278,7 +285,7 @@ function App() {
           path="/song"
           element={user? <Song
             userData = {userData}
-            increaseStreak={updateLongestStreak}
+            increaseStreak={updateLongestAndCurrentStreak}
             increaseTotalScore={updateTotalScore}
             genreChanged={genreChanged}
             genreOptions={genres.listOfGenresFromAPI}
