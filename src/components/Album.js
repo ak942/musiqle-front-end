@@ -2,7 +2,7 @@ import React from 'react';
 import "./Album.css"
 import AlbumInputForm from './AlbumInputForm';
 import ScoreBoard from './ScoreBoard';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import NavBar from './NavBar';
 
 

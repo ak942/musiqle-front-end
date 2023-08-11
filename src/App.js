@@ -201,55 +201,6 @@ function App() {
   } catch {
     console.log("Total score could not be updated")
   }}}
-  
-
-  ///Close Pop Up
-  const closePopUp = () => {
-    setShowSignIn(false)
-    console.log("app/close")
-  }
-  ///Open Pop Up
-  const openPopUp = () => {
-    setShowSignIn(true)
-    console.log("app/open")
-  }
-    
-  //Album Component Render
-  const showAlbumComponent = () => {
-    if (user && ! showSignIn) {
-      return (
-        <Album
-        playlistData={playlistData}
-        userData = {userData}
-        updateCurrentScore={updateCurrentScore}
-        updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
-        updateBestScoreAlbum={updateBestScoreAlbum}
-        updateBestOverallScore={updateBestOverallScore}
-        genreChanged={genreChanged}
-        genreOptions={genres.listOfGenresFromAPI}
-        selectedGenre={genres.selectedGenre}
-        playlistChanged={playlistChanged}
-        playlistOptions={playlist.listOfPlaylistFromAPI}
-        selectedPlaylist={playlist.selectedPlaylist}
-      />)
-    } else if (!user) {
-      return (
-        <SignInpPopUp 
-        closeCallBack = {closePopUp} 
-        findUser={getUserData} openCallBack = {openPopUp}/>)
-    } else if (!user && showSignIn) {
-      return (
-        <Home
-            user={user}
-            userData = {userData}
-            findUser={getUserData}
-            closePopUp = {closePopUp}
-            deleteUser = {deleteUser}
-            userSignOut = {userSignOut}
-          />)
-    }
-  }
-  
 
   return (
     <Router>
@@ -261,7 +212,6 @@ function App() {
               user={user}
               userData = {userData}
               findUser={getUserData}
-              closePopUp = {closePopUp}
               deleteUser = {deleteUser}
               userSignOut = {userSignOut}
             />
@@ -269,7 +219,7 @@ function App() {
         />
         <Route
           path="/album"
-          element={user ? <Album
+          element={<Album
               playlistData={playlistData}
               userData = {userData}
               updateCurrentScore={updateCurrentScore}
@@ -282,14 +232,11 @@ function App() {
               playlistChanged={playlistChanged}
               playlistOptions={playlist.listOfPlaylistFromAPI}
               selectedPlaylist={playlist.selectedPlaylist}
-            /> : 
-            <SignInpPopUp 
-            closeCallBack = {closePopUp} 
-            findUser={getUserData} openCallBack = {openPopUp}/>}
+            />}
         />
         <Route
           path="/song"
-          element={user ? <Song
+          element={<Song
             playlistData = {playlistData}
             userData = {userData}
             updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
@@ -301,11 +248,7 @@ function App() {
             playlistChanged={playlistChanged}
             playlistOptions={playlist.listOfPlaylistFromAPI}
             selectedPlaylist={playlist.selectedPlaylist}
-          /> : <SignInpPopUp 
-          closeCallBack = {closePopUp} 
-          findUser={getUserData}/>}
-
-        
+          />}
         />
       </Routes>
     </Router>
