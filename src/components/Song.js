@@ -38,8 +38,6 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
         const randomNum = Math.floor(Math.random() * playlistData.length)
         return playlistData[randomNum]
     }
-
-    const [randomSong, setRandomSong] = useState(getRandomSong())
         
     const getRandomTrackNum = () => {
         const randomTrackNum = Math.floor(Math.random() * playlistData.length)
@@ -115,9 +113,12 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
     const skipSong = ()=> {
         resetGame()
         setStreak(0)
+        updateLongestAndCurrentStreak(0)
     }
 
+
     const handleReset = () => {
+        setAttempts(4)
         const song = getRandomSong()
         setSongName(song.track.name)
         setArtistName(song.track.artists[0].name)
@@ -142,7 +143,7 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
             setTotalScore(totalScore + points[attempts])
             updateBestOverallScore(totalScore + points[attempts])
             setStreak(streak + 1)
-            updateLongestAndCurrentStreak(streak +1)
+            updateLongestAndCurrentStreak(streak + 1)
             resetGame()
         } else {
             if (attempts === 0) {
