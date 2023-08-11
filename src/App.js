@@ -164,10 +164,10 @@ function App() {
   /// Update Current Score API Call to DB
   const updateCurrentScore = (score) => {
     try {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/score`, 
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/score`, 
       {"score": score}) 
       if (userData.bestOverallScore < score) {
-        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}/bestoverallscore`, 
+        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestoverallscore`, 
         {"bestOverallScore": score})
       }
     } catch {

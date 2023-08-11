@@ -16,9 +16,10 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
     // const [bestScoreSong, setBestScoreSong] = useState(userData.bestScoreSong)
     const [streak, setStreak] = useState(userData.streak)
     const [totalScore, setTotalScore] = useState(userData.totalScore)
+    const [correctAnswerString, setCorrectAnswerString]=useState("")
     
     
-    const filters = ["(", ")", "live", "remastered", "edit", "remix", "-", "?", "!", "remaster"]
+    const filters = ["live","ep","version", "edit", "remix",  "remastered", "yuh"]   
     
     const points = {
         4: 10,
@@ -40,7 +41,7 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
     }
         
     const getRandomTrackNum = () => {
-        const randomTrackNum = Math.floor(Math.random() * playlistData.length)
+        const randomTrackNum = Math.floor(Math.random() * 100)
         return randomTrackNum
     }
 
@@ -50,6 +51,7 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
         const randomTrackNum = getRandomTrackNum()
         const response = await axios.get('https://musiqle-back-end-w9vy.onrender.com/musixmatch/track')
             setSongName(response.data.message.body.track_list[randomTrackNum].track.track_name)
+            cleanAnswer(response.data.message.body.track_list[randomTrackNum].track.track_name)
             setArtistName(response.data.message.body.track_list[randomTrackNum].track.artist_name)
             findLyrics(response.data.message.body.track_list[randomTrackNum].track.track_id)
     }
@@ -57,8 +59,6 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
     /// Get Lyrics from MusixMatch with Track ID from findTracks()
     const findLyrics = async (id) => {
         const response = await axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/track/${id}`)
-        // console.log(response.data.message.body.lyrics.explicit)
-
         // const avoidTracks= ["Takku Tamaram Bandi", "VENTE CONMIGO"]
         // const spanish = ['Ponte', 'mi', 'jacket', 'por', 'si', 'hoy', 'te', 'da', 'frío']
         setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
@@ -71,6 +71,7 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
         const song = getRandomSong()
         setSongName(song.track.name)
         setArtistName(song.track.artists[0].name)
+        cleanAnswer(song.track.name)
         const response = await axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/search_track/${song.track.name}/${song.track.artists[0].name}`)
             setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
     }
@@ -83,17 +84,15 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
         const commercialUse = ["******* This Lyrics is NOT for Commercial use *******"]
         let sliceLyrics = lyrics.slice(0, lyrics.length - 1)
         for (let line of sliceLyrics) {
-            console.log()
             if (/[a-z]/i.test(line) && lyricsArray.indexOf(line) === -1 && commercialUse.indexOf(line) === -1) {
                 lyricsArray.push(line)
             }
         }
         if (!lyricsArray) {
-
             findTrackLyrics()
         };
         let showLyrics = lyricsArray.slice(0, endNum)
-        console.log({ songName }, { artistName })
+        // console.log({ songName }, { artistName })
         return (
             (showLyrics || []).map(lyric => <section className="lyric">{lyric}</section>
             )
@@ -109,6 +108,7 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
         setAttempts(4)
         setNum(0)
         updateCurrentScore(score + points[attempts])
+        findTrackLyrics()
     }
 
     // Skip Song Callback
@@ -118,24 +118,21 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
         updateLongestAndCurrentStreak(0)
     }
 
-
+    //Handle Reset
     const handleReset = () => {
         setAttempts(4)
         findTrackLyrics()
     }
-
+    ///Create Clean Answer for SongName
+    const cleanAnswer = (songName)=> {
+        let correctAnswer = songName.replace(/[\W_]+/g," ").toLowerCase().split(' ')
+        const filteredAnswer = correctAnswer.filter(word => !filters.some(f => word ===f))
+        setCorrectAnswerString(filteredAnswer.join(" "))
+    }
 
     //CHECK THE INPUT AGAINST ANSWER
     const compareInput = (inputAnswer) => {
-        let correctAnswer = songName.toLowerCase().split(" ")
-        for (let word of correctAnswer) {
-            if (filters.indexOf(word) !== -1) {
-                let index = correctAnswer.indexOf(word)
-                correctAnswer.splice(index, 1)
-            }
-        }
-        let correctAnswerString = correctAnswer.join(" ")
-        console.log(correctAnswerString, "newcorrectanswer")
+        console.log(correctAnswerString, "Correct Answer");
         if (inputAnswer.toLowerCase() === correctAnswerString ) {
             alert(`You are Correct! The song is ${songName} by ${artistName}`)
             setScore(score + points[attempts])
