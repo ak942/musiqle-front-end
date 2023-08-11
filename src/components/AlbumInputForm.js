@@ -5,9 +5,9 @@ import { useState } from 'react';
 const AlbumInputForm = ({ skipAlbum, compareInput, giveAnswer }) => {
 
     const [inputAnswer, setInputAnswer] = useState("")
+    
     const handleSubmit = (event) => {
         event.preventDefault()
-
         compareInput(inputAnswer)
         setInputAnswer('')
     }
