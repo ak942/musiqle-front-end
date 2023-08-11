@@ -191,6 +191,8 @@ function App() {
   } catch {
     console.log("Total score could not be updated")
   }}}
+  
+
   ///Close Pop Up
   const closePopUp = () => {
     setShowSignIn(false)
@@ -203,7 +205,7 @@ function App() {
   }
     
   //Album Component Render
-  const showAlbumComponent = () =>{
+  const showAlbumComponent = () => {
     if (user && ! showSignIn) {
       return (
         <Album
