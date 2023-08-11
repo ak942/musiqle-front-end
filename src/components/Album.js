@@ -2,7 +2,7 @@ import React from 'react';
 import "./Album.css"
 import AlbumInputForm from './AlbumInputForm';
 import ScoreBoard from './ScoreBoard';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import NavBar from './NavBar';
 
 
@@ -22,7 +22,7 @@ const Album = ({ playlistData, userData, increaseStreak, genreOptions, genreChan
         2: 4,
         1: 1
     }
-    
+    useEffect(()=> {},[])
     const getRandomAlbum = () => {
         const randomNum = playlistData ? Math.floor(Math.random() * playlistData.length) : 0
         return playlistData[randomNum]
