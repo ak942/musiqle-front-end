@@ -60,12 +60,26 @@ const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged,
         } else if (user) {
             return (
                 <section className="user-login-page">
-                    <h4 className="user-header">Welcome Back, {user.charAt(0).toUpperCase() + user.slice(1)}!</h4>
+                    <h4 className="user-header">Welcome, {user.charAt(0).toUpperCase() + user.slice(1)}!</h4>
                     {showUserStats()}
                     {showDeleteUser()}
                     <button className = "user-login-btn" onClick = {userSignOut}> Sign Out </button>
                 </section>
             )
+        }
+    }
+    const showAlbumComponent = ()=> {
+        if (user) {
+            return (<Link to="/album">Album</Link>)
+        } else {
+            return (<Link onClick = {openPopUp} to="/">Album</Link>)
+        }
+    }
+    const showSongComponent = () => {
+        if (user) {
+            return (<Link to="/song">Song</Link>)
+        } else {
+            return (<Link onClick = {openPopUp} to="/">Song</Link>)
         }
     }
     return (
@@ -83,17 +97,12 @@ const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged,
             <ul className="link-container">
                 <li className="link-list">
                     <div className="link">
-                        <Link to="/album">
-                            Album
-                        </Link>
+                        {showAlbumComponent()}
                     </div>
                 </li>
                 <li className="link-list">
                     <div className="link">
-                        <Link to="/song">
-                            Song
-                        </Link>
-                        
+                        {showSongComponent()}
                     </div>
                 </li>
             </ul>

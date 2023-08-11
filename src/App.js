@@ -256,7 +256,7 @@ function App() {
         />
         <Route
           path="/album"
-          element={user ? <Album
+          element={<Album
               playlistData={playlistData}
               userData = {userData}
               increaseCurrentScore={updateCurrentScore}
@@ -268,14 +268,11 @@ function App() {
               playlistChanged={playlistChanged}
               playlistOptions={playlist.listOfPlaylistFromAPI}
               selectedPlaylist={playlist.selectedPlaylist}
-            /> : 
-            <SignInpPopUp 
-            closeCallBack = {closePopUp} 
-            findUser={getUserData} openCallBack = {openPopUp}/>}
+            />}
         />
         <Route
           path="/song"
-          element={user ? <Song
+          element={<Song
             playlistData = {playlistData}
             userData = {userData}
             updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
@@ -287,11 +284,7 @@ function App() {
             playlistChanged={playlistChanged}
             playlistOptions={playlist.listOfPlaylistFromAPI}
             selectedPlaylist={playlist.selectedPlaylist}
-          /> : <SignInpPopUp 
-          closeCallBack = {closePopUp} 
-          findUser={getUserData}/>}
-
-        
+          />}
         />
       </Routes>
     </Router>
