@@ -23,7 +23,10 @@
 h4 {
     margin: 0;
     color: #1ed760;
+    font-size: 3vh;
+    letter-spacing: 0.3vh;
 }
+
 input[type=text]:focus{
     outline: #1ed760
 }
@@ -31,6 +34,7 @@ input[type=text]:focus{
 h6 {
     margin: 0;
     font-size: 16px;
+    letter-spacing: 0.1vh;
 }
 
 .enter-submit-btn {
@@ -75,4 +79,17 @@ float: right;
 .close:hover {
 color: #1db954;
 cursor: pointer;
+}
+
+/* Stats PopUp CSS Specific  */
+.stats-header {
+    text-align: center;
+    color: #1db954;
+    font-size: 5vh;
+    margin-top: 0;
+}
+
+h5 {
+    font-size: 3vh;
+    margin: 2.8vh;
 }

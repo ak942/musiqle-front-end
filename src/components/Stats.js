@@ -1,4 +1,5 @@
 import React from 'react'
+import './signinpopup.css'
 
 const Stats = ({closeStats, userData}) => {
 
@@ -8,8 +9,8 @@ const Stats = ({closeStats, userData}) => {
             <span className="close" onClick = {closeStats}>
                 &times;
             </span>
-            <h2>Statistics For {userData.name} </h2>
-            <section>
+            <h2 className='stats-header'>Statistics For {userData.name.charAt(0).toUpperCase() + userData.name.slice(1)} </h2>
+            <section className='stats-container'>
                 <h5>Total Score Accumulated: {userData.totalScore}</h5>
                 <h5>Best Overall Score: {userData.bestOverallScore}</h5>
                 <h5>Streak: {userData.streak}</h5>

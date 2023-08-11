@@ -5,22 +5,34 @@ import SignInPopUp from './SignInpPopUp'
 // import Dropdown from "./Dropdown";
 import Stats from './Stats'
 import logo from '../Resources/Musiqle-logo.png'
+import DeleteUser from "./DeleteUser";
 
 const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged, genreOptions, selectedGenre, playlistOptions, selectedPlaylist, playlistChanged }) => {
-    const [clicked, setClicked] = React.useState(false)
+    const [signInClicked, setSignInClicked] = React.useState(false)
     const [stats, setStats] = React.useState(false)
+    const [deleteModal, setDeleteModal] = React.useState(false)
 
     const openPopUp = () => {
-        setClicked(true)
+        setSignInClicked(true)
     }
     const closePopUp = () => {
-        setClicked(false)
+        setSignInClicked(false)
     }
     const openStats = () => {
         setStats(true)
     }
     const closeStats = () => {
         setStats(false)
+    }
+    const openDeleteUser = () => {
+        setDeleteModal(true)
+    }
+    const closeDeleteUser = () => {
+        setDeleteModal(false)
+    }
+    const deleteAndCloseUser = ()=> {
+        deleteUser()
+        closeDeleteUser()
     }
     const showUserStats= () => {
         if (stats) {
@@ -29,13 +41,17 @@ const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged,
             return <button className ="user-login-btn" onClick = {openStats}>Stats</button>
         }
     }
+    const showDeleteUser = () => {
+        if (deleteModal) {
+            return <DeleteUser userData={userData} deleteUser={deleteAndCloseUser} closeDeleteUser = {closeDeleteUser}/>
+        } else {
+            return <button className = "user-login-btn" onClick = {openDeleteUser}> Delete </button>
+        }
+    }
     const signIn = () => {
-        if (!clicked && !user) {
+        if (!signInClicked && !user) {
             return (
                 <div>
-                    {/* <button className="circular signin" onClick={spotifyClick}>
-                        Sign In To Spotify
-                    </button> */}
                     <button className="signin-btn" onClick={openPopUp}>
                         Sign In
                     </button>
@@ -46,7 +62,7 @@ const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged,
                 <section className="user-login-page">
                     <h4 className="user-header">Welcome Back, {user.charAt(0).toUpperCase() + user.slice(1)}!</h4>
                     {showUserStats()}
-                    <button className = "user-login-btn" onClick = {deleteUser}> Delete </button>
+                    {showDeleteUser()}
                     <button className = "user-login-btn" onClick = {userSignOut}> Sign Out </button>
                 </section>
             )
@@ -61,7 +77,7 @@ const Home = ({ user, userData, deleteUser, userSignOut, findUser, genreChanged,
                 {signIn()}
             </div>
             <div>
-                {clicked ? <SignInPopUp closeCallBack={closePopUp} findUser={findUser} /> : null}
+                {signInClicked ? <SignInPopUp closeCallBack={closePopUp} findUser={findUser} /> : null}
             </div>
             <br />
             <ul className="link-container">
