@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import './InputForm.css'
 
 
-const InputForm = ({ skipAlbum, compareInput, giveAnswer }) => {
+const AlbumInputForm = ({ skipAlbum, compareInput, giveAnswer }) => {
 
     const [inputAnswer, setInputAnswer] = useState("")
     const handleSubmit = (event) => {
@@ -57,9 +56,9 @@ const InputForm = ({ skipAlbum, compareInput, giveAnswer }) => {
     )
 }
 
-InputForm.propTypes = {
+AlbumInputForm.propTypes = {
     compareInput: PropTypes.func.isRequired,
     giveAnswer: PropTypes.func
 };
 
-export default InputForm;
+export default AlbumInputForm;

@@ -1,6 +1,6 @@
 import React from 'react';
 import "./Album.css"
-import InputForm from './InputForm';
+import AlbumInputForm from './AlbumInputForm';
 import ScoreBoard from './ScoreBoard';
 import { useState } from 'react';
 import NavBar from './NavBar';
@@ -108,7 +108,7 @@ const Album = ({ playlistData, userData, increaseStreak, genreOptions, genreChan
                 src={albumCover}
                 alt="album cover"
             />
-            <InputForm
+            <AlbumInputForm
                 skipAlbum={skipAlbum}
                 giveAnswer={attempts === 0 ? giveAnswer : null}
                 compareInput={compareInput}
