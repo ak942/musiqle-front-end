@@ -1,7 +1,8 @@
-import {useState} from 'react'
+import { useState } from 'react'
 // import PropTypes from 'prop-types'
 
-const SongInputForm = ({compareInput, skipSong}) => {
+const SongInputForm = ({ compareInput, skipSong, giveAnswer }) => {
+
     const [inputAnswer, setInputAnswer] = useState("")
 
     const handleSubmit = (event) => {
@@ -10,15 +11,14 @@ const SongInputForm = ({compareInput, skipSong}) => {
         setInputAnswer('')
     }
 
-    const handleChange = (event) => {
-        setInputAnswer(event.target.value);
-    };
-
     const handleSkip = (event) => {
         event.preventDefault()
         skipSong()
     }
 
+    const handleChange = (event) => {
+        giveAnswer ? setInputAnswer(giveAnswer) : setInputAnswer(event.target.value);
+    };
 
     return (
         <div className="answer-box">
