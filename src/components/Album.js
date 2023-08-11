@@ -33,25 +33,29 @@ const Album = ({ playlistData, userData, increaseStreak, genreOptions, genreChan
     const albumName = randomAlbum ? randomAlbum.track.album.name : name
     const albumCover = randomAlbum ? randomAlbum.track.album.images[0].url : url
 
+    // Resets game after correct guess
     const resetGame = () => {
         setAttempts(4)
         setNum(8)
         increaseStreak(streak + 1)
-    }
-
-    const giveAnswer = () => {
-        return `The album is ${albumName}`
-    }
-
-    const skipAlbum = () => {
-        resetGame()
-        setStreak(0)
-        setScore(0)
         setRandomAlbum(
             getRandomAlbum()
         )
     }
 
+
+    const giveAnswer = () => {
+        return `The album is ${albumName}`
+    }
+
+    // Click when user wants to skip song, but lose points
+    const skipAlbum = () => {
+        resetGame()
+        setStreak(0)
+        setScore(0)
+    }
+
+    // Click when playlist has been changed
     const handleReset = () => {
         setRandomAlbum(
             getRandomAlbum()
@@ -59,10 +63,9 @@ const Album = ({ playlistData, userData, increaseStreak, genreOptions, genreChan
     }
 
     const compareInput = (inputAnswer) => {
-        if (inputAnswer === albumName) {
-            setRandomAlbum(
-                getRandomAlbum()
-            )
+        let correctAnswer = albumName.toLowerCase()
+        if (inputAnswer.toLowerCase() === correctAnswer) {
+            alert(`You are Correct! The album is ${albumName}.`)
             setTotalScore(totalScore + points[attempts])
             setScore(score + points[attempts])
             setStreak(streak + 1)
@@ -70,20 +73,13 @@ const Album = ({ playlistData, userData, increaseStreak, genreOptions, genreChan
 
         } else {
             if (attempts === 0) {
-                setRandomAlbum(
-                    getRandomAlbum()
-                )
                 setStreak(0)
                 resetGame()
 
             } else {
 
-                setAttempts(
-                    attempts - 1
-                )
-                setNum(
-                    num - 2
-                )
+                setAttempts(attempts - 1)
+                setNum(num - 2)
             }
         }
     }
