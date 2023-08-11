@@ -203,7 +203,7 @@ function App() {
   }
     
   //Album Component Render
-  const albumComponent = () =>{
+  const showAlbumComponent = () =>{
     if (user && ! showSignIn) {
       return (
         <Album
