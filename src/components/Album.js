@@ -22,6 +22,8 @@ const Album = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBe
         1: 1
     }
 
+    const filters = ["(", ")", "live", "remastered", "edit", "remix", "-", "?", "!", "remaster"]
+
     const getRandomAlbum = () => {
         const randomNum = playlistData ? Math.floor(Math.random() * playlistData.length) : 0
         return playlistData[randomNum]
@@ -92,8 +94,15 @@ const Album = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBe
     }
 
     const compareInput = (inputAnswer) => {
-        let correctAnswer = albumName.toLowerCase()
-        if (inputAnswer.toLowerCase() === correctAnswer) {
+        let correctAnswer = albumName.toLowerCase().split(" ")
+        for (let word of correctAnswer) {
+            if (filters.indexOf(word) !== -1) {
+                let index = correctAnswer.indexOf(word)
+                correctAnswer.splice(index, 1)
+            }
+        }
+        let correctAnswerString = correctAnswer.join(" ")
+        if (inputAnswer.toLowerCase() === correctAnswerString) {
             alert(`You are Correct! The album is ${albumName}.`)
             increaseTotalScore()
             increaseScore()
