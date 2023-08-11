@@ -192,6 +192,16 @@ function App() {
     console.log("Total score could not be updated")
   }}}
 
+  ///Update BestScore Song API Patch Call to DB
+  const updateBestScoreAlbum = (score) => {
+    const bestDBScoreAlbum = userData.bestScoreAlbum
+    if (bestDBScoreAlbum > score) {
+    try { axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
+    {"totalScore": score})
+  } catch {
+    console.log("Total score could not be updated")
+  }}}
+
   return (
     <Router>
       <Routes>
@@ -212,9 +222,10 @@ function App() {
           element={<Album
               playlistData={playlistData}
               userData = {userData}
-              increaseCurrentScore={updateCurrentScore}
-              increaseStreak={updateLongestAndCurrentStreak}
+              updateCurrentScore={updateCurrentScore}
+              updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
               updateBestScoreSong={updateBestScoreSong}
+              updateBestOverallScore={updateBestOverallScore}
               genreChanged={genreChanged}
               genreOptions={genres.listOfGenresFromAPI}
               selectedGenre={genres.selectedGenre}
