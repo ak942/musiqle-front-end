@@ -67,24 +67,30 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
     }
 
     /// Get Lyrics from MusixMatch with track name and artist from specific playlist
-    const findTrackLyrics = async (song, artist) => {
-        const response = await axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/search_track/${song}/${artist}`)
+    const findTrackLyrics = async () => {
+        const song = getRandomSong()
+        setSongName(song.track.name)
+        setArtistName(song.track.artists[0].name)
+        const response = await axios.get(`https://musiqle-back-end-w9vy.onrender.com/musixmatch/search_track/${song.track.name}/${song.track.artists[0].name}`)
             setLyrics(response.data.message.body.lyrics.lyrics_body.split('\n'))
     }
+
 
     ///GET LYRICS
     const lyricsShown = () => {
         let endNum = num + 1
         let lyricsArray = []
+        const commercialUse = ["******* This Lyrics is NOT for Commercial use *******"]
         let sliceLyrics = lyrics.slice(0, lyrics.length - 1)
         for (let line of sliceLyrics) {
             console.log()
-            if (/[a-z]/i.test(line) && lyricsArray.indexOf(line) === -1) {
+            if (/[a-z]/i.test(line) && lyricsArray.indexOf(line) === -1 && commercialUse.indexOf(line) === -1) {
                 lyricsArray.push(line)
             }
         }
         if (!lyricsArray) {
-            findTrackLyrics(songName,  artistName)
+
+            findTrackLyrics()
         };
         let showLyrics = lyricsArray.slice(0, endNum)
         console.log({ songName }, { artistName })
@@ -102,10 +108,6 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
     const resetGame = () => {
         setAttempts(4)
         setNum(0)
-        const song = getRandomSong()
-        setSongName(song.track.name)
-        setArtistName(song.track.artists[0].name)
-        findTrackLyrics(song.track.name,  song.track.artists[0].name)
         updateCurrentScore(score + points[attempts])
     }
 
@@ -119,10 +121,7 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
 
     const handleReset = () => {
         setAttempts(4)
-        const song = getRandomSong()
-        setSongName(song.track.name)
-        setArtistName(song.track.artists[0].name)
-        findTrackLyrics(song.track.name,  song.track.artists[0].name)
+        findTrackLyrics()
     }
 
 
