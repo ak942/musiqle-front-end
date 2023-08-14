@@ -1,6 +1,6 @@
 import React from 'react'
 import ScorePage from './ScorePage'
-import './signinpopup.css'
+import './AllPlayerStats.css'
 
 const AllPlayerStats = ({ closeStats, allData }) => {
 
@@ -26,30 +26,35 @@ const AllPlayerStats = ({ closeStats, allData }) => {
         if (page === 1) {
             return (
                 <div>
+                    <h4 className="center">Best Scores:</h4>
                     {playerScoreComponents}
                 </div>
             )
         } else if (page === 2) {
             return (
                 <div>
+                    <h4 className="center">Longest Streaks:</h4>
                     {playerStreakComponents}
                 </div>
             )
         } else if (page === 3) {
             return (
                 <div>
+                    <h4 className="center">Total Scores:</h4>
                     {playerTotalScoreComponents}
                 </div>
             )
         } else if (page === 4) {
             return (
                 <div>
+                    <h4 className="center">Best Artist Scores:</h4>
                     {playerArtistScoreComponents}
                 </div>
             )
         } else if (page === 5) {
             return (
                 <div>
+                    <h4 className="center">Best Song Scores:</h4>
                     {playerSongScoreComponents}
                 </div>
             )
@@ -122,14 +127,14 @@ const AllPlayerStats = ({ closeStats, allData }) => {
                 <span className="close" onClick={closeStats}>
                     &times;
                 </span>
-                <span className="page-arrow" onClick={prevStats}>
+                <span className="page-arrow left" onClick={prevStats}>
                     {"←"} Previous
                 </span>
                 <h2 className='stats-header'>All Players' Stats</h2>
                 <section className='stats-container'>
                     {showPage()}
                 </section>
-                <span className="page-arrow" onClick={nextStats}>
+                <span className="page-arrow right-arrow" onClick={nextStats}>
                     Next {"→"}
                 </span>
             </div>

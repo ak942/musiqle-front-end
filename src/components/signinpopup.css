@@ -69,6 +69,7 @@ button:hover {
     width: 60%;
     justify-content: center;
     overflow: scroll;
+    z-index: 1;
 }
 
 .close {
@@ -80,6 +81,8 @@ button:hover {
 .close:hover {
     color: #1db954;
     cursor: pointer;
+    font-size: 1.2em;
+    font-weight: bold;
 }
 
 /* Stats PopUp CSS Specific  */
