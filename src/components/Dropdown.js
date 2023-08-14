@@ -1,7 +1,7 @@
 import React from 'react'
 import './Dropdown.css'
 
-const Dropdown = ({ options, changed, selected, callBack}) => {
+const Dropdown = ({ options, changed, selected, callBack, defaultValueName}) => {
 
     const dropdownChanged = e => {
         changed(e.target.value)
@@ -17,15 +17,14 @@ const Dropdown = ({ options, changed, selected, callBack}) => {
             No options available
         </option>
 
-
     return (
         <div className="dropdown-container">
             <select
                 className="dropdown"
                 value={selected}
                 onChange={dropdownChanged}
-                defaultValue="TEST"
-            >
+            >   
+                {defaultValueName()}
                 {dropdownOptions}
             </select>
         </div>
