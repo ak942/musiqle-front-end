@@ -94,6 +94,7 @@ function App() {
     try {
       axios.get("https://musiqle-back-end-w9vy.onrender.com/genres")
           .then(genreResponse => {
+              console.log(genreResponse.data)
               setGenres({
                   selectedGenre: genres.selectedGenre,
                   listOfGenresFromAPI: genreResponse.data.categories.items
@@ -115,6 +116,7 @@ function App() {
 
   // Retrieves list of playlists from selected genre
   const genreChanged = val => {
+      console.log(val)
       setGenres({
           selectedGenre: val,
           listOfGenresFromAPI: genres.listOfGenresFromAPI
@@ -209,6 +211,7 @@ function App() {
           exact path="/"
           element={
             <Home
+              allData={allData}
               user={user}
               userData = {userData}
               findUser={getUserData}

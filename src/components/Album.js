@@ -22,7 +22,7 @@ const Album = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBe
         1: 1
     }
 
-    const filters = ["(", ")", "live", "remastered", "edit", "remix", "-", "?", "!", "remaster"]
+    const filters = ["(", ")", "live", "remastered", "edit", "remix", "-", "?", "!", "remaster", "deluxe"]
 
     const getRandomAlbum = () => {
         const randomNum = playlistData ? Math.floor(Math.random() * playlistData.length) : 0
