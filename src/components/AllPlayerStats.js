@@ -9,12 +9,16 @@ const AllPlayerStats = ({ closeStats, allData }) => {
     const nextStats = () => {
         if (page !== 5) {
             setPage(page + 1)
+        } else if (page === 5) {
+            setPage(1)
         }
     }
 
     const prevStats = () => {
         if (page !== 1) {
             setPage(page - 1)
+        } else if (page === 1) {
+            setPage(5)
         }
     }
 
