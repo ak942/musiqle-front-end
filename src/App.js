@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import Album from "./components/Album";
+import Artist from "./components/Artist";
 import Song from "./components/Song";
 import { useState, useEffect } from "react";
 import axios from 'axios';
@@ -221,8 +221,8 @@ function App() {
           }
         />
         <Route
-          path="/album"
-          element={<Album
+          path="/artist"
+          element={<Artist
               playlistData={playlistData}
               userData = {userData}
               updateCurrentScore={updateCurrentScore}

@@ -40,7 +40,7 @@ const AllPlayerStats = ({ closeStats, allData }) => {
         } else if (page === 4) {
             return (
                 <div>
-                    {playerAlbumScoreComponents}
+                    {playerArtistScoreComponents}
                 </div>
             )
         } else if (page === 5) {
@@ -88,13 +88,13 @@ const AllPlayerStats = ({ closeStats, allData }) => {
         )
     })
 
-    const playerAlbumScoreComponents = allData.map(player => {
+    const playerArtistScoreComponents = allData.map(player => {
         return (
             <div>
                 <ScorePage
-                    statType={"Best Album Score"}
+                    statType={"Best Artist Score"}
                     userName={player.name}
-                    userScore={player.bestScoreAlbum}
+                    userScore={player.bestScoreArtist}
                 />
             </div>
         )

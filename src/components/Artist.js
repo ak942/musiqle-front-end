@@ -1,12 +1,12 @@
 import React from 'react';
-import "./Album.css"
-import AlbumInputForm from './AlbumInputForm';
+import "./Artist.css"
+import ArtistInputForm from './ArtistInputForm';
 import ScoreBoard from './ScoreBoard';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import NavBar from './NavBar';
 
 
-const Album = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBestOverallScore, updateCurrentScore, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
+const Artist = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBestOverallScore, updateCurrentScore, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
 
 
     const [streak, setStreak] = useState(userData.streak)
@@ -31,7 +31,7 @@ const Album = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBe
 
     const [randomAlbum, setRandomAlbum] = useState(getRandomAlbum())
 
-    const albumName = randomAlbum.track.album.name
+    const artistName = randomAlbum.track.album.artists[0].name
     const albumCover = randomAlbum.track.album.images[0].url
 
     // Sets score in state and User's DB stats to 0
@@ -76,7 +76,7 @@ const Album = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBe
 
 
     const giveAnswer = () => {
-        return `The album is ${albumName}.`
+        return `The artist is ${artistName}.`
     }
 
     // Click when user wants to skip song, but lose points
@@ -94,7 +94,7 @@ const Album = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBe
     }
 
     const compareInput = (inputAnswer) => {
-        let correctAnswer = albumName.toLowerCase().split(" ")
+        let correctAnswer = artistName.toLowerCase().split(" ")
         for (let word of correctAnswer) {
             if (filters.indexOf(word) !== -1) {
                 let index = correctAnswer.indexOf(word)
@@ -103,7 +103,7 @@ const Album = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBe
         }
         let correctAnswerString = correctAnswer.join(" ")
         if (inputAnswer.toLowerCase() === correctAnswerString) {
-            alert(`You are Correct! The album is ${albumName}.`)
+            alert(`You are Correct! The artist is ${artistName}.`)
             increaseTotalScore()
             increaseScore()
             increaseStreak()
@@ -137,7 +137,7 @@ const Album = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBe
                 playlistOptions={playlistOptions}
                 selectedPlaylist={selectedPlaylist}
             />
-            <h1>Guess the Album</h1>
+            <h1>Guess the Artist</h1>
             <ScoreBoard
                 currentScore={score}
                 totalScore={totalScore}
@@ -149,7 +149,7 @@ const Album = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBe
                 src={albumCover}
                 alt="album cover"
             />
-            <AlbumInputForm
+            <ArtistInputForm
                 skipAlbum={skipAlbum}
                 giveAnswer={attempts === 0 ? giveAnswer : null}
                 compareInput={compareInput}
@@ -158,4 +158,4 @@ const Album = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBe
     )
 }
 
-export default Album;
+export default Artist;

@@ -45,10 +45,10 @@ const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) =>
     const showAllUserStats = () => {
         if (allStats) {
             return (
-            <AllPlayerStats
-                closeStats={closeAllStats}
-                allData={allData}
-            />
+                <AllPlayerStats
+                    closeStats={closeAllStats}
+                    allData={allData}
+                />
             )
         } else {
             return (<button className="all-stats-btn" onClick={openAllStats}>
@@ -91,11 +91,11 @@ const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) =>
             )
         }
     }
-    const showAlbumComponent = () => {
+    const showArtistComponent = () => {
         if (user) {
-            return (<Link to="/album">Album</Link>)
+            return (<Link to="/artist">Artist</Link>)
         } else {
-            return (<Link onClick={openPopUp} to="/">Album</Link>)
+            return (<Link onClick={openPopUp} to="/">Artist</Link>)
         }
     }
     const showSongComponent = () => {
@@ -121,7 +121,7 @@ const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) =>
             <ul className="link-container">
                 <li className="link-list">
                     <div className="link">
-                        {showAlbumComponent()}
+                        {showArtistComponent()}
                     </div>
                 </li>
                 <li className="link-list">
