@@ -1,0 +1,21 @@
+.wide {
+    width: 60vw
+}
+
+.right-align {
+    /* display: flex; */
+    /* flex-direction: column; */
+    justify-content: right;
+}
+
+.left-align {
+    /* display: flex; */
+    justify-content: left;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    padding-bottom: 2px;
+}

@@ -2,13 +2,13 @@
     width: 50%;
     height: 20%;
     background-color: white;
-    color:black;
+    color: black;
 }
 
 .user-form {
     width: 100%;
     display: flex;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
 }
@@ -17,7 +17,7 @@
     color: white;
     font-size: 35px;
     letter-spacing: 3px;
-    margin-top:0;
+    margin-top: 0;
 }
 
 h4 {
@@ -27,7 +27,7 @@ h4 {
     letter-spacing: 0.3vh;
 }
 
-input[type=text]:focus{
+input[type=text]:focus {
     outline: #1ed760
 }
 
@@ -38,47 +38,48 @@ h6 {
 }
 
 .enter-submit-btn {
-border-radius: 10px;
-/* background-color: white; */
-outline: none;
-border: 2px solid white;
-padding: 15px;
-background-color: #1ed760;
-border-radius: 5px;
-margin-top: 3vh;
+    border-radius: 10px;
+    /* background-color: white; */
+    outline: none;
+    border: 2px solid white;
+    padding: 15px;
+    background-color: #1ed760;
+    border-radius: 5px;
+    margin-top: 3vh;
 }
 
-button:hover{
+button:hover {
     border: 2px solid #323232;
     background-color: #1ed760;
 }
 
 
 .modal_content {
-background-color: black;
-color:white;
-position: fixed;
-top: 18%;
-left: 18%;
-width: 40%;
-padding: 20px;
-margin-left: auto;
-border-radius: 5px;
-border: 2px solid #1db954;
-height: 50vh;
-width: 60%;
-justify-content: center;
+    background-color: black;
+    color: white;
+    position: fixed;
+    top: 18%;
+    left: 18%;
+    width: 40%;
+    padding: 20px;
+    margin-left: auto;
+    border-radius: 5px;
+    border: 2px solid #1db954;
+    height: 50vh;
+    width: 60%;
+    justify-content: center;
+    overflow: scroll;
 }
 
 .close {
-color: white;
-size: 100px;
-float: right;
+    color: white;
+    size: 100px;
+    float: right;
 }
 
 .close:hover {
-color: #1db954;
-cursor: pointer;
+    color: #1db954;
+    cursor: pointer;
 }
 
 /* Stats PopUp CSS Specific  */

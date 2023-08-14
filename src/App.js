@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import Album from "./components/Album";
+import Artist from "./components/Artist";
 import Song from "./components/Song";
 import { useState, useEffect } from "react";
 import axios from 'axios';
@@ -94,6 +94,7 @@ function App() {
     try {
       axios.get("https://musiqle-back-end-w9vy.onrender.com/genres")
           .then(genreResponse => {
+              console.log(genreResponse.data)
               setGenres({
                   selectedGenre: genres.selectedGenre,
                   listOfGenresFromAPI: genreResponse.data.categories.items
@@ -115,6 +116,7 @@ function App() {
 
   // Retrieves list of playlists from selected genre
   const genreChanged = val => {
+      console.log(val)
       setGenres({
           selectedGenre: val,
           listOfGenresFromAPI: genres.listOfGenresFromAPI
@@ -209,6 +211,7 @@ function App() {
           exact path="/"
           element={
             <Home
+              allData={allData}
               user={user}
               userData = {userData}
               findUser={getUserData}
@@ -218,8 +221,8 @@ function App() {
           }
         />
         <Route
-          path="/album"
-          element={<Album
+          path="/artist"
+          element={<Artist
               playlistData={playlistData}
               userData = {userData}
               updateCurrentScore={updateCurrentScore}
