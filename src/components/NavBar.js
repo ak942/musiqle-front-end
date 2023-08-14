@@ -25,7 +25,7 @@ const NavBar = ({ handleReset, genreOptions, genreChanged, selectedGenre, playli
                     />
                 </div>
                 <button 
-                    className="circular"
+                    className="nav-circular"
                     onClick={handleReset}
                 >
                     Reset
