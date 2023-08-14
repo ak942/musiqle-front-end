@@ -22,7 +22,7 @@ const Dropdown = ({ options, changed, selected, callBack}) => {
         <div className="dropdown-container">
             <select
                 className="dropdown"
-                value={selected}
+                value={selected? selected : "NONE"}
                 onChange={dropdownChanged}
             >
                 {dropdownOptions}
