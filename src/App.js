@@ -61,7 +61,7 @@ function App() {
       "totalScore": 0,
       "longestStreak": 0,
       "bestOverallScore": 0,
-      "bestScoreAlbum": 0,
+      "bestScoreArtist": 0,
       "bestScoreSong": 0
     }
     let specificUserChosen;
@@ -195,9 +195,9 @@ function App() {
   }}}
 
   ///Update BestScore Song API Patch Call to DB
-  const updateBestScoreAlbum = (score) => {
-    const bestDBScoreAlbum = userData.bestScoreAlbum
-    if (bestDBScoreAlbum > score) {
+  const updateBestScoreArtist = (score) => {
+    const bestDBScoreArtist = userData.bestScoreArtist
+    if (bestDBScoreArtist > score) {
     try { axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
     {"totalScore": score})
   } catch {
