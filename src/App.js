@@ -52,6 +52,13 @@ function App() {
     axios.post('https://musiqle-back-end-w9vy.onrender.com/user', newUserData)
   }
 
+  const refreshData = () => {
+    axios.get('https://musiqle-back-end-w9vy.onrender.com/user')
+    .then((response) => {
+      setAllData(response.data)
+    })
+  }
+
   /// choosing the right user
   const getUserData = (newuser) => {
     const specificUser = allData.find(user => {
@@ -64,7 +71,6 @@ function App() {
       "totalScore": 0,
       "longestStreak": 0,
       "bestOverallScore": 0,
-      "bestScoreArtist": 0,
       "bestScoreArtist": 0,
       "bestScoreSong": 0
     }
@@ -153,6 +159,7 @@ function App() {
 const closeArtistRules = () => {
   setArtistRules(false)
 }
+
 const showArtistRules = () => {
 
   if (artistRules) {
@@ -254,6 +261,7 @@ const showArtistRules = () => {
         <Route
           path="/artist"
           element={<Artist
+              refreshData={refreshData}
               showRules={showArtistRules}
               closeRules={closeArtistRules}
               playlistData={playlistData}
@@ -273,6 +281,7 @@ const showArtistRules = () => {
         <Route
           path="/song"
           element={<Song
+            refreshData={refreshData}
             showRules={showSongRules}
             closeRules={closeSongRules}
             playlistData = {playlistData}

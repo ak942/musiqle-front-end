@@ -6,7 +6,7 @@ import { useState } from 'react';
 import NavBar from './NavBar';
 
 
-const Artist = ({ showRules, playlistData, userData, updateLongestAndCurrentStreak, updateBestOverallScore, updateCurrentScore, updateBestScoreArtist, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
+const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestAndCurrentStreak, updateBestOverallScore, updateCurrentScore, updateBestScoreArtist, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
 
 
     const [streak, setStreak] = useState(userData.streak)
@@ -107,7 +107,7 @@ const Artist = ({ showRules, playlistData, userData, updateLongestAndCurrentStre
         const filteredAnswer = correctAnswer.filter(word => !filters.some(f => word === f))
         const correctAnswerString = filteredAnswer.join(" ")
         console.log(correctAnswerString)
-        console.log("not filtered", correctAnswer) 
+        console.log("not filtered", correctAnswer)
         if (inputAnswer.toLowerCase() === correctAnswerString) {
             alert(`You are Correct! The artist is ${artistName}.`)
             increaseTotalScore()
@@ -139,6 +139,7 @@ const Artist = ({ showRules, playlistData, userData, updateLongestAndCurrentStre
                 {showRules()}
             </div>
             <NavBar
+                refreshData={refreshData}
                 handleReset={handleReset}
                 genreChanged={genreChanged}
                 genreOptions={genreOptions}

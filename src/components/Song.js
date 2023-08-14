@@ -5,7 +5,7 @@ import NavBar from './NavBar'
 import SongInputForm from './SongInputForm'
 import './Song.css'
 
-const Song = ({ showRules, playlistData, userData, updateLongestAndCurrentStreak, updateBestOverallScore, updateCurrentScore, updateBestScoreSong, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
+const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAndCurrentStreak, updateBestOverallScore, updateCurrentScore, updateBestScoreSong, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
 
     const [attempts, setAttempts] = useState(4)
     const [lyrics, setLyrics] = useState("")
@@ -195,6 +195,7 @@ const Song = ({ showRules, playlistData, userData, updateLongestAndCurrentStreak
                 {showRules()}
             </div>
             <NavBar
+                refreshData={refreshData}
                 handleReset={handleReset}
                 genreChanged={genreChanged}
                 genreOptions={genreOptions}
