@@ -61,7 +61,7 @@ function App() {
       "totalScore": 0,
       "longestStreak": 0,
       "bestOverallScore": 0,
-      "bestScoreAlbum": 0,
+      "bestScoreArtist": 0,
       "bestScoreSong": 0
     }
     let specificUserChosen;
