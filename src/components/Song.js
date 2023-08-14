@@ -133,6 +133,11 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
         updateBestOverallScore(userData.totalScore + points[attempts])
     }
 
+    // Increases Best Artist Score in User's DB stats
+    const increaseDBSongScore = () => {
+        updateBestScoreSong(userData.bestScoreSong + points[attempts])
+    }
+
     ///Resets Game 
     const resetGame = () => {
         setNum(0)
@@ -154,6 +159,7 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
         findTrackLyrics()
     }
 
+
     ///Create Clean Answer for SongName
     const cleanAnswer = (songName)=> {
         let correctAnswer = songName.replace(/[\W_]+/g," ").toLowerCase().split(' ')
@@ -168,6 +174,7 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
             alert(`You are Correct! The song is ${songName} by ${artistName}`)
             increaseTotalScore()
             increaseScore()
+            increaseDBSongScore()
             increaseStreak()
             resetGame()
         } else {

@@ -187,21 +187,21 @@ function App() {
   ///Update BestScore Song API Patch Call to DB
   const updateBestScoreSong = (score) => {
     const bestDBScoreSong = userData.bestScoreSong
-    if (bestDBScoreSong > score) {
-    try { axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
-    {"totalScore": score})
+    if (score > bestDBScoreSong) {
+    try { axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoresong`,
+    {"bestScoreSong": score})
   } catch {
-    console.log("Total score could not be updated")
+    console.log("Song score could not be updated")
   }}}
 
-  ///Update BestScore Song API Patch Call to DB
+  ///Update BestScore Artist API Patch Call to DB
   const updateBestScoreArtist = (score) => {
     const bestDBScoreArtist = userData.bestScoreArtist
-    if (bestDBScoreArtist > score) {
-    try { axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
-    {"totalScore": score})
+    if (score > bestDBScoreArtist) {
+    try { axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoreartist`,
+    {"bestScoreArtist": score})
   } catch {
-    console.log("Total score could not be updated")
+    console.log("Artist score could not be updated")
   }}}
 
   return (
@@ -217,8 +217,7 @@ function App() {
               findUser={getUserData}
               deleteUser = {deleteUser}
               userSignOut = {userSignOut}
-            />
-          }
+            />}
         />
         <Route
           path="/artist"
@@ -227,7 +226,7 @@ function App() {
               userData = {userData}
               updateCurrentScore={updateCurrentScore}
               updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
-              updateBestScoreSong={updateBestScoreSong}
+              updateBestScoreArtist={updateBestScoreArtist}
               updateBestOverallScore={updateBestOverallScore}
               genreChanged={genreChanged}
               genreOptions={genres.listOfGenresFromAPI}
@@ -243,6 +242,7 @@ function App() {
             playlistData = {playlistData}
             userData = {userData}
             updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
+            updateBestScoreSong={updateBestScoreSong}
             updateBestOverallScore={updateBestOverallScore}
             updateCurrentScore = {updateCurrentScore}
             genreChanged={genreChanged}

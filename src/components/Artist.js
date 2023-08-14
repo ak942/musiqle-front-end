@@ -6,7 +6,7 @@ import { useState } from 'react';
 import NavBar from './NavBar';
 
 
-const Artist = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBestOverallScore, updateCurrentScore, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
+const Artist = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBestOverallScore, updateCurrentScore, updateBestScoreArtist, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
 
 
     const [streak, setStreak] = useState(userData.streak)
@@ -66,6 +66,11 @@ const Artist = ({ playlistData, userData, updateLongestAndCurrentStreak, updateB
         updateBestOverallScore(userData.totalScore + points[attempts])
     }
 
+    // Increases Best Artist Score in User's DB stats
+    const increaseDBArtistScore = () => {
+        updateBestScoreArtist(userData.bestScoreArtist + points[attempts])
+    }
+
 
     // Resets game after correct guess
     const resetGame = () => {
@@ -104,6 +109,7 @@ const Artist = ({ playlistData, userData, updateLongestAndCurrentStreak, updateB
             alert(`You are Correct! The artist is ${artistName}.`)
             increaseTotalScore()
             increaseScore()
+            increaseDBArtistScore()
             increaseStreak()
             resetGame()
 
