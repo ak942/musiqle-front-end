@@ -24,7 +24,7 @@ const Dropdown = ({ options, changed, selected, callBack, defaultValueName}) => 
                 value={selected}
                 onChange={dropdownChanged}
             >   
-                {defaultValueName()}
+                <option>{defaultValueName()}</option>
                 {dropdownOptions}
             </select>
         </div>

@@ -10,10 +10,10 @@ const NavBar = ({ handleReset, genreOptions, genreChanged, selectedGenre, playli
         setShowGenre(true)
     }
     const defaultPlaylistValue = () => {
-        return <option value={playlistOptions[0].id}>Select Playlist</option>
+        return "Select Playlist"
     }
     const defaultGenreValue = () => {
-        return <option value ={genreOptions[0].id}>Select Genre</option>
+        return "Select Genre"
     }
     const showGenreComponent = () => {
         if (showGenre) {
