@@ -3,9 +3,9 @@ import "./ScorePage.css"
 
 const ScorePage = ({ statType, userName, userScore }) => {
     return (
-        <div className="wide">
+        <div className="wide flex">
             <span className="left-align">
-                Player: {userName} 
+                Player: {userName}
             </span>
             <span className="right-align">
                 {statType}: {userScore}

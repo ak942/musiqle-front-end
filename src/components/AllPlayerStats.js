@@ -5,7 +5,7 @@ import './signinpopup.css'
 const AllPlayerStats = ({ closeStats, allData }) => {
 
     const [page, setPage] = React.useState(1)
-    
+
     const nextStats = () => {
         if (page !== 5) {
             setPage(page + 1)
@@ -20,15 +20,35 @@ const AllPlayerStats = ({ closeStats, allData }) => {
 
     const showPage = () => {
         if (page === 1) {
-            return {playerScoreComponents}
+            return (
+                <div>
+                    {playerScoreComponents}
+                </div>
+            )
         } else if (page === 2) {
-            return {playerStreakComponents}
+            return (
+                <div>
+                    {playerStreakComponents}
+                </div>
+            )
         } else if (page === 3) {
-            return {playerTotalScoreComponents}
+            return (
+                <div>
+                    {playerTotalScoreComponents}
+                </div>
+            )
         } else if (page === 4) {
-            return {playerAlbumScoreComponents}
+            return (
+                <div>
+                    {playerAlbumScoreComponents}
+                </div>
+            )
         } else if (page === 5) {
-            return {playerSongScoreComponents}
+            return (
+                <div>
+                    {playerSongScoreComponents}
+                </div>
+            )
         }
     }
 
@@ -86,19 +106,11 @@ const AllPlayerStats = ({ closeStats, allData }) => {
                 <ScorePage
                     statType={"Best Song Score"}
                     userName={player.name}
-                    userScore={player.bestSongAlbum}
+                    userScore={player.bestScoreSong}
                 />
             </div>
         )
     })
-
-    // const showScores = () => {
-    //     if (allData) {
-    //         return { playerScoreComponents }
-    //     } else {
-    //         return (<p>No stats available</p>)
-    //     }
-    // }
 
     return (
         <div className="modal">
@@ -106,10 +118,16 @@ const AllPlayerStats = ({ closeStats, allData }) => {
                 <span className="close" onClick={closeStats}>
                     &times;
                 </span>
+                <span className="page-arrow" onClick={prevStats}>
+                    {"←"} Previous
+                </span>
                 <h2 className='stats-header'>All Players' Stats</h2>
                 <section className='stats-container'>
-                    {playerScoreComponents}
+                    {showPage()}
                 </section>
+                <span className="page-arrow" onClick={nextStats}>
+                    Next {"→"}
+                </span>
             </div>
         </div>
     )
