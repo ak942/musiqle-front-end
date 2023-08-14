@@ -6,7 +6,7 @@ import { useState } from 'react';
 import NavBar from './NavBar';
 
 
-const Artist = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBestOverallScore, updateCurrentScore, updateBestScoreArtist, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
+const Artist = ({ showRules, playlistData, userData, updateLongestAndCurrentStreak, updateBestOverallScore, updateCurrentScore, updateBestScoreArtist, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
 
 
     const [streak, setStreak] = useState(userData.streak)
@@ -24,6 +24,7 @@ const Artist = ({ playlistData, userData, updateLongestAndCurrentStreak, updateB
     }
 
     const filters = ["live", "ep", "version", "edit", "remix", "remastered", "yuh"]
+
 
 
     const getRandomAlbum = () => {
@@ -132,6 +133,9 @@ const Artist = ({ playlistData, userData, updateLongestAndCurrentStreak, updateB
 
     return (
         <div className="center game">
+            <div>
+                {showRules()}
+            </div>
             <NavBar
                 handleReset={handleReset}
                 genreChanged={genreChanged}

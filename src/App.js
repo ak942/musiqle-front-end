@@ -6,7 +6,8 @@ import Song from "./components/Song";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import SignInpPopUp from "./components/SignInpPopUp";
-
+import SongRules from "./components/SongRules";
+import ArtistRules from "./components/ArtistRules";
 
 function App() {
   // const [accessToken, setAccessToken] = useState(null)
@@ -18,7 +19,9 @@ function App() {
   const [playlist, setPlaylist] = useState({ selectedPlaylist: '1ap9564Wpqxi2Bb8gVaSWc', listOfPlaylistFromAPI: [] })
   const [showSignIn, setShowSignIn] = useState(false)
   const [playlistData, setPlaylistData] = useState([])
-  
+  const [songRules, setSongRules] = useState(true)
+  const [artistRules, setArtistRules] = useState(true)
+
   // Retrieves tracks from ADA C19 Playlist as default selected playlist
   useEffect(() => {
     // const playlistID = "1ap9564Wpqxi2Bb8gVaSWc"
@@ -132,6 +135,35 @@ function App() {
           .catch(err=>console.log("Error! ", err))
   }
 
+
+  const closeSongRules = () => {
+    setSongRules(false)
+}
+  const showSongRules = () => {
+
+    if (songRules) {
+        return (
+            <SongRules
+                closeCallBack={closeSongRules}
+            />
+        )
+    }
+}
+
+const closeArtistRules = () => {
+  setArtistRules(false)
+}
+const showArtistRules = () => {
+
+  if (artistRules) {
+      return (
+          <ArtistRules
+              closeCallBack={closeArtistRules}
+          />
+      )
+  }
+}
+
   // Retrieves list of tracks from selected playlist
   const playlistChanged = val => {
       setPlaylist({
@@ -222,6 +254,8 @@ function App() {
         <Route
           path="/artist"
           element={<Artist
+              showRules={showArtistRules}
+              closeRules={closeArtistRules}
               playlistData={playlistData}
               userData = {userData}
               updateCurrentScore={updateCurrentScore}
@@ -239,6 +273,8 @@ function App() {
         <Route
           path="/song"
           element={<Song
+            showRules={showSongRules}
+            closeRules={closeSongRules}
             playlistData = {playlistData}
             userData = {userData}
             updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}

@@ -7,11 +7,13 @@ import Stats from './Stats'
 import logo from '../Resources/Musiqle-logo.png'
 import DeleteUser from "./DeleteUser";
 import AllPlayerStats from "./AllPlayerStats";
+// import Rules from "./Rules";
 
 const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) => {
     const [signInClicked, setSignInClicked] = React.useState(false)
     const [stats, setStats] = React.useState(false)
     const [allStats, setAllStats] = React.useState(false)
+    
     const [deleteModal, setDeleteModal] = React.useState(false)
 
     const openPopUp = () => {
@@ -32,6 +34,7 @@ const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) =>
     const closeAllStats = () => {
         setAllStats(false)
     }
+
     const openDeleteUser = () => {
         setDeleteModal(true)
     }
@@ -42,6 +45,18 @@ const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) =>
         deleteUser()
         closeDeleteUser()
     }
+
+    // const showRules = () => {
+
+    //     if (rules) {
+    //         return (
+    //             <Rules
+    //                 closeCallBack={closeRules}
+    //             />
+    //         )
+    //     }
+    // }
+
     const showAllUserStats = () => {
         if (allStats) {
             return (
@@ -106,30 +121,33 @@ const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) =>
         }
     }
     return (
-        <div className="home">
+        <div>
             {/* <h1 className="musiqle-header">Musiqle</h1> */}
-            <img className="musiqle-logo" alt="musiqle logo" src={logo} />
-            <h1 className="welcome-header">Play! Pick Your Path</h1>
-            <div className="right">
-                {signIn()}
-                {showAllUserStats()}
+            <div className="home">
+                <img className="musiqle-logo" alt="musiqle logo" src={logo} />
+                {/* <h1 className="welcome-header">Choose A Game!</h1> */}
+                <div className="right sign-in">
+                    {signIn()}
+                    {showAllUserStats()}
+                </div>
+                <div>
+                    {signInClicked ? <SignInPopUp closeCallBack={closePopUp} findUser={findUser} /> : null}
+                </div>
+                <br />
+                <ul className="link-container">
+                    <li className="link-list">
+                        <div className="link">
+                            {showArtistComponent()}
+                        </div>
+                    </li>
+                    <li className="link-list">
+                        <div className="link">
+                            {showSongComponent()}
+                        </div>
+                    </li>
+                </ul>
+
             </div>
-            <div>
-                {signInClicked ? <SignInPopUp closeCallBack={closePopUp} findUser={findUser} /> : null}
-            </div>
-            <br />
-            <ul className="link-container">
-                <li className="link-list">
-                    <div className="link">
-                        {showArtistComponent()}
-                    </div>
-                </li>
-                <li className="link-list">
-                    <div className="link">
-                        {showSongComponent()}
-                    </div>
-                </li>
-            </ul>
         </div>
     );
 };

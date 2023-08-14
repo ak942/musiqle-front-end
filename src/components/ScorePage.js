@@ -2,10 +2,12 @@ import React from 'react'
 import "./ScorePage.css"
 
 const ScorePage = ({ statType, userName, userScore }) => {
+    const capitalizedUserName = userName.toUpperCase()
+
     return (
         <div className="wide flex">
             <span className="left-align">
-                Player: {userName}
+                {capitalizedUserName}
             </span>
             <span className="right-align">
                 {statType}: {userScore}

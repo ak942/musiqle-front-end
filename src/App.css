@@ -13,11 +13,19 @@
     align-items: center;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
-    height: 100%;
-    border-radius: 10px;
+    /* height: 100%; */
+    border-radius: 20px;
+    border: outset 4px rgba(0, 0, 0, 0.5);
     padding: 10px;
+    width: 95vw;
+    height: 92vh;
+    margin: 2vh;
 }
 
 .signin {
     margin: 10px;
+}
+
+.green {
+    color: green;
 }
