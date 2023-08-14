@@ -1,5 +1,7 @@
 .page-arrow {
-    display: flex;
+    position: fixed;
+    top: 50vh;
     align-content: center;
-    font-size: 5rem;
+    /* display: flex;
+    align-content: center; */
 }

@@ -103,26 +103,57 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
         return `The song is ${songName} by ${artistName}`
     }
 
+    // Sets score in state and User's DB stats to 0
+    const resetScore = () => {
+        setScore(0)
+        updateCurrentScore(0)
+    }
+
+    // Sets streak in state and User's DB stats to 0
+    const resetStreak = () => {
+        setStreak(0)
+        updateLongestAndCurrentStreak(0)
+    }
+
+    // Increases score in state and User's DB stats to new score
+    const increaseScore = () => {
+        setScore(score + points[attempts])
+        updateCurrentScore(userData.score + points[attempts])
+    }
+
+    // Increases streak in state and User's DB stats to new streak
+    const increaseStreak = () => {
+        updateLongestAndCurrentStreak(streak + 1)
+        setStreak(streak + 1)
+    }
+
+    // Increases total score in state and User's DB stats to new total score
+    const increaseTotalScore = () => {
+        setTotalScore(totalScore + points[attempts])
+        updateBestOverallScore(userData.totalScore + points[attempts])
+    }
+
     ///Resets Game 
     const resetGame = () => {
-        setAttempts(4)
         setNum(0)
-        updateCurrentScore(score + points[attempts])
         findTrackLyrics()
+        setAttempts(4)
     }
 
     // Skip Song Callback
     const skipSong = ()=> {
         resetGame()
-        setStreak(0)
-        updateLongestAndCurrentStreak(0)
+        resetScore()
+        resetStreak()
     }
 
     //Handle Reset
     const handleReset = () => {
         setAttempts(4)
+        setNum(0)
         findTrackLyrics()
     }
+
     ///Create Clean Answer for SongName
     const cleanAnswer = (songName)=> {
         let correctAnswer = songName.replace(/[\W_]+/g," ").toLowerCase().split(' ')
@@ -135,16 +166,15 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
         console.log(correctAnswerString, "Correct Answer");
         if (inputAnswer.toLowerCase() === correctAnswerString ) {
             alert(`You are Correct! The song is ${songName} by ${artistName}`)
-            setScore(score + points[attempts])
-            setTotalScore(totalScore + points[attempts])
-            updateBestOverallScore(totalScore + points[attempts])
-            setStreak(streak + 1)
-            updateLongestAndCurrentStreak(streak + 1)
+            increaseTotalScore()
+            increaseScore()
+            increaseStreak()
             resetGame()
         } else {
             if (attempts === 0) {
+                resetScore()
+                resetStreak()
                 resetGame()
-                setStreak(0)
             } else {
                 setAttempts(attempts - 1)
                 setNum(num + 1)

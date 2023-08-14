@@ -23,7 +23,7 @@ const Artist = ({ playlistData, userData, updateLongestAndCurrentStreak, updateB
         1: 1
     }
 
-    const filters = ["live","ep","version", "edit", "remix",  "remastered", "yuh"]   
+    const filters = ["live", "ep", "version", "edit", "remix", "remastered", "yuh"]
 
 
     const getRandomAlbum = () => {
@@ -90,14 +90,15 @@ const Artist = ({ playlistData, userData, updateLongestAndCurrentStreak, updateB
 
     // Click when playlist has been changed
     const handleReset = () => {
+        setAttempts(4)
         setRandomAlbum(
             getRandomAlbum()
         )
     }
 
     const compareInput = (inputAnswer) => {
-        let correctAnswer = artistName.replace(/[\W_]+/g," ").toLowerCase().split(' ')
-        const filteredAnswer = correctAnswer.filter(word => !filters.some(f => word ===f))
+        let correctAnswer = artistName.replace(/[\W_]+/g, " ").toLowerCase().split(' ')
+        const filteredAnswer = correctAnswer.filter(word => !filters.some(f => word === f))
         const correctAnswerString = filteredAnswer.join(" ")
         if (inputAnswer.toLowerCase() === correctAnswerString) {
             alert(`You are Correct! The artist is ${artistName}.`)
