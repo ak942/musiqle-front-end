@@ -9,6 +9,12 @@ const NavBar = ({ handleReset, genreOptions, genreChanged, selectedGenre, playli
     const changeShowGenreState = () => {
         setShowGenre(true)
     }
+    const defaultPlaylistValue = () => {
+        return <option value={playlistOptions[0].id}>Select Playlist</option>
+    }
+    const defaultGenreValue = () => {
+        return <option value ={genreOptions[0].id}>Select Genre</option>
+    }
     const showGenreComponent = () => {
         if (showGenre) {
             return (
@@ -17,6 +23,7 @@ const NavBar = ({ handleReset, genreOptions, genreChanged, selectedGenre, playli
                 options={playlistOptions}
                 changed={playlistChanged}
                 selected={selectedPlaylist}
+                defaultValueName = {defaultPlaylistValue}
                 callBack={changeShowGenreState}
                 />
             </div>
@@ -35,6 +42,7 @@ const NavBar = ({ handleReset, genreOptions, genreChanged, selectedGenre, playli
                         options={genreOptions}
                         changed={genreChanged}
                         selected={selectedGenre}
+                        defaultValueName = {defaultGenreValue}
                         callBack={changeShowGenreState}
                     />
                 </div>

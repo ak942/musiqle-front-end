@@ -94,7 +94,7 @@ const Song = ({ showRules, playlistData, userData, updateLongestAndCurrentStreak
         let showLyrics = lyricsArray.slice(0, endNum)
         // console.log({ songName }, { artistName })
         return (
-            (showLyrics || []).map(lyric => <section className="lyric">{lyric}</section>
+            (showLyrics || []).map(lyric => <section key={lyric} className="lyric">{lyric}</section>
             )
         )
     }
