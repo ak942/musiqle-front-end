@@ -170,7 +170,7 @@ const Song = ({ playlistData, userData, updateLongestAndCurrentStreak, updateBes
                 streak={streak}
             />
             <p>Attempts Left: {attempts}</p>
-            <div className="size">{lyricsShown()}</div>
+            <div className="song-size">{lyricsShown()}</div>
             <SongInputForm
                 compareInput={compareInput}
                 giveAnswer={attempts === 0 ? giveAnswer : null}
