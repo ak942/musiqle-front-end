@@ -15,7 +15,7 @@ const Stats = ({closeStats, userData}) => {
                 <h5>Best Overall Score: {userData.bestOverallScore}</h5>
                 <h5>Streak: {userData.streak}</h5>
                 <h5>Longest Streak: {userData.longestStreak}</h5>
-                <h5>Best Score From Album: {userData.bestScoreAlbum}</h5>
+                <h5>Best Score From Artist: {userData.bestScoreArtist}</h5>
                 <h5>Best Score From Song: {userData.bestScoreSong}</h5>
             </section>
         </div>
