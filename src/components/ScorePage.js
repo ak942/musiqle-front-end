@@ -1,14 +1,14 @@
 import React from 'react'
 import "./ScorePage.css"
 
-const ScorePage = ({ userName, userScore }) => {
+const ScorePage = ({ statType, userName, userScore }) => {
     return (
         <div className="wide">
             <span className="left-align">
-                Player: {userName}, 
+                Player: {userName} 
             </span>
             <span className="right-align">
-                Best Score: {userScore}
+                {statType}: {userScore}
             </span>
         </div>
     )
