@@ -1,10 +1,11 @@
 import React from 'react'
 import './Dropdown.css'
 
-const Dropdown = ({ options, changed, selected }) => {
+const Dropdown = ({ options, changed, selected, callBack}) => {
 
     const dropdownChanged = e => {
         changed(e.target.value)
+        callBack()
     }
 
     const dropdownOptions = (options.length > 0) ?
