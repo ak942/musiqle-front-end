@@ -37,6 +37,20 @@ const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestA
     const artistName = randomAlbum.track.album.artists[0].name
     const albumCover = randomAlbum.track.album.images[0].url
 
+    const lives = (attempts) => {
+        if (attempts === 4) {
+            return "💚  💚  💚  💚 "
+        } else if (attempts === 3) {
+            return "💚  💚  💚  🤍"
+        } else if (attempts === 2) {
+            return "💚  💚  🤍  🤍"
+        } else if (attempts === 1) {
+            return "💚  🤍  🤍  🤍"
+        } else if (attempts === 0) {
+            return "🤍  🤍  🤍  🤍"
+        }
+    }
+
     // Sets score in state and User's DB stats to 0
     const resetScore = () => {
         setScore(0)
@@ -132,7 +146,6 @@ const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestA
         }
     }
 
-
     return (
         <div className="center game">
             <div>
@@ -154,7 +167,7 @@ const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestA
                 totalScore={totalScore}
                 streak={streak}
             />
-            <p>Attempts Left: {attempts}</p>
+            <p className="lives">{lives(attempts)}</p>
             <img
                 className={`blur${num} size image`}
                 src={albumCover}

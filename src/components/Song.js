@@ -103,6 +103,20 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
         return `The song is ${songName} by ${artistName}`
     }
 
+    const lives = (attempts) => {
+        if (attempts === 4) {
+            return "💚  💚  💚  💚 "
+        } else if (attempts === 3) {
+            return "💚  💚  💚  🤍"
+        } else if (attempts === 2) {
+            return "💚  💚  🤍  🤍"
+        } else if (attempts === 1) {
+            return "💚  🤍  🤍  🤍"
+        } else if (attempts === 0) {
+            return "🤍  🤍  🤍  🤍"
+        }
+    }
+
     // Sets score in state and User's DB stats to 0
     const resetScore = () => {
         setScore(0)
@@ -210,7 +224,7 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
                 totalScore={totalScore}
                 streak={streak}
             />
-            <p>Attempts Left: {attempts}</p>
+            <p className="lives">{lives(attempts)}</p>
             <div className="song-size">{lyricsShown()}</div>
             <SongInputForm
                 compareInput={compareInput}

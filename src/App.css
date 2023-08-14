@@ -30,3 +30,7 @@
 .green {
     color: green;
 }
+
+.lives {
+    font-size: 1.5rem;
+}
