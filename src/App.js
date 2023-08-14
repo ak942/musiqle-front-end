@@ -17,7 +17,7 @@ function App() {
   const [allData, setAllData] = useState([])
   const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
   const [playlist, setPlaylist] = useState({ selectedPlaylist: '1ap9564Wpqxi2Bb8gVaSWc', listOfPlaylistFromAPI: [] })
-  const [showSignIn, setShowSignIn] = useState(false)
+  // const [showSignIn, setShowSignIn] = useState(false)
   const [playlistData, setPlaylistData] = useState([])
   const [songRules, setSongRules] = useState(true)
   const [artistRules, setArtistRules] = useState(true)
@@ -42,7 +42,7 @@ function App() {
     axios.get('https://musiqle-back-end-w9vy.onrender.com/user')
     .then((response) => {
       setAllData(response.data)
-      console.log(response.data)
+      // console.log(response.data)
     })
     .catch(err=>console.log("Error! ", err))
   }, []);
@@ -108,7 +108,6 @@ function App() {
     } try {
       axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${playlist.selectedPlaylist}`)
         .then(tracksResponse => {
-          console.log(tracksResponse)
           setPlaylistData(tracksResponse.data.items)
         })
         .catch(err => console.log("Error! ", err))
@@ -119,7 +118,7 @@ function App() {
 
   // Retrieves list of playlists from selected genre
   const genreChanged = val => {
-      console.log(val)
+      // console.log(val)
       setGenres({
           selectedGenre: val,
           listOfGenresFromAPI: genres.listOfGenresFromAPI

@@ -103,9 +103,11 @@ const Artist = ({ showRules, playlistData, userData, updateLongestAndCurrentStre
     }
 
     const compareInput = (inputAnswer) => {
-        let correctAnswer = artistName.replace(/[\W_]+/g, " ").toLowerCase().split(' ')
+        let correctAnswer = artistName.replace(/[^0-9a-zA-Z.$]/g, " ").toLowerCase().split(' ')
         const filteredAnswer = correctAnswer.filter(word => !filters.some(f => word === f))
         const correctAnswerString = filteredAnswer.join(" ")
+        console.log(correctAnswerString)
+        console.log("not filtered", correctAnswer) 
         if (inputAnswer.toLowerCase() === correctAnswerString) {
             alert(`You are Correct! The artist is ${artistName}.`)
             increaseTotalScore()

@@ -4,6 +4,26 @@ import Dropdown from './Dropdown'
 import './navbar.css'
 
 const NavBar = ({ handleReset, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
+    const [showGenre, setShowGenre] = React.useState(false)
+
+    const changeShowGenreState = () => {
+        setShowGenre(true)
+    }
+    const showGenreComponent = () => {
+        if (showGenre) {
+            return (
+            <div className="dropdown-bar">
+                <Dropdown 
+                options={playlistOptions}
+                changed={playlistChanged}
+                selected={selectedPlaylist}
+                callBack={changeShowGenreState}
+                />
+            </div>
+        )}
+    }
+    
+
     return (
         <Nav>
             <NavMenu className="nav-container">
@@ -15,17 +35,19 @@ const NavBar = ({ handleReset, genreOptions, genreChanged, selectedGenre, playli
                         options={genreOptions}
                         changed={genreChanged}
                         selected={selectedGenre}
+                        callBack={changeShowGenreState}
                     />
                 </div>
-                <div className="dropdown-bar">
-                    <Dropdown
+                {/* <div className="dropdown-bar"> */}
+                    {/* <Dropdown
                         options={playlistOptions}
                         changed={playlistChanged}
                         selected={selectedPlaylist}
-                    />
-                </div>
+                    /> */}
+                {/* </div> */}
+                {showGenreComponent()}
                 <button 
-                    className="circular"
+                    className="nav-circular"
                     onClick={handleReset}
                 >
                     Reset
