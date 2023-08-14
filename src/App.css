@@ -20,6 +20,7 @@
     width: 95vw;
     height: 92vh;
     margin: 2vh;
+    overflow: scroll;
 }
 
 .signin {

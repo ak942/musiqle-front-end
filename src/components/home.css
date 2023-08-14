@@ -16,6 +16,7 @@ html {
     align-self: center;
     padding: 10px;
     border-radius: 20px;
+    overflow: scroll;
 }
 
 /* Header Styling */
