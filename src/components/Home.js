@@ -13,7 +13,7 @@ const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) =>
     const [signInClicked, setSignInClicked] = React.useState(false)
     const [stats, setStats] = React.useState(false)
     const [allStats, setAllStats] = React.useState(false)
-    
+
     const [deleteModal, setDeleteModal] = React.useState(false)
 
     const openPopUp = () => {
@@ -67,7 +67,7 @@ const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) =>
             )
         } else {
             return (<button className="all-stats-btn" onClick={openAllStats}>
-                All Players' Stats
+                View All Players' Stats
             </button>)
         }
     }
@@ -126,9 +126,11 @@ const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) =>
             <div className="home">
                 <img className="musiqle-logo" alt="musiqle logo" src={logo} />
                 {/* <h1 className="welcome-header">Choose A Game!</h1> */}
+                <div className="left sign-in">
+                    {showAllUserStats()}
+                </div>
                 <div className="right sign-in">
                     {signIn()}
-                    {showAllUserStats()}
                 </div>
                 <div>
                     {signInClicked ? <SignInPopUp closeCallBack={closePopUp} findUser={findUser} /> : null}

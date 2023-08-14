@@ -127,7 +127,7 @@ const AllPlayerStats = ({ closeStats, allData }) => {
                 <span className="close" onClick={closeStats}>
                     &times;
                 </span>
-                <span className="page-arrow left" onClick={prevStats}>
+                <span className="page-arrow left-arrow" onClick={prevStats}>
                     {"←"} Previous
                 </span>
                 <h2 className='stats-header'>All Players' Stats</h2>

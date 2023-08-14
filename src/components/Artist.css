@@ -24,7 +24,7 @@
 }
 
 .image {
-    margin-bottom: 5px;
+    margin-bottom: 20px;
     border: 2px solid white;
 }
 
@@ -57,7 +57,7 @@ form {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif */
 }
 
 form button {
