@@ -103,7 +103,6 @@ function App() {
                   listOfGenresFromAPI: genreResponse.data.categories.items
               })
           })
-        })
     } catch {
       console.log("Could not retrieve genres.")
     } try {
