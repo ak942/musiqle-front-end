@@ -148,9 +148,6 @@ const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestA
 
     return (
         <div className="center game">
-            <div>
-                {showRules()}
-            </div>
             <NavBar
                 refreshData={refreshData}
                 handleReset={handleReset}
@@ -173,11 +170,16 @@ const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestA
                 src={albumCover}
                 alt="album cover"
             />
-            <ArtistInputForm
-                skipAlbum={skipAlbum}
-                giveAnswer={attempts === 0 ? giveAnswer : null}
-                compareInput={compareInput}
-            />
+            <div className="inline">
+                <div>
+                    {showRules()}
+                </div>
+                <ArtistInputForm
+                    skipAlbum={skipAlbum}
+                    giveAnswer={attempts === 0 ? giveAnswer : null}
+                    compareInput={compareInput}
+                />
+            </div>
         </div>
     )
 }

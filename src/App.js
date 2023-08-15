@@ -125,33 +125,47 @@ function App() {
       .catch(err => console.log("Error! ", err))
   }
 
+  const openSongRules = () => {
+    setSongRules(true)
+  }
 
   const closeSongRules = () => {
     setSongRules(false)
   }
-  const showSongRules = () => {
 
+
+  const showSongRules = () => {
+    // toggleSongRules()
     if (songRules) {
       return (
         <SongRules
           closeCallBack={closeSongRules}
         />
       )
+    } else {
+      return <button className="rules-btn" onClick={openSongRules}>Rules</button>
     }
+  }
+
+  const openArtistRules = () => {
+    setArtistRules(true)
   }
 
   const closeArtistRules = () => {
     setArtistRules(false)
   }
 
-  const showArtistRules = () => {
 
+  const showArtistRules = () => {
+    // toggleArtistRules()
     if (artistRules) {
       return (
         <ArtistRules
           closeCallBack={closeArtistRules}
         />
       )
+    } else {
+      return <button className="rules-btn" onClick={openArtistRules}>Rules</button>
     }
   }
 
@@ -261,7 +275,6 @@ function App() {
           element={<Artist
             refreshData={refreshData}
             showRules={showArtistRules}
-            closeRules={closeArtistRules}
             playlistData={playlistData}
             userData={userData}
             updateCurrentScore={updateCurrentScore}
@@ -281,7 +294,6 @@ function App() {
           element={<Song
             refreshData={refreshData}
             showRules={showSongRules}
-            closeRules={closeSongRules}
             playlistData={playlistData}
             userData={userData}
             updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
