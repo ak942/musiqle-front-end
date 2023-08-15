@@ -176,7 +176,7 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
 
     ///Create Clean Answer for SongName
     const cleanAnswer = (songName)=> {
-        let correctAnswer = songName.replace(/[\W_]+/g," ").toLowerCase().split(' ')
+        let correctAnswer = songName.replace(/[^0-9a-zA-Z.']/g," ").toLowerCase().split(' ')
         const filteredAnswer = correctAnswer.filter(word => !filters.some(f => word ===f))
         setCorrectAnswerString(filteredAnswer.join(" "))
     }
