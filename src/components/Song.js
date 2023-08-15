@@ -183,7 +183,7 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
 
     //CHECK THE INPUT AGAINST ANSWER
     const compareInput = (inputAnswer) => {
-        console.log(correctAnswerString, "Correct Answer");
+        // console.log(correctAnswerString, "Correct Answer");
         if (inputAnswer.toLowerCase() === correctAnswerString ) {
             alert(`You are Correct! The song is ${songName} by ${artistName}`)
             increaseTotalScore()

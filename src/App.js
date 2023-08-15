@@ -5,19 +5,16 @@ import Artist from "./components/Artist";
 import Song from "./components/Song";
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import SignInpPopUp from "./components/SignInpPopUp";
 import SongRules from "./components/SongRules";
 import ArtistRules from "./components/ArtistRules";
 
 function App() {
-  // const [accessToken, setAccessToken] = useState(null)
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState({})
   const [userId, setUserId] = useState(null)
   const [allData, setAllData] = useState([])
   const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] })
   const [playlist, setPlaylist] = useState({ selectedPlaylist: '1ap9564Wpqxi2Bb8gVaSWc', listOfPlaylistFromAPI: [] })
-  // const [showSignIn, setShowSignIn] = useState(false)
   const [playlistData, setPlaylistData] = useState([])
   const [songRules, setSongRules] = useState(true)
   const [artistRules, setArtistRules] = useState(true)
@@ -27,11 +24,10 @@ function App() {
     // const playlistID = "1ap9564Wpqxi2Bb8gVaSWc"
     try {
       axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${playlist.selectedPlaylist}`)
-        .then(tracksResponse => {
-          console.log(tracksResponse)
-          setPlaylistData(tracksResponse.data.items)
-        })
-        .catch(err => console.log("Error! ", err))
+      .then(tracksResponse => {
+        setPlaylistData(tracksResponse.data.items)
+      })
+      .catch(err => console.log("Error! ", err))
     } catch {
       console.log("Could not retrieve tracks.")
     }
@@ -40,11 +36,10 @@ function App() {
   /// Getting all the Users from DB
   useEffect(() => {
     axios.get('https://musiqle-back-end-w9vy.onrender.com/user')
-      .then((response) => {
-        setAllData(response.data)
-        // console.log(response.data)
-      })
-      .catch(err => console.log("Error! ", err))
+    .then((response) => {
+      setAllData(response.data)
+    })
+    .catch(err=>console.log("Error! ", err))
   }, []);
 
   /// Adding User to DB
@@ -84,7 +79,6 @@ function App() {
     setUser(specificUserChosen.name)
     setUserId(specificUserChosen.id)
     setUserData(specificUserChosen)
-    console.log(specificUserChosen, "new")
   }
 
   /// Sign Out User
@@ -103,13 +97,12 @@ function App() {
   useEffect(() => {
     try {
       axios.get("https://musiqle-back-end-w9vy.onrender.com/genres")
-        .then(genreResponse => {
-          console.log(genreResponse.data)
-          setGenres({
-            selectedGenre: genres.selectedGenre,
-            listOfGenresFromAPI: genreResponse.data.categories.items
+          .then(genreResponse => {
+              setGenres({
+                  selectedGenre: genres.selectedGenre,
+                  listOfGenresFromAPI: genreResponse.data.categories.items
+              })
           })
-        })
     } catch {
       console.log("Could not retrieve genres.")
     } try {
@@ -125,17 +118,9 @@ function App() {
 
   // Retrieves list of playlists from selected genre
   const genreChanged = val => {
-    console.log(val);
-    setGenres({
-      selectedGenre: val,
-      listOfGenresFromAPI: genres.listOfGenresFromAPI
-    })
-    axios.get(`https://musiqle-back-end-w9vy.onrender.com/genres/${val}/playlists`)
-      .then(playlistResponse => {
-        setPlaylist({
-          selectedPlaylist: playlist.selectedPlaylist,
-          listOfPlaylistFromAPI: playlistResponse.data.playlists.items.filter(playlist => !!playlist)
-        })
+      setGenres({
+          selectedGenre: val,
+          listOfGenresFromAPI: genres.listOfGenresFromAPI
       })
       .catch(err => console.log("Error! ", err))
   }

@@ -2,12 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import './home.css'
 import SignInPopUp from './SignInpPopUp'
-// import Dropdown from "./Dropdown";
 import Stats from './Stats'
 import logo from '../Resources/Musiqle-logo.png'
 import DeleteUser from "./DeleteUser";
 import AllPlayerStats from "./AllPlayerStats";
-// import Rules from "./Rules";
 
 const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) => {
     const [signInClicked, setSignInClicked] = React.useState(false)
@@ -112,7 +110,6 @@ const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) =>
     }
     return (
         <div>
-            {/* <h1 className="musiqle-header">Musiqle</h1> */}
             <div className="home">
                 <img className="musiqle-logo" alt="musiqle logo" src={logo} />
                 {/* <h1 className="welcome-header">Choose A Game!</h1> */}
