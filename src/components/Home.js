@@ -57,7 +57,7 @@ const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) =>
             )
         } else {
             return (<button className="all-stats-btn" onClick={openAllStats}>
-                View All Players' Stats
+                View Top Players' Stats
             </button>)
         }
     }

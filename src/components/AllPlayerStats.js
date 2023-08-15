@@ -84,7 +84,7 @@ const AllPlayerStats = ({ closeStats, allData }) => {
         )
     })
 
-    const playerStreakComponents = allData.map(player => {
+    const playerStreakComponents = sortData("longestStreak").slice(0,5).map(player => {
         return (
             <div>
                 <ScorePage
@@ -96,7 +96,7 @@ const AllPlayerStats = ({ closeStats, allData }) => {
         )
     })
 
-    const playerTotalScoreComponents = allData.map(player => {
+    const playerTotalScoreComponents = sortData("totalScore").slice(0,5).map(player => {
         return (
             <div>
                 <ScorePage
@@ -108,7 +108,7 @@ const AllPlayerStats = ({ closeStats, allData }) => {
         )
     })
 
-    const playerArtistScoreComponents = allData.map(player => {
+    const playerArtistScoreComponents = sortData("bestScoreArtist").slice(0,5).map(player => {
         return (
             <div>
                 <ScorePage
@@ -120,7 +120,7 @@ const AllPlayerStats = ({ closeStats, allData }) => {
         )
     })
 
-    const playerSongScoreComponents = allData.map(player => {
+    const playerSongScoreComponents = sortData("bestScoreSong").slice(0,5).map(player => {
         return (
             <div>
                 <ScorePage
@@ -141,7 +141,7 @@ const AllPlayerStats = ({ closeStats, allData }) => {
                 <span className="page-arrow left-arrow" onClick={prevStats}>
                     {"←"} Previous
                 </span>
-                <h2 className='stats-header'>All Players' Stats</h2>
+                <h2 className='stats-header'>Top Players' Stats</h2>
                 <section className='stats-container'>
                     {showPage()}
                 </section>
