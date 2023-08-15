@@ -46,16 +46,6 @@ const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) =>
         closeDeleteUser()
     }
 
-    // const showRules = () => {
-
-    //     if (rules) {
-    //         return (
-    //             <Rules
-    //                 closeCallBack={closeRules}
-    //             />
-    //         )
-    //     }
-    // }
 
     const showAllUserStats = () => {
         if (allStats) {
@@ -67,7 +57,7 @@ const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) =>
             )
         } else {
             return (<button className="all-stats-btn" onClick={openAllStats}>
-                View All Players' Stats
+                View Top Players' Stats
             </button>)
         }
     }

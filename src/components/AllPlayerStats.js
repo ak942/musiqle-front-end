@@ -61,7 +61,18 @@ const AllPlayerStats = ({ closeStats, allData }) => {
         }
     }
 
-    const playerScoreComponents = allData.map(player => {
+    const sortData =(variable)=> { 
+        const data = allData.map(player => {
+            const dataObject= {"name": player.name}
+            dataObject[variable] =player[variable]
+            return dataObject})
+        data.sort(function(a,b){
+            return b[variable]-a[variable]
+        })
+        return data
+    };
+
+    const playerScoreComponents = sortData("bestOverallScore").slice(0,5).map(player => {
         return (
             <div>
                 <ScorePage
@@ -73,7 +84,7 @@ const AllPlayerStats = ({ closeStats, allData }) => {
         )
     })
 
-    const playerStreakComponents = allData.map(player => {
+    const playerStreakComponents = sortData("longestStreak").slice(0,5).map(player => {
         return (
             <div>
                 <ScorePage
@@ -85,7 +96,7 @@ const AllPlayerStats = ({ closeStats, allData }) => {
         )
     })
 
-    const playerTotalScoreComponents = allData.map(player => {
+    const playerTotalScoreComponents = sortData("totalScore").slice(0,5).map(player => {
         return (
             <div>
                 <ScorePage
@@ -97,7 +108,7 @@ const AllPlayerStats = ({ closeStats, allData }) => {
         )
     })
 
-    const playerArtistScoreComponents = allData.map(player => {
+    const playerArtistScoreComponents = sortData("bestScoreArtist").slice(0,5).map(player => {
         return (
             <div>
                 <ScorePage
@@ -109,7 +120,7 @@ const AllPlayerStats = ({ closeStats, allData }) => {
         )
     })
 
-    const playerSongScoreComponents = allData.map(player => {
+    const playerSongScoreComponents = sortData("bestScoreSong").slice(0,5).map(player => {
         return (
             <div>
                 <ScorePage
@@ -130,7 +141,7 @@ const AllPlayerStats = ({ closeStats, allData }) => {
                 <span className="page-arrow left-arrow" onClick={prevStats}>
                     {"←"} Previous
                 </span>
-                <h2 className='stats-header'>All Players' Stats</h2>
+                <h2 className='stats-header'>Top Players' Stats</h2>
                 <section className='stats-container'>
                     {showPage()}
                 </section>
