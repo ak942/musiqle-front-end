@@ -68,7 +68,7 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
 
     /// Get Lyrics from MusixMatch with track name and artist from specific playlist
     const findTrackLyrics = async () => {
-        const song = getRandomSong()
+        const song = await getRandomSong()
         setSongName(song.track.name)
         setArtistName(song.track.artists[0].name)
         cleanAnswer(song.track.name)
@@ -155,8 +155,8 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
     ///Resets Game 
     const resetGame = () => {
         setNum(0)
-        findTrackLyrics()
         setAttempts(4)
+        findTrackLyrics()
     }
 
     // Skip Song Callback
@@ -176,7 +176,7 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
 
     ///Create Clean Answer for SongName
     const cleanAnswer = (songName)=> {
-        let correctAnswer = songName.replace(/[\W_]+/g," ").toLowerCase().split(' ')
+        let correctAnswer = songName.replace(/[^0-9a-zA-Z.']/g," ").toLowerCase().split(' ')
         const filteredAnswer = correctAnswer.filter(word => !filters.some(f => word ===f))
         setCorrectAnswerString(filteredAnswer.join(" "))
     }
