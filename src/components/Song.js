@@ -68,7 +68,7 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
 
     /// Get Lyrics from MusixMatch with track name and artist from specific playlist
     const findTrackLyrics = async () => {
-        const song = getRandomSong()
+        const song = await getRandomSong()
         setSongName(song.track.name)
         setArtistName(song.track.artists[0].name)
         cleanAnswer(song.track.name)
@@ -155,8 +155,8 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
     ///Resets Game 
     const resetGame = () => {
         setNum(0)
-        findTrackLyrics()
         setAttempts(4)
+        findTrackLyrics()
     }
 
     // Skip Song Callback
