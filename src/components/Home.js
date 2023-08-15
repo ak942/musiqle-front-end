@@ -46,16 +46,6 @@ const Home = ({ allData, user, userData, deleteUser, userSignOut, findUser }) =>
         closeDeleteUser()
     }
 
-    // const showRules = () => {
-
-    //     if (rules) {
-    //         return (
-    //             <Rules
-    //                 closeCallBack={closeRules}
-    //             />
-    //         )
-    //     }
-    // }
 
     const showAllUserStats = () => {
         if (allStats) {

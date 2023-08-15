@@ -61,7 +61,12 @@ const AllPlayerStats = ({ closeStats, allData }) => {
         }
     }
 
-    const playerScoreComponents = allData.map(player => {
+    const sortBestOverallScoreData = allData.map(player => {
+        return {"name": player.name, "bestOverallScore": player.bestOverallScore}})
+        sortBestOverallScoreData.sort(function(a,b){
+            return b.bestOverallScore-a.bestOverallScore
+        });
+    const playerScoreComponents = sortBestOverallScoreData.slice(0,5).map(player => {
         return (
             <div>
                 <ScorePage
