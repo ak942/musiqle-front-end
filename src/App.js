@@ -27,11 +27,11 @@ function App() {
     // const playlistID = "1ap9564Wpqxi2Bb8gVaSWc"
     try {
       axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${playlist.selectedPlaylist}`)
-      .then(tracksResponse => {
-        console.log(tracksResponse)
-        setPlaylistData(tracksResponse.data.items)
-      })
-      .catch(err => console.log("Error! ", err))
+        .then(tracksResponse => {
+          console.log(tracksResponse)
+          setPlaylistData(tracksResponse.data.items)
+        })
+        .catch(err => console.log("Error! ", err))
     } catch {
       console.log("Could not retrieve tracks.")
     }
@@ -40,11 +40,11 @@ function App() {
   /// Getting all the Users from DB
   useEffect(() => {
     axios.get('https://musiqle-back-end-w9vy.onrender.com/user')
-    .then((response) => {
-      setAllData(response.data)
-      // console.log(response.data)
-    })
-    .catch(err=>console.log("Error! ", err))
+      .then((response) => {
+        setAllData(response.data)
+        // console.log(response.data)
+      })
+      .catch(err => console.log("Error! ", err))
   }, []);
 
   /// Adding User to DB
@@ -54,9 +54,9 @@ function App() {
 
   const refreshData = () => {
     axios.get('https://musiqle-back-end-w9vy.onrender.com/user')
-    .then((response) => {
-      setAllData(response.data)
-    })
+      .then((response) => {
+        setAllData(response.data)
+      })
   }
 
   /// choosing the right user
@@ -98,18 +98,18 @@ function App() {
     axios.delete(`https://musiqle-back-end-w9vy.onrender.com/user/${userData.id}`)
     userSignOut()
   };
-  
+
   // Retrieves list of genres from Spotify API
   useEffect(() => {
     try {
       axios.get("https://musiqle-back-end-w9vy.onrender.com/genres")
-          .then(genreResponse => {
-              console.log(genreResponse.data)
-              setGenres({
-                  selectedGenre: genres.selectedGenre,
-                  listOfGenresFromAPI: genreResponse.data.categories.items
-              })
+        .then(genreResponse => {
+          console.log(genreResponse.data)
+          setGenres({
+            selectedGenre: genres.selectedGenre,
+            listOfGenresFromAPI: genreResponse.data.categories.items
           })
+        })
     } catch {
       console.log("Could not retrieve genres.")
     } try {
@@ -125,123 +125,136 @@ function App() {
 
   // Retrieves list of playlists from selected genre
   const genreChanged = val => {
-      // console.log(val)
-      setGenres({
-          selectedGenre: val,
-          listOfGenresFromAPI: genres.listOfGenresFromAPI
+    console.log(val);
+    setGenres({
+      selectedGenre: val,
+      listOfGenresFromAPI: genres.listOfGenresFromAPI
+    })
+    axios.get(`https://musiqle-back-end-w9vy.onrender.com/genres/${val}/playlists`)
+      .then(playlistResponse => {
+        setPlaylist({
+          selectedPlaylist: playlist.selectedPlaylist,
+          listOfPlaylistFromAPI: playlistResponse.data.playlists.items.filter(playlist => !!playlist)
+        })
       })
-
-      axios.get(`https://musiqle-back-end-w9vy.onrender.com/genres/${val}/playlists`)
-          .then(playlistResponse => {
-              setPlaylist({
-                  selectedPlaylist: playlist.selectedPlaylist,
-                  listOfPlaylistFromAPI: playlistResponse.data.playlists.items
-              })
-          })
-          .catch(err=>console.log("Error! ", err))
+      .catch(err => console.log("Error! ", err))
   }
 
 
   const closeSongRules = () => {
     setSongRules(false)
-}
+  }
   const showSongRules = () => {
 
     if (songRules) {
-        return (
-            <SongRules
-                closeCallBack={closeSongRules}
-            />
-        )
-    }
-}
-
-const closeArtistRules = () => {
-  setArtistRules(false)
-}
-
-const showArtistRules = () => {
-
-  if (artistRules) {
       return (
-          <ArtistRules
-              closeCallBack={closeArtistRules}
-          />
+        <SongRules
+          closeCallBack={closeSongRules}
+        />
       )
+    }
   }
-}
+
+  const closeArtistRules = () => {
+    setArtistRules(false)
+  }
+
+  const showArtistRules = () => {
+
+    if (artistRules) {
+      return (
+        <ArtistRules
+          closeCallBack={closeArtistRules}
+        />
+      )
+    }
+  }
 
   // Retrieves list of tracks from selected playlist
   const playlistChanged = val => {
-      setPlaylist({
-          selectedPlaylist: val,
-          listOfPlaylistFromAPI: playlist.listOfPlaylistFromAPI
-      })
+    setPlaylist({
+      selectedPlaylist: val,
+      listOfPlaylistFromAPI: playlist.listOfPlaylistFromAPI
+    })
 
-      axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${val}`)
-          .then(tracksResponse => {
-              setPlaylistData(tracksResponse.data.items)
-          })
-          .catch(err=>console.log("Error! ", err))
+    axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${val}`)
+      .then(tracksResponse => {
+        setPlaylistData(tracksResponse.data.items)
+      })
+      .catch(err => console.log("Error! ", err))
   }
 
 
   //// Updates Longest Streak and Streak API Call to DD
-  const updateLongestAndCurrentStreak=(streak) => {
+  const updateLongestAndCurrentStreak = (streak) => {
     const currentLongestStreak = userData.longestStreak
     const currentStreak = userData.streak
     if (streak > currentLongestStreak) {
-      try {axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
-      {"longestStreak": streak})
-    } catch {
-      console.log("Longest Streak could not be updated")
-    }} else if (streak > currentStreak) {
-      try {axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/streak`,
-      {"streak": streak})
-    } catch {
-      console.log("Longest Streak could not be updated")
-  }}}
+      try {
+        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
+          { "longestStreak": streak })
+      } catch {
+        console.log("Longest Streak could not be updated")
+      }
+    } else if (streak > currentStreak) {
+      try {
+        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/streak`,
+          { "streak": streak })
+      } catch {
+        console.log("Longest Streak could not be updated")
+      }
+    }
+  }
 
   /// Update Current Score API Call to DB
   const updateCurrentScore = (score) => {
     try {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/score`, 
-      {"score": score}) 
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/score`,
+        { "score": score })
       if (userData.bestOverallScore < score) {
-        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestoverallscore`, 
-        {"bestOverallScore": score})
+        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestoverallscore`,
+          { "bestOverallScore": score })
       }
     } catch {
       console.log("Score could not be updated.")
-    }}
+    }
+  }
 
   ///Update Total Score Call API Patch to DB
   const updateBestOverallScore = (totalscore) => {
-    try { axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
-    {"totalScore": totalscore})
-  } catch {
-    console.log("Total score could not be updated")
-  }}
+    try {
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
+        { "totalScore": totalscore })
+    } catch {
+      console.log("Total score could not be updated")
+    }
+  }
 
   ///Update BestScore Song API Patch Call to DB
   const updateBestScoreSong = (score) => {
     const bestDBScoreSong = userData.bestScoreSong
     if (score > bestDBScoreSong) {
-    try { axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoresong`,
-    {"bestScoreSong": score})
-  } catch {
-    console.log("Song score could not be updated")
-  }}}
+      try {
+        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoresong`,
+          { "bestScoreSong": score })
+      } catch {
+        console.log("Song score could not be updated")
+      }
+    }
+  }
 
   ///Update BestScore Artist API Patch Call to DB
   const updateBestScoreArtist = (score) => {
     const bestDBScoreArtist = userData.bestScoreArtist
     if (score > bestDBScoreArtist) {
-    try { axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoreartist`,
-    {"bestScoreArtist": score})
-  } catch {
-    console.log("Artist score could not be updated")
-  }}}
+      try {
+        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoreartist`,
+          { "bestScoreArtist": score })
+      } catch {
+        console.log("Artist score could not be updated")
+      }
+    }
+  }
 
   return (
     <Router>
@@ -252,31 +265,31 @@ const showArtistRules = () => {
             <Home
               allData={allData}
               user={user}
-              userData = {userData}
+              userData={userData}
               findUser={getUserData}
-              deleteUser = {deleteUser}
-              userSignOut = {userSignOut}
+              deleteUser={deleteUser}
+              userSignOut={userSignOut}
             />}
         />
         <Route
           path="/artist"
           element={<Artist
-              refreshData={refreshData}
-              showRules={showArtistRules}
-              closeRules={closeArtistRules}
-              playlistData={playlistData}
-              userData = {userData}
-              updateCurrentScore={updateCurrentScore}
-              updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
-              updateBestScoreArtist={updateBestScoreArtist}
-              updateBestOverallScore={updateBestOverallScore}
-              genreChanged={genreChanged}
-              genreOptions={genres.listOfGenresFromAPI}
-              selectedGenre={genres.selectedGenre}
-              playlistChanged={playlistChanged}
-              playlistOptions={playlist.listOfPlaylistFromAPI}
-              selectedPlaylist={playlist.selectedPlaylist}
-            />}
+            refreshData={refreshData}
+            showRules={showArtistRules}
+            closeRules={closeArtistRules}
+            playlistData={playlistData}
+            userData={userData}
+            updateCurrentScore={updateCurrentScore}
+            updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
+            updateBestScoreArtist={updateBestScoreArtist}
+            updateBestOverallScore={updateBestOverallScore}
+            genreChanged={genreChanged}
+            genreOptions={genres.listOfGenresFromAPI}
+            selectedGenre={genres.selectedGenre}
+            playlistChanged={playlistChanged}
+            playlistOptions={playlist.listOfPlaylistFromAPI}
+            selectedPlaylist={playlist.selectedPlaylist}
+          />}
         />
         <Route
           path="/song"
@@ -284,12 +297,12 @@ const showArtistRules = () => {
             refreshData={refreshData}
             showRules={showSongRules}
             closeRules={closeSongRules}
-            playlistData = {playlistData}
-            userData = {userData}
+            playlistData={playlistData}
+            userData={userData}
             updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
             updateBestScoreSong={updateBestScoreSong}
             updateBestOverallScore={updateBestOverallScore}
-            updateCurrentScore = {updateCurrentScore}
+            updateCurrentScore={updateCurrentScore}
             genreChanged={genreChanged}
             genreOptions={genres.listOfGenresFromAPI}
             selectedGenre={genres.selectedGenre}
