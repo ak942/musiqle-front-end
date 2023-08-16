@@ -92,6 +92,7 @@ const Artist = ({ refreshData, showRules, playlistData, userData, updateData, up
         const correctAnswerString = filteredAnswer.join(" ")
         // console.log(correctAnswerString)
         // console.log("not filtered", correctAnswer)
+        
         if (inputAnswer.toLowerCase() === correctAnswerString) {
             alert(`You are Correct! The artist is ${artistName}.`)
             setScore(score + points[attempts])

@@ -254,6 +254,7 @@ function App() {
   }
 
   ///Update BestScore Artist API Patch Call to DB
+  
   const updateBestScoreArtist = (score) => {
     const bestDBScoreArtist = userData.bestScoreArtist
     if (score > bestDBScoreArtist) {
