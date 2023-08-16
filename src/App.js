@@ -24,10 +24,10 @@ function App() {
     // const playlistID = "1ap9564Wpqxi2Bb8gVaSWc"
     try {
       axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${playlist.selectedPlaylist}`)
-      .then(tracksResponse => {
-        setPlaylistData(tracksResponse.data.items)
-      })
-      .catch(err => console.log("Error! ", err))
+        .then(tracksResponse => {
+          setPlaylistData(tracksResponse.data.items)
+        })
+        .catch(err => console.log("Error! ", err))
     } catch {
       console.log("Could not retrieve tracks.")
     }
@@ -36,10 +36,10 @@ function App() {
   /// Getting all the Users from DB
   useEffect(() => {
     axios.get('https://musiqle-back-end-w9vy.onrender.com/user')
-    .then((response) => {
-      setAllData(response.data)
-    })
-    .catch(err=>console.log("Error! ", err))
+      .then((response) => {
+        setAllData(response.data)
+      })
+      .catch(err => console.log("Error! ", err))
   }, []);
 
   /// Adding User to DB
@@ -53,7 +53,7 @@ function App() {
         setAllData(response.data)
       })
     getUserData(user)
-    
+
   }
 
   /// choosing the right user
@@ -99,16 +99,16 @@ function App() {
   useEffect(() => {
     try {
       axios.get("https://musiqle-back-end-w9vy.onrender.com/genres")
-          .then(genreResponse => {
-              setGenres({
-                  selectedGenre: genres.selectedGenre,
-                  listOfGenresFromAPI: genreResponse.data.categories.items
-              })
+        .then(genreResponse => {
+          setGenres({
+            selectedGenre: genres.selectedGenre,
+            listOfGenresFromAPI: genreResponse.data.categories.items
           })
+        })
     } catch {
       console.log("Could not retrieve genres.")
     }
-  }, [])
+  }, [genres.selectedGenre])
 
   // Retrieves list of playlists from selected genre
   const genreChanged = val => {
@@ -117,13 +117,13 @@ function App() {
       listOfGenresFromAPI: genres.listOfGenresFromAPI
     })
     axios.get(`https://musiqle-back-end-w9vy.onrender.com/genres/${val}/playlists`)
-    .then(playlistResponse => {
-      setPlaylist({
-        selectedPlaylist: playlist.selectedPlaylist,
-        listOfPlaylistFromAPI: playlistResponse.data.playlists.items.filter(playlist => !!playlist)
+      .then(playlistResponse => {
+        setPlaylist({
+          selectedPlaylist: playlist.selectedPlaylist,
+          listOfPlaylistFromAPI: playlistResponse.data.playlists.items.filter(playlist => !!playlist)
+        })
       })
-    })
-    .catch(err => console.log("Error! ", err))
+      .catch(err => console.log("Error! ", err))
   }
 
   // Retrieves list of tracks from selected playlist
@@ -190,26 +190,26 @@ function App() {
   const updateData = async (streak, score, totalscore) => {
     const currentLongestStreak = userData.longestStreak
     console.log("streak", userId, streak)
-    await 
+    await
       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/streak`,
         { "streak": streak })
     if (streak > currentLongestStreak) {
-      await 
+      await
         axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
           { "longestStreak": streak })
           .then(console.log("Success"))
-      }
-    await 
+    }
+    await
       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/score`,
         { "score": score })
     if (userData.bestOverallScore < score) {
       await axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestoverallscore`,
         { "bestOverallScore": score })
-      }
+    }
     await axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
-    { "totalScore": totalscore })
+      { "totalScore": totalscore })
 
-}
+  }
 
   // /// Update Current Score API Call to DB
   // const updateCurrentScore = async (score) => {
