@@ -6,7 +6,7 @@ import { useState } from 'react';
 import NavBar from './NavBar';
 
 
-const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestAndCurrentStreak, updateBestOverallScore, updateCurrentScore, updateBestScoreArtist, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
+const Artist = ({ refreshData, showRules, playlistData, userData, updateData, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
 
 
     const [streak, setStreak] = useState(userData.streak)
@@ -51,40 +51,6 @@ const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestA
         }
     }
 
-    // Sets score in state and User's DB stats to 0
-    const resetScore = () => {
-        setScore(0)
-        updateCurrentScore(0)
-    }
-
-    // Sets streak in state and User's DB stats to 0
-    const resetStreak = () => {
-        setStreak(0)
-        updateLongestAndCurrentStreak(0)
-    }
-
-    // Increases score in state and User's DB stats to new score
-    const increaseScore = () => {
-        setScore(score + points[attempts])
-        updateCurrentScore(userData.score + points[attempts])
-    }
-
-    // Increases streak in state and User's DB stats to new streak
-    const increaseStreak = () => {
-        updateLongestAndCurrentStreak(userData.streak + 1)
-        setStreak(streak + 1)
-    }
-
-    // Increases total score in state and User's DB stats to new total score
-    const increaseTotalScore = () => {
-        setTotalScore(totalScore + points[attempts])
-        updateBestOverallScore(userData.totalScore + points[attempts])
-    }
-
-    // Increases Best Artist Score in User's DB stats
-    const increaseDBArtistScore = () => {
-        updateBestScoreArtist(userData.bestScoreArtist + points[attempts])
-    }
 
 
     // Resets game after correct guess
@@ -103,9 +69,10 @@ const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestA
 
     // Click when user wants to skip song, but lose points
     const skipAlbum = () => {
+        updateData(0, 0,totalScore)
         resetGame()
-        resetScore()
-        resetStreak()
+        setScore(0)
+        setStreak(0)
     }
 
     // Click when playlist has been changed
@@ -121,21 +88,22 @@ const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestA
         const filteredAnswer = correctAnswer.filter(word => !filters.some(f => word === f))
         const correctAnswerString = filteredAnswer.join(" ")
         // console.log(correctAnswerString)
-        // console.log("not filtered", correctAnswer)
+        console.log("not filtered", correctAnswer)
         if (inputAnswer.toLowerCase() === correctAnswerString) {
             alert(`You are Correct! The artist is ${artistName}.`)
-            increaseTotalScore()
-            increaseScore()
-            increaseDBArtistScore()
-            increaseStreak()
+            setScore(score + points[attempts])
+            updateData(streak + 1, score + points[attempts],totalScore + points[attempts])
+            setStreak(streak + 1)
+            setTotalScore(totalScore + points[attempts])
             resetGame()
 
         } else {
 
             if (attempts === 0) {
-                resetScore()
-                resetStreak()
+                updateData(0, 0,totalScore)
                 resetGame()
+                setScore(0)
+                setStreak(0)
 
             } else {
 
