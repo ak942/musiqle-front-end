@@ -105,22 +105,35 @@ function App() {
           })
     } catch {
       console.log("Could not retrieve genres.")
-    } try {
-      axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${playlist.selectedPlaylist}`)
-        .then(tracksResponse => {
-          setPlaylistData(tracksResponse.data.items)
-        })
-        .catch(err => console.log("Error! ", err))
-    } catch {
-      console.log("Could not retrieve tracks.")
     }
   }, [])
 
   // Retrieves list of playlists from selected genre
   const genreChanged = val => {
-      setGenres({
-          selectedGenre: val,
-          listOfGenresFromAPI: genres.listOfGenresFromAPI
+    setGenres({
+      selectedGenre: val,
+      listOfGenresFromAPI: genres.listOfGenresFromAPI
+    })
+    axios.get(`https://musiqle-back-end-w9vy.onrender.com/genres/${val}/playlists`)
+    .then(playlistResponse => {
+      setPlaylist({
+        selectedPlaylist: playlist.selectedPlaylist,
+        listOfPlaylistFromAPI: playlistResponse.data.playlists.items.filter(playlist => !!playlist)
+      })
+    })
+    .catch(err => console.log("Error! ", err))
+  }
+
+  // Retrieves list of tracks from selected playlist
+  const playlistChanged = val => {
+    setPlaylist({
+      selectedPlaylist: val,
+      listOfPlaylistFromAPI: playlist.listOfPlaylistFromAPI
+    })
+
+    axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${val}`)
+      .then(tracksResponse => {
+        setPlaylistData(tracksResponse.data.items)
       })
       .catch(err => console.log("Error! ", err))
   }
@@ -169,19 +182,6 @@ function App() {
     }
   }
 
-  // Retrieves list of tracks from selected playlist
-  const playlistChanged = val => {
-    setPlaylist({
-      selectedPlaylist: val,
-      listOfPlaylistFromAPI: playlist.listOfPlaylistFromAPI
-    })
-
-    axios.get(`https://musiqle-back-end-w9vy.onrender.com/playlists/${val}`)
-      .then(tracksResponse => {
-        setPlaylistData(tracksResponse.data.items)
-      })
-      .catch(err => console.log("Error! ", err))
-  }
 
 
   //// Updates Longest Streak and Streak API Call to DD
