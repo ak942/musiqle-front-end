@@ -11,7 +11,7 @@ const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestA
 
     const [streak, setStreak] = useState(userData.streak)
     const [totalScore, setTotalScore] = useState(userData.totalScore)
-    const [score, setScore] = useState(0)
+    const [score, setScore] = useState(userData.score)
     const [attempts, setAttempts] = useState(4)
     const [num, setNum] = useState(8)
 
@@ -71,7 +71,7 @@ const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestA
 
     // Increases streak in state and User's DB stats to new streak
     const increaseStreak = () => {
-        updateLongestAndCurrentStreak(streak + 1)
+        updateLongestAndCurrentStreak(userData.streak + 1)
         setStreak(streak + 1)
     }
 

@@ -12,7 +12,7 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
     const [songName, setSongName] = useState("")
     const [artistName, setArtistName] = useState("")
     const [num, setNum] = useState(0)
-    const [score, setScore] = useState(0)
+    const [score, setScore] = useState(userData.score)
     // const [bestScoreSong, setBestScoreSong] = useState(userData.bestScoreSong)
     const [streak, setStreak] = useState(userData.streak)
     const [totalScore, setTotalScore] = useState(userData.totalScore)
@@ -137,7 +137,7 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
 
     // Increases streak in state and User's DB stats to new streak
     const increaseStreak = () => {
-        updateLongestAndCurrentStreak(streak + 1)
+        updateLongestAndCurrentStreak(userData.streak + 1)
         setStreak(streak + 1)
     }
 

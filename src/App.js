@@ -52,6 +52,7 @@ function App() {
       .then((response) => {
         setAllData(response.data)
       })
+    getUserData(user)
   }
 
   /// choosing the right user
@@ -188,6 +189,13 @@ function App() {
   const updateLongestAndCurrentStreak = (streak) => {
     const currentLongestStreak = userData.longestStreak
     // const currentStreak = userData.streak
+    try {
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/streak`,
+        { "streak": streak })
+    } catch {
+      console.log("Longest Streak could not be updated")
+    }
+
     if (streak > currentLongestStreak) {
       try {
         axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
@@ -195,13 +203,6 @@ function App() {
       } catch {
         console.log("Longest Streak could not be updated")
       }
-    }
-
-    try {
-      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/streak`,
-        { "streak": streak })
-    } catch {
-      console.log("Longest Streak could not be updated")
     }
   }
 
