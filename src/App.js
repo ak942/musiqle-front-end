@@ -187,7 +187,7 @@ function App() {
   //// Updates Longest Streak and Streak API Call to DD
   const updateLongestAndCurrentStreak = (streak) => {
     const currentLongestStreak = userData.longestStreak
-    const currentStreak = userData.streak
+    // const currentStreak = userData.streak
     if (streak > currentLongestStreak) {
       try {
         axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
@@ -195,13 +195,13 @@ function App() {
       } catch {
         console.log("Longest Streak could not be updated")
       }
-    } else if (streak > currentStreak) {
-      try {
-        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/streak`,
-          { "streak": streak })
-      } catch {
-        console.log("Longest Streak could not be updated")
-      }
+    }
+
+    try {
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/streak`,
+        { "streak": streak })
+    } catch {
+      console.log("Longest Streak could not be updated")
     }
   }
 
