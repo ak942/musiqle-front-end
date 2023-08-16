@@ -48,12 +48,12 @@ function App() {
   }
 
   const refreshData = async () => {
-    getUserData(user)
-
     await axios.get('https://musiqle-back-end-w9vy.onrender.com/user')
       .then((response) => {
         setAllData(response.data)
       })
+    getUserData(user)
+
   }
 
   /// choosing the right user
@@ -186,87 +186,86 @@ function App() {
 
 
 
-  //// Updates Longest Streak and Streak API Call to DD
-  const updateLongestAndCurrentStreak = async (streak) => {
+  //// Updates User DB Stats
+  const updateData = async (streak, score, totalscore) => {
     const currentLongestStreak = userData.longestStreak
-    // const currentStreak = userData.streak
-    try {
-      await axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/streak`,
+    console.log("streak", userId, streak)
+    await
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/streak`,
         { "streak": streak })
-      // .then(console.log("Successfully updated streak"))
-    } catch {
-      console.log("Longest Streak could not be updated")
-    }
-
     if (streak > currentLongestStreak) {
-      try {
-        await axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
+      await
+        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
           { "longestStreak": streak })
-        // .then(console.log("Successfully updated longest streak"))
-      } catch {
-        console.log("Longest Streak could not be updated")
-      }
+          .then(console.log("Success"))
     }
-  }
-
-  /// Update Current Score API Call to DB
-  const updateCurrentScore = async (score) => {
-    try {
-      await axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/score`,
+    await
+      axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/score`,
         { "score": score })
-      // .then(console.log("Successfully updated score"))
-    } catch {
-      console.log("Score could not be updated.")
-    }
     if (userData.bestOverallScore < score) {
-      try {
-        await axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestoverallscore`,
-          { "bestOverallScore": score })
-        // .then(console.log("Successfully updated best score"))
-      } catch {
-        console.log("Score could not be updated.")
-      }
+      await axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestoverallscore`,
+        { "bestOverallScore": score })
     }
+    await axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
+      { "totalScore": totalscore })
+
   }
 
-  ///Update Total Score Call API Patch to DB
-  const updateBestOverallScore = async (totalscore) => {
-    try {
-      await axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
-        { "totalScore": totalscore })
-      // .then(console.log("Successfully updated total score"))
-    } catch {
-      console.log("Total score could not be updated")
-    }
-  }
+  // /// Update Current Score API Call to DB
+  // const updateCurrentScore = async (score) => {
+  //   await 
+  //     axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/score`,
+  //       { "score": score })
+  //   // } catch {
+  //   //   console.log("Score could not be updated.")
+  //   // }
+  //   if (userData.bestOverallScore < score) {
+  //     try {axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestoverallscore`,
+  //       { "bestOverallScore": score })
+  //       .then(console.log("Success"))
+  //   } catch {
+  //     console.log("Score could not be updated.")
+  //   }
+  // }}
 
-  ///Update BestScore Song API Patch Call to DB
-  const updateBestScoreSong = async (score) => {
-    const bestDBScoreSong = userData.bestScoreSong
-    if (score > bestDBScoreSong) {
-      try {
-        await axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoresong`,
-          { "bestScoreSong": score })
-        // .then(console.log("Successfully updated song score"))
-      } catch {
-        console.log("Song score could not be updated")
-      }
-    }
-  }
+  // ///Update Total Score Call API Patch to DB
+  // const updateBestOverallScore = (totalscore) => {
+  //   try {
+  //     axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
+  //       { "totalScore": totalscore })
+  //       .then(console.log("Success"))
+  //   } catch {
+  //     console.log("Total score could not be updated")
+  //   }
+  // }
 
-  ///Update BestScore Artist API Patch Call to DB
-  const updateBestScoreArtist = async (score) => {
-    const bestDBScoreArtist = userData.bestScoreArtist
-    if (score > bestDBScoreArtist) {
-      try {
-        await axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoreartist`,
-          { "bestScoreArtist": score })
-        // .then(console.log("Successfully updated artist score"))
-      } catch {
-        console.log("Artist score could not be updated")
-      }
-    }
-  }
+  // ///Update BestScore Song API Patch Call to DB
+  // const updateBestScoreSong = (score) => {
+  //   const bestDBScoreSong = userData.bestScoreSong
+  //   if (score > bestDBScoreSong) {
+  //     try {
+  //       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoresong`,
+  //         { "bestScoreSong": score })
+  //         .then(console.log("Success"))
+  //     } catch {
+  //       console.log("Song score could not be updated")
+  //     }
+  //   }
+  // }
+
+  // ///Update BestScore Artist API Patch Call to DB
+  // const updateBestScoreArtist = (score) => {
+  //   const bestDBScoreArtist = userData.bestScoreArtist
+  //   if (score > bestDBScoreArtist) {
+  //     try {
+  //       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoreartist`,
+  //         { "bestScoreArtist": score })
+  //         .then(console.log("Success"))
+  //     } catch {
+  //       console.log("Artist score could not be updated")
+  //     }
+  //   }
+  // }
 
   return (
     <Router>
@@ -290,10 +289,7 @@ function App() {
             showRules={showArtistRules}
             playlistData={playlistData}
             userData={userData}
-            updateCurrentScore={updateCurrentScore}
-            updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
-            updateBestScoreArtist={updateBestScoreArtist}
-            updateBestOverallScore={updateBestOverallScore}
+            updateData={updateData}
             genreChanged={genreChanged}
             genreOptions={genres.listOfGenresFromAPI}
             selectedGenre={genres.selectedGenre}
@@ -309,10 +305,12 @@ function App() {
             showRules={showSongRules}
             playlistData={playlistData}
             userData={userData}
-            updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
-            updateBestScoreSong={updateBestScoreSong}
-            updateBestOverallScore={updateBestOverallScore}
-            updateCurrentScore={updateCurrentScore}
+            updateData={updateData}
+
+            // updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
+            // updateBestScoreSong={updateBestScoreSong}
+            // updateBestOverallScore={updateBestOverallScore}
+            // updateCurrentScore={updateCurrentScore}
             genreChanged={genreChanged}
             genreOptions={genres.listOfGenresFromAPI}
             selectedGenre={genres.selectedGenre}
