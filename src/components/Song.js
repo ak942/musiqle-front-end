@@ -5,7 +5,7 @@ import NavBar from './NavBar'
 import SongInputForm from './SongInputForm'
 import './Song.css'
 
-const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAndCurrentStreak, updateBestOverallScore, updateCurrentScore, updateBestScoreSong, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
+const Song = ({ refreshData, showRules, playlistData, userData, updateData, updateBestScoreSong, genreOptions, genreChanged, selectedGenre, playlistOptions, playlistChanged, selectedPlaylist }) => {
 
     const [attempts, setAttempts] = useState(4)
     const [lyrics, setLyrics] = useState("")
@@ -116,38 +116,7 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
             return "🤍  🤍  🤍  🤍"
         }
     }
-
-    // Sets score in state and User's DB stats to 0
-    const resetScore = () => {
-        setScore(0)
-        updateCurrentScore(0)
-    }
-
-    // Sets streak in state and User's DB stats to 0
-    const resetStreak = () => {
-        setStreak(0)
-        updateLongestAndCurrentStreak(0)
-    }
-
-    // Increases score in state and User's DB stats to new score
-    const increaseScore = () => {
-        setScore(score + points[attempts])
-        updateCurrentScore(userData.score + points[attempts])
-    }
-
-    // Increases streak in state and User's DB stats to new streak
-    const increaseStreak = () => {
-        updateLongestAndCurrentStreak(userData.streak + 1)
-        setStreak(streak + 1)
-    }
-
-    // Increases total score in state and User's DB stats to new total score
-    const increaseTotalScore = () => {
-        setTotalScore(totalScore + points[attempts])
-        updateBestOverallScore(userData.totalScore + points[attempts])
-    }
-
-    // Increases Best Artist Score in User's DB stats
+    ///increase Best Score in User's DB Stats
     const increaseDBSongScore = () => {
         updateBestScoreSong(userData.bestScoreSong + points[attempts])
     }
@@ -161,9 +130,10 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
 
     // Skip Song Callback
     const skipSong = ()=> {
+        updateData(0, 0,totalScore)
         resetGame()
-        resetScore()
-        resetStreak()
+        setScore(0)
+        setStreak(0)
     }
 
     //Handle Reset
@@ -186,16 +156,18 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
         // console.log(correctAnswerString, "Correct Answer");
         if (inputAnswer.toLowerCase() === correctAnswerString ) {
             alert(`You are Correct! The song is ${songName} by ${artistName}`)
-            increaseTotalScore()
-            increaseScore()
-            increaseDBSongScore()
-            increaseStreak()
+            setScore(score + points[attempts])
+            updateData(streak + 1, score + points[attempts],totalScore + points[attempts])
+            setStreak(streak + 1)
+            setTotalScore(totalScore + points[attempts])
             resetGame()
+            increaseDBSongScore()
         } else {
             if (attempts === 0) {
-                resetScore()
-                resetStreak()
+                updateData(0, 0,totalScore)
                 resetGame()
+                setScore(0)
+                setStreak(0)
             } else {
                 setAttempts(attempts - 1)
                 setNum(num + 1)
