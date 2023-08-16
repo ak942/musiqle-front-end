@@ -183,7 +183,7 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
 
     //CHECK THE INPUT AGAINST ANSWER
     const compareInput = (inputAnswer) => {
-        console.log(correctAnswerString, "Correct Answer");
+        // console.log(correctAnswerString, "Correct Answer");
         if (inputAnswer.toLowerCase() === correctAnswerString ) {
             alert(`You are Correct! The song is ${songName} by ${artistName}`)
             increaseTotalScore()
@@ -205,9 +205,6 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
 
     return (
         <div className="center game">
-            <div>
-                {showRules()}
-            </div>
             <NavBar
                 refreshData={refreshData}
                 handleReset={handleReset}
@@ -226,12 +223,16 @@ const Song = ({ refreshData, showRules, playlistData, userData, updateLongestAnd
             />
             <p className="lives">{lives(attempts)}</p>
             <div className="song-size">{lyricsShown()}</div>
-            <SongInputForm
-                compareInput={compareInput}
-                giveAnswer={attempts === 0 ? giveAnswer : null}
-                skipSong={skipSong}
-            />
-
+            <div className="inline">
+                <div>
+                    {showRules()}
+                </div>
+                <SongInputForm
+                    compareInput={compareInput}
+                    giveAnswer={attempts === 0 ? giveAnswer : null}
+                    skipSong={skipSong}
+                />
+            </div>
         </div>
     )
 

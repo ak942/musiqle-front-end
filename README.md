@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+<h2>Introduction:</h2>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Musiqle was created to provide a fun and challenging game to all music lovers! The game has two path options that will test your knowledge of artist's album covers or your knowledge of song lyrics. Each path will be able to track your progress and save your scores in our database. There are many ways to compete against yourself or compare yourself with other players. We hope you enjoy our game!
 
-## Available Scripts
+To begin the using our website, you must login with your name. If you do not have a current login, then you will make one and it will get added to our database. At the end of each round, the scores will be updated and streak will be increased by 1 if the player has consecutive correct answers in a row. 
 
-In the project directory, you can run:
+<h2>Features:</h2>
 
-### `npm start`
+<b>Metrics the user will have access to:</b>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<ul>
+  <li>id
+  <li>Name
+  <li>Current score
+  <li>Total score
+  <li>Best score in a streak
+  <li>Longest streak
+  <li>Best score for game type - Artist
+  <li>Best score for game type - Song
+</ul>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<h3>Scoring Method:</h3>
 
-### `npm test`
+If you are able to guess the song/artist on the 1st try you will receive 10 points. If you guess it correctly it on your 2nd try, then 7 points. Third try is 4 points. Fourth try is 1 point. If you are unable to guess the song/artist, you will receive 0 points for the round and your streak will reset to 0.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<h4>Guess the Artist:</h4>
 
-### `npm run build`
+Player will have 4 chances to guess an artist. (Not case-sensitive and only alpha-characters)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Album cover will be blurred to 8px at the start of the game and every attempt, it will decrease the blur by 2px until the player has run out of 4 attempts or has guessed the artist. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<h4>Guess the Song:</h4>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Player will have 4 chances to guess the song. (Not case-sensitive and only alpha-characters)
 
-### `npm run eject`
+Player will be given one line of the lyrics and will gain 1 additional line for every attempt until the player has run out of 4 attempts or has guessed the song.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+<h4>Rankings:</h4>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+When user clicks on view all player' stats, it will prompt them to a page that will show metrics of Top 5 players for each score metric. It will rank the players on the criteria from the database.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<h2>Dependencies:</h2>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Must install all packages using
 
-## Learn More
+<code>$npm install</code>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Running this application on your local server
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<code>$npm start</code>

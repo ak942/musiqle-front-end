@@ -120,8 +120,8 @@ const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestA
         let correctAnswer = artistName.replace(/[^0-9a-zA-Z.$]/g, " ").toLowerCase().split(' ')
         const filteredAnswer = correctAnswer.filter(word => !filters.some(f => word === f))
         const correctAnswerString = filteredAnswer.join(" ")
-        console.log(correctAnswerString)
-        console.log("not filtered", correctAnswer)
+        // console.log(correctAnswerString)
+        // console.log("not filtered", correctAnswer)
         if (inputAnswer.toLowerCase() === correctAnswerString) {
             alert(`You are Correct! The artist is ${artistName}.`)
             increaseTotalScore()
@@ -148,9 +148,6 @@ const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestA
 
     return (
         <div className="center game">
-            <div>
-                {showRules()}
-            </div>
             <NavBar
                 refreshData={refreshData}
                 handleReset={handleReset}
@@ -173,11 +170,16 @@ const Artist = ({ refreshData, showRules, playlistData, userData, updateLongestA
                 src={albumCover}
                 alt="album cover"
             />
-            <ArtistInputForm
-                skipAlbum={skipAlbum}
-                giveAnswer={attempts === 0 ? giveAnswer : null}
-                compareInput={compareInput}
-            />
+            <div className="inline">
+                <div>
+                    {showRules()}
+                </div>
+                <ArtistInputForm
+                    skipAlbum={skipAlbum}
+                    giveAnswer={attempts === 0 ? giveAnswer : null}
+                    compareInput={compareInput}
+                />
+            </div>
         </div>
     )
 }
