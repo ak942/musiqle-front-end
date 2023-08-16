@@ -192,6 +192,7 @@ function App() {
     try {
       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/streak`,
         { "streak": streak })
+        .then(console.log("Success"))
     } catch {
       console.log("Longest Streak could not be updated")
     }
@@ -200,6 +201,7 @@ function App() {
       try {
         axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/longeststreak`,
           { "longestStreak": streak })
+          .then(console.log("Success"))
       } catch {
         console.log("Longest Streak could not be updated")
       }
@@ -217,6 +219,7 @@ function App() {
     if (userData.bestOverallScore < score) {
       try {axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestoverallscore`,
         { "bestOverallScore": score })
+        .then(console.log("Success"))
     } catch {
       console.log("Score could not be updated.")
     }
@@ -227,6 +230,7 @@ function App() {
     try {
       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/totalscore`,
         { "totalScore": totalscore })
+        .then(console.log("Success"))
     } catch {
       console.log("Total score could not be updated")
     }
@@ -239,6 +243,7 @@ function App() {
       try {
         axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoresong`,
           { "bestScoreSong": score })
+          .then(console.log("Success"))
       } catch {
         console.log("Song score could not be updated")
       }
@@ -252,6 +257,7 @@ function App() {
       try {
         axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoreartist`,
           { "bestScoreArtist": score })
+          .then(console.log("Success"))
       } catch {
         console.log("Artist score could not be updated")
       }
