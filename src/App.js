@@ -211,10 +211,12 @@ function App() {
     try {
       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/score`,
         { "score": score })
-      if (userData.bestOverallScore < score) {
-        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestoverallscore`,
-          { "bestOverallScore": score })
-      }
+    } catch {
+      console.log("Score could not be updated.")
+    }
+    if (userData.bestOverallScore < score) {
+      try {axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestoverallscore`,
+        { "bestOverallScore": score })
     } catch {
       console.log("Score could not be updated.")
     }
