@@ -219,7 +219,7 @@ function App() {
     } catch {
       console.log("Score could not be updated.")
     }
-  }
+  }}
 
   ///Update Total Score Call API Patch to DB
   const updateBestOverallScore = (totalscore) => {
