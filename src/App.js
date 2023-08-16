@@ -239,33 +239,33 @@ function App() {
   //   }
   // }
 
-  // ///Update BestScore Song API Patch Call to DB
-  // const updateBestScoreSong = (score) => {
-  //   const bestDBScoreSong = userData.bestScoreSong
-  //   if (score > bestDBScoreSong) {
-  //     try {
-  //       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoresong`,
-  //         { "bestScoreSong": score })
-  //         .then(console.log("Success"))
-  //     } catch {
-  //       console.log("Song score could not be updated")
-  //     }
-  //   }
-  // }
+  ///Update BestScore Song API Patch Call to DB
+  const updateBestScoreSong = (score) => {
+    const bestDBScoreSong = userData.bestScoreSong
+    if (score > bestDBScoreSong) {
+      try {
+        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoresong`,
+          { "bestScoreSong": score })
+          .then(console.log("Success"))
+      } catch {
+        console.log("Song score could not be updated")
+      }
+    }
+  }
 
-  // ///Update BestScore Artist API Patch Call to DB
-  // const updateBestScoreArtist = (score) => {
-  //   const bestDBScoreArtist = userData.bestScoreArtist
-  //   if (score > bestDBScoreArtist) {
-  //     try {
-  //       axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoreartist`,
-  //         { "bestScoreArtist": score })
-  //         .then(console.log("Success"))
-  //     } catch {
-  //       console.log("Artist score could not be updated")
-  //     }
-  //   }
-  // }
+  ///Update BestScore Artist API Patch Call to DB
+  const updateBestScoreArtist = (score) => {
+    const bestDBScoreArtist = userData.bestScoreArtist
+    if (score > bestDBScoreArtist) {
+      try {
+        axios.patch(`https://musiqle-back-end-w9vy.onrender.com/user/${userId}/bestscoreartist`,
+          { "bestScoreArtist": score })
+          .then(console.log("Success"))
+      } catch {
+        console.log("Artist score could not be updated")
+      }
+    }
+  }
 
   return (
     <Router>
@@ -291,6 +291,7 @@ function App() {
             userData={userData}
             updateData={updateData}
             genreChanged={genreChanged}
+            updateBestScoreArtist = {updateBestScoreArtist}
             genreOptions={genres.listOfGenresFromAPI}
             selectedGenre={genres.selectedGenre}
             playlistChanged={playlistChanged}
@@ -306,7 +307,7 @@ function App() {
             playlistData={playlistData}
             userData={userData}
             updateData={updateData}
-
+            updateBestScoreSong = {updateBestScoreSong}
             // updateLongestAndCurrentStreak={updateLongestAndCurrentStreak}
             // updateBestScoreSong={updateBestScoreSong}
             // updateBestOverallScore={updateBestOverallScore}
